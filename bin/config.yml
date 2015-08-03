@@ -1,0 +1,29 @@
+chat:
+  Visitor: '%player% -> %message%'
+  Member: '%player% -> %message%'
+  Mod: '%player% -> &b%message%'
+  Admin: '%player% -> &b%message%'
+  Owner: '%player% -> &b%message%'
+  
+commandspy:
+  filters:
+    default:
+    - 'c give'
+    - 'c i'
+    - 'c item'
+    all:
+    - '*'
+  players:
+    bobmandude9889:
+      filter: default
+colors:
+  - 'Visitor,7'
+  - 'Member,a'
+  - 'MemberP,a'
+  - 'Trusted,b'
+  - 'Mod,9'
+  - 'Admin,c'
+  - 'Owner,4'
+kits:
+  default:
+    - 

@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="PermissionsEx">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/PermissionsEx.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

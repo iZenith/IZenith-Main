@@ -1,0 +1,44 @@
+name: VintageHub
+version: 1.0
+main: net.bobmandude9889.Main.Main
+author: bobmandude9889
+depend: [Multiverse-Core,PermissionsEx,PlotMe,Vault]
+
+commands:
+  commandspy:
+    description: commandspy
+    usage: /<command>
+    aliases: ['commandpsy','cs']
+  lel:
+    description: lol
+    usage: /<command>
+    aliases: ['lawl']
+  stap:
+    description: stap
+    usage: /<command>
+  createclock:
+    description: creates a clock
+    usage: /<command>
+  plots:
+    description: warps to plots
+    usage: /<command>
+  report:
+    description: used to report problems
+    usage: /<command>
+  setfloor:
+    description: Change the floor of your plot
+    usage: /<command> <blockid>
+  kit:
+    description: Create and use kits
+    usage: /<command> <create,(kit name)>
+
+permissions:
+  commandspy.use:
+    description: gives access to /commandspy
+    default: OP
+  stap:
+    description: stap
+    default: OP
+  clock.create:
+    description: gives access to /createclock
+    default: OP
