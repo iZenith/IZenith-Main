@@ -6,24 +6,24 @@ depend: [Multiverse-Core,PermissionsEx,PlotMe,Vault]
 
 commands:
   commandspy:
-    description: commandspy
+    description: Commandspy
     usage: /<command>
     aliases: ['commandpsy','cs']
   lel:
-    description: lol
+    description: Lol
     usage: /<command>
     aliases: ['lawl']
   stap:
-    description: stap
+    description: Staps the server
     usage: /<command>
   createclock:
     description: creates a clock
     usage: /<command>
   plots:
-    description: warps to plots
+    description: Warps to plots
     usage: /<command>
   report:
-    description: used to report problems
+    description: Used to report problems
     usage: /<command>
   setfloor:
     description: Change the floor of your plot
@@ -44,14 +44,14 @@ permissions:
     description: stap
     default: OP
   clock.create:
-    description: gives access to /createclock
+    description: Gives access to /createclock
     default: OP
   setfloor.others:
     description: Set other player plot floor
     default: OP
   kit.use:
-    description: Use kits
+    description: Use Kits
     default: OP
   gkit.use:
-    description: Create and remove gkits
+    description: Create and remove Global Kits
     default: OP
