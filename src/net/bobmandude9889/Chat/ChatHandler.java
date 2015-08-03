@@ -36,8 +36,8 @@ public class ChatHandler implements Listener{
 		if(format != null){
 			e.setCancelled(true);
 			for(final Player p : main.getServer().getOnlinePlayers()){
-				if(message.contains(p.getName()) && !e.getPlayer().equals(p)){
-					int i = message.indexOf(p.getName());
+				if(message.toLowerCase().contains(p.getName().toLowerCase()) && !e.getPlayer().equals(p)){
+					int i = message.toLowerCase().indexOf(p.getName().toLowerCase());
 					String messageP = message.substring(0, i) + ChatColor.RED + ChatColor.BOLD + message.substring(i, p.getName().length() + i) + ChatColor.getByChar(format.charAt(format.indexOf("%message%") - 1)) + message.substring(p.getName().length() + i);
 					p.sendMessage(messageP);
 					p.playSound(p.getLocation(), Sound.NOTE_PLING, 1f, 1f);

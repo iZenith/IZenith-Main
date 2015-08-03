@@ -20,6 +20,7 @@ public class Main extends JavaPlugin {
 		Vars.init(this);
 		Util.initScoreboard();
 		CommandSpy.loadFilters();
+		System.out.println("Vintage Hub Enabled");
 	}
 
 	@Override

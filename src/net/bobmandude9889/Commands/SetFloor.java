@@ -31,7 +31,7 @@ public class SetFloor implements HubCommand {
 		try {
 			Player player = (Player) sender;
 			Plot plot = PlotManager.getPlotById(player.getLocation());
-			if (!Bukkit.getPlayer(plot.getOwner()).equals(sender) && !sender.isOp()) {
+			if (!Bukkit.getPlayer(plot.getOwner()).equals(sender) && !sender.hasPermission("setfloor.others")) {
 				sender.sendMessage(ChatColor.RED + "This is not your plot!");
 				return;
 			}

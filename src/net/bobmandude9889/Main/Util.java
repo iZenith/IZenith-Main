@@ -230,8 +230,9 @@ public class Util {
     }
 	
 	public static void getKit(Player player, String name){
+		getMain().reloadConfig();
 		List<String> kit = getConfig().getStringList("kits." + player.getUniqueId() + "." + name);
-		if(kit == null) kit = getConfig().getStringList("kits.global." + name);
+		if(kit.size() == 0) kit = getConfig().getStringList("kits.global." + name);
 		if(kit != null){
 			try {
 				ItemStack[] contents = itemStackArrayFromBase64(kit.get(0));
@@ -250,6 +251,7 @@ public class Util {
 		kit.add(arrayKit[0]);
 		kit.add(arrayKit[1]);
 		getConfig().set("kits." + player.getUniqueId() + "." + name, kit);
+		getMain().saveConfig();
 	}
 	
 	public static void setGlobalKit(Player player, String name){
@@ -258,6 +260,17 @@ public class Util {
 		kit.add(arrayKit[0]);
 		kit.add(arrayKit[1]);
 		getConfig().set("kits.global." + name, kit);
+		getMain().saveConfig();
+	}
+	
+	public static void removeKit(Player player, String name){
+		getConfig().set("kits." + player.getUniqueId() + "." + name, null);
+		getMain().saveConfig();
+	}
+	
+	public static void removeGlobalKit(String name){
+		getConfig().set("kits.global." + name, null);
+		getMain().saveConfig();
 	}
 	
 }

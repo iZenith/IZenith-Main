@@ -30,7 +30,11 @@ commands:
     usage: /<command> <blockid>
   kit:
     description: Create and use kits
-    usage: /<command> <create,(kit name)>
+    usage: /<command> <kit name>
+    aliases: [kits]
+  gkit:
+    description: Create and remove global kits
+    usage: /<command> <create,remove> <kit name>
 
 permissions:
   commandspy.use:
@@ -41,4 +45,13 @@ permissions:
     default: OP
   clock.create:
     description: gives access to /createclock
+    default: OP
+  setfloor.others:
+    description: Set other player plot floor
+    default: OP
+  kit.use:
+    description: Use kits
+    default: OP
+  gkit.use:
+    description: Create and remove gkits
     default: OP

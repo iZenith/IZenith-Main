@@ -1,16 +1,14 @@
 package net.bobmandude9889.Commands;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Set;
 
-import net.bobmandude9889.Main.Vars;
-
-import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
-import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.permissions.Permission;
+
+import net.bobmandude9889.Main.Util;
+import net.md_5.bungee.api.ChatColor;
 
 public class Kit implements HubCommand {
 
@@ -21,23 +19,62 @@ public class Kit implements HubCommand {
 
 	@Override
 	public String[] getAliases() {
-		return null;
+		return new String[] { "kits" };
 	}
 
 	@Override
 	public void onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
-		FileConfiguration config = Vars.main.getConfig();
 		Player player = (Player) sender;
-		if(args[0].equalsIgnoreCase("create")){
-			@SuppressWarnings("unused")
-			List<String> kits;
-			if(config.contains("kits." + player.getName())){
-				kits = config.getStringList("kits." + player.getName());
+		if (args.length == 0) {
+			Set<String> globalKits = Util.getConfig().getConfigurationSection("kits.global").getKeys(false);
+			Set<String> privateKits = Util.getConfig().getConfigurationSection("kits." + player.getUniqueId())
+					.getKeys(false);
+
+			player.sendMessage(ChatColor.BLUE + "Global Kits");
+			if (globalKits.size() > 0) {
+				for (String kitName : globalKits) {
+					player.sendMessage(ChatColor.GREEN + kitName);
+				}
 			} else {
-				kits = new ArrayList<String>();
+				player.sendMessage(ChatColor.RED + "None");
 			}
-			
-			return;
+
+			player.sendMessage(ChatColor.BLUE + "Private Kits");
+			if (privateKits.size() > 0) {
+				for (String kitName : privateKits) {
+					player.sendMessage(ChatColor.GREEN + kitName);
+				}
+			} else {
+				player.sendMessage(ChatColor.RED + "None");
+			}
+		} else {
+			switch (args[0]) {
+			case "create":
+				if (args.length > 1) {
+					Util.setKit((Player) sender, args[1]);
+					sender.sendMessage(ChatColor.BLUE + "Created kit " + ChatColor.GREEN + args[1]);
+				} else {
+					sender.sendMessage(ChatColor.RED + "/kit create <name>");
+				}
+				break;
+			case "remove":
+				if (args.length > 1) {
+					Util.removeKit(player, args[1]);
+					player.sendMessage(ChatColor.BLUE + "Removed the kit " + ChatColor.GREEN + args[1]);
+				} else {
+					sender.sendMessage(ChatColor.RED + "/kit remove <name>");
+				}
+				break;
+			default:
+				String name = args[0];
+				if (Util.getConfig().get("kits." + player.getUniqueId() + "." + name) != null
+						|| Util.getConfig().get("kits.global." + name) != null) {
+					Util.getKit(player, name);
+				} else {
+					player.sendMessage(ChatColor.RED + "There is not a kit named " + args[0] + ".");
+				}
+				break;
+			}
 		}
 	}
 
@@ -48,12 +85,12 @@ public class Kit implements HubCommand {
 
 	@Override
 	public boolean hasPermission() {
-		return false;
+		return true;
 	}
 
 	@Override
 	public Permission getPermission() {
-		return null;
+		return new Permission("kit.use");
 	}
 
 }
