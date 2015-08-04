@@ -26,12 +26,9 @@ public class Kit implements HubCommand {
 	public void onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
 		Player player = (Player) sender;
 		if (args.length == 0) {
-			Set<String> globalKits = Util.getConfig().getConfigurationSection("kits.global").getKeys(false);
-			Set<String> privateKits = Util.getConfig().getConfigurationSection("kits." + player.getUniqueId())
-					.getKeys(false);
-
 			player.sendMessage(ChatColor.BLUE + "Global Kits");
-			if (globalKits.size() > 0) {
+			if (Util.getConfig().contains("kits.global")) {
+				Set<String> globalKits = Util.getConfig().getConfigurationSection("kits.global").getKeys(false);
 				for (String kitName : globalKits) {
 					player.sendMessage(ChatColor.GREEN + kitName);
 				}
@@ -40,7 +37,8 @@ public class Kit implements HubCommand {
 			}
 
 			player.sendMessage(ChatColor.BLUE + "Private Kits");
-			if (privateKits.size() > 0) {
+			if (Util.getConfig().contains("kits." + player.getUniqueId())) {
+				Set<String> privateKits = Util.getConfig().getConfigurationSection("kits." + player.getUniqueId()).getKeys(false);
 				for (String kitName : privateKits) {
 					player.sendMessage(ChatColor.GREEN + kitName);
 				}
@@ -66,7 +64,7 @@ public class Kit implements HubCommand {
 				}
 				break;
 			default:
-				String name = args[0];
+				String name = args[0].toLowerCase();
 				if (Util.getConfig().get("kits." + player.getUniqueId() + "." + name) != null
 						|| Util.getConfig().get("kits.global." + name) != null) {
 					Util.getKit(player, name);

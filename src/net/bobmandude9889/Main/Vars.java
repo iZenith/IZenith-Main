@@ -22,7 +22,7 @@ import net.bobmandude9889.Commands.Lel;
 import net.bobmandude9889.Commands.Plots;
 import net.bobmandude9889.Commands.Report;
 import net.bobmandude9889.Commands.SetFloor;
-import net.bobmandude9889.Commands.Stap;
+import net.bobmandude9889.Commands.Trusted;
 import net.bobmandude9889.Gamemode.TeleportListener;
 
 public class Vars {
@@ -43,12 +43,12 @@ public class Vars {
 		main = plugin;
 		commands = new HubCommand[] { new CommandSpy(plugin), 
 				new Lel(), 
-				new Stap(), 
 				new Plots(),
 				new Report(),
 				new SetFloor(),
 				new Kit(),
-				new GKit()
+				new GKit(),
+				new Trusted()
 				};
 		commandSpy = new HashMap<Player, CommandFilter>();
 		

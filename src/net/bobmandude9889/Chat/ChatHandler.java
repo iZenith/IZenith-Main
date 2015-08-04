@@ -1,8 +1,8 @@
 package net.bobmandude9889.Chat;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.regex.Matcher;
-
-import net.bobmandude9889.Main.PermissionHandler;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Sound;
@@ -12,6 +12,8 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.plugin.Plugin;
+
+import net.bobmandude9889.Main.PermissionHandler;
 
 public class ChatHandler implements Listener{
 
@@ -30,9 +32,14 @@ public class ChatHandler implements Listener{
 		message = message.replaceAll("%prefix%", PermissionHandler.getGroup(e.getPlayer()).getPrefix());
 		String chars = "abcdefrlomn1234567890";
 		for(Character c : chars.toCharArray()){
-			message = message.replaceAll("&" + c.toString(), ChatColor.getByChar(c) + "");
+			for(int i = 0; i < message.length() - 1; i++){
+				if(message.substring(i,i+2).equals("&" + c.toString())){
+					String replace = message.substring(i-1,i).equals("&")?"&" + c.toString():ChatColor.getByChar(c) + "";
+					message = message.substring(0,i - 1) + replace + message.substring(i+2,message.length());
+					i++;
+				}
+			}
 		}
-		
 		if(format != null){
 			e.setCancelled(true);
 			for(final Player p : main.getServer().getOnlinePlayers()){

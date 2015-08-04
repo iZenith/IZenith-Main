@@ -230,6 +230,7 @@ public class Util {
     }
 	
 	public static void getKit(Player player, String name){
+		name = name.toLowerCase();
 		getMain().reloadConfig();
 		List<String> kit = getConfig().getStringList("kits." + player.getUniqueId() + "." + name);
 		if(kit.size() == 0) kit = getConfig().getStringList("kits.global." + name);
@@ -246,6 +247,7 @@ public class Util {
 	}
 	
 	public static void setKit(Player player, String name){
+		name = name.toLowerCase();
 		String[] arrayKit = playerInventoryToBase64(player.getInventory());
 		List<String> kit = new ArrayList<String>();
 		kit.add(arrayKit[0]);
@@ -255,6 +257,7 @@ public class Util {
 	}
 	
 	public static void setGlobalKit(Player player, String name){
+		name = name.toLowerCase();
 		String[] arrayKit = playerInventoryToBase64(player.getInventory());
 		List<String> kit = new ArrayList<String>();
 		kit.add(arrayKit[0]);
@@ -264,12 +267,29 @@ public class Util {
 	}
 	
 	public static void removeKit(Player player, String name){
+		name = name.toLowerCase();
 		getConfig().set("kits." + player.getUniqueId() + "." + name, null);
 		getMain().saveConfig();
 	}
 	
 	public static void removeGlobalKit(String name){
+		name = name.toLowerCase();
 		getConfig().set("kits.global." + name, null);
+		getMain().saveConfig();
+	}
+	
+	public static boolean hasJoined(Player player){
+		getMain().reloadConfig();
+		List<String> players = getConfig().getStringList("players");
+		if(!getConfig().contains("players")) return false;
+		return players.contains(player.getUniqueId().toString());
+	}
+	
+	public static void setJoined(Player player){
+		List<String> players = getConfig().getStringList("players");
+		if(players == null) players = new ArrayList<String>();
+		players.add(player.getUniqueId().toString());
+		getConfig().set("players", players);
 		getMain().saveConfig();
 	}
 	
