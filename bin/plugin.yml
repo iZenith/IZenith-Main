@@ -13,9 +13,6 @@ commands:
     description: lol
     usage: /<command>
     aliases: ['lawl']
-  stap:
-    description: stap
-    usage: /<command>
   createclock:
     description: creates a clock
     usage: /<command>
@@ -35,6 +32,10 @@ commands:
   gkit:
     description: Create and remove global kits
     usage: /<command> <create,remove> <kit name>
+  trusted:
+    description: Warp to trusted world
+    usage: /<command>
+    aliases: [void]
 
 permissions:
   commandspy.use:
