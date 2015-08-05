@@ -14,6 +14,7 @@ import org.bukkit.scoreboard.Team;
 import net.bobmandude9889.Chat.ChatHandler;
 import net.bobmandude9889.Color.PlayerJoinListener;
 import net.bobmandude9889.CommandSpy.CommandFilter;
+import net.bobmandude9889.CommandSpy.CommandListener;
 import net.bobmandude9889.Commands.CommandSpy;
 import net.bobmandude9889.Commands.GKit;
 import net.bobmandude9889.Commands.HubCommand;
@@ -41,7 +42,8 @@ public class Vars {
 		scoreboard = manager.getMainScoreboard();
 		teams = new ArrayList<Team>();
 		main = plugin;
-		commands = new HubCommand[] { new CommandSpy(plugin), 
+		commands = new HubCommand[] { 
+				new CommandSpy(), 
 				new Lel(), 
 				new Plots(),
 				new Report(),
@@ -61,6 +63,7 @@ public class Vars {
 		lis.add(new ChatHandler(plugin));
 		lis.add(new PlayerJoinListener());
 		lis.add(new TeleportListener());
+		lis.add(new CommandListener());
 		for (Listener l : lis) {
 			plugin.getServer().getPluginManager().registerEvents(l, plugin);
 		}

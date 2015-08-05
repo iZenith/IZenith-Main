@@ -1,10 +1,11 @@
 package net.bobmandude9889.Commands;
 
-import net.bobmandude9889.Main.Vars;
-
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 import org.bukkit.permissions.Permission;
+
+import net.bobmandude9889.Main.Vars;
 
 public class Plots implements HubCommand {
 
@@ -20,7 +21,8 @@ public class Plots implements HubCommand {
 
 	@Override
 	public void onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
-		Vars.main.getServer().dispatchCommand(sender, "warp plots");
+		Player player = (Player) sender;
+		player.performCommand("warp plots");
 	}
 
 	@Override

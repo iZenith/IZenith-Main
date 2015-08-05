@@ -13,7 +13,6 @@ import org.bukkit.Material;
 import org.bukkit.Server;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -291,6 +290,10 @@ public class Util {
 		players.add(player.getUniqueId().toString());
 		getConfig().set("players", players);
 		getMain().saveConfig();
+	}
+
+	public static boolean containsIgnoreCase(String message, String regex){
+		return message.toLowerCase().contains(regex.toLowerCase());
 	}
 	
 }

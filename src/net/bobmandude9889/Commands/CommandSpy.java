@@ -22,10 +22,6 @@ import net.bobmandude9889.Main.Vars;
 
 public class CommandSpy implements HubCommand, Listener {
 
-	public CommandSpy(Main main) {
-		main.getServer().getPluginManager().registerEvents(this, main);
-	}
-
 	@Override
 	public String getName() {
 		return "commandspy";
@@ -188,23 +184,6 @@ public class CommandSpy implements HubCommand, Listener {
 		sender.sendMessage(ChatColor.BLUE + "/commandspy <filter> list");
 		sender.sendMessage(ChatColor.BLUE + "/commandspy create <name> [template filter]");
 		sender.sendMessage(ChatColor.BLUE + "/commandspy list");
-	}
-
-	@EventHandler
-	public void onJoin(PlayerJoinEvent e) {
-		setupFilter(e.getPlayer());
-	}
-
-	@EventHandler
-	public void onCommand(PlayerCommandPreprocessEvent e) {
-		for (Player p : Vars.main.getServer().getOnlinePlayers()) {
-			CommandFilter filter = Vars.commandSpy.get(p);
-			if (filter != null) {
-				if (filter.canPass(e)) {
-					p.sendMessage(ChatColor.RED + e.getPlayer().getName() + ChatColor.GRAY + " performed the command: " + ChatColor.GREEN + e.getMessage());
-				}
-			}
-		}
 	}
 
 	public static void setupFilter(Player player) {
