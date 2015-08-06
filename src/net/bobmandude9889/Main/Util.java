@@ -17,6 +17,8 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.plugin.RegisteredServiceProvider;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scoreboard.Team;
 import org.bukkit.util.io.BukkitObjectInputStream;
 import org.bukkit.util.io.BukkitObjectOutputStream;
@@ -71,7 +73,7 @@ public class Util {
 		}
 		return economy;
 	}
-
+	
 	public static boolean isIn(Location loc1, Location loc2, Location loc3) {
 		int n = 0;
 		if (loc2.getBlockX() > loc3.getBlockX() && loc1.getBlockX() >= loc3.getBlockX() && loc1.getBlockX() <= loc2.getBlockX()) {
@@ -294,6 +296,10 @@ public class Util {
 
 	public static boolean containsIgnoreCase(String message, String regex){
 		return message.toLowerCase().contains(regex.toLowerCase());
+	}
+
+	public static boolean startsWithIgnoreCase(String message, String regex){
+		return message.toLowerCase().startsWith(regex.toLowerCase());
 	}
 	
 }

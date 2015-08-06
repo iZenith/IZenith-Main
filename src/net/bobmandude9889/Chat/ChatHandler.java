@@ -1,7 +1,5 @@
 package net.bobmandude9889.Chat;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.regex.Matcher;
 
 import org.bukkit.ChatColor;
@@ -31,6 +29,7 @@ public class ChatHandler implements Listener{
 		message = message.replaceAll("%message%", Matcher.quoteReplacement(e.getMessage()));
 		message = message.replaceAll("%prefix%", PermissionHandler.getGroup(e.getPlayer()).getPrefix());
 		String chars = "abcdefrlomn1234567890";
+		
 		for(Character c : chars.toCharArray()){
 			for(int i = 0; i < message.length() - 1; i++){
 				if(message.substring(i,i+2).equals("&" + c.toString())){
@@ -40,6 +39,7 @@ public class ChatHandler implements Listener{
 				}
 			}
 		}
+		
 		if(format != null){
 			e.setCancelled(true);
 			for(final Player p : main.getServer().getOnlinePlayers()){
