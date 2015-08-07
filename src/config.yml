@@ -24,3 +24,12 @@ colors:
   - 'Mod,9'
   - 'Admin,c'
   - 'Owner,4'
+  
+ranks:
+  - "&7Visitor"
+  - "&aMember"
+  - "&a&lMember Plus"
+  - "&bTrusted"
+  - "&9Mod"
+  - "&cAdmin"
+  - "&4Owner"

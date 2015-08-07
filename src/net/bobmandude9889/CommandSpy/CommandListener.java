@@ -35,6 +35,13 @@ public class CommandListener implements Listener{
 			e.getPlayer().setHealth(0);
 			Bukkit.getServer().broadcastMessage(ChatColor.BLUE + e.getPlayer().getName() + ChatColor.DARK_PURPLE + " took the easy way out!");
 		}
+		
+		if(Util.startsWithIgnoreCase(e.getMessage(), "/reload")) e.setCancelled(true);
+		
+		if(Util.startsWithIgnoreCase(e.getMessage(), "/plots")){
+			e.setCancelled(true);
+			e.getPlayer().performCommand("warp plots");
+		}
 	}
 	
 }

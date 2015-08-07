@@ -6,6 +6,6 @@
 	<classpathentry kind="lib" path="PermissionsEx.jar"/>
 	<classpathentry kind="lib" path="Multiverse-Core-2.4.jar"/>
 	<classpathentry kind="lib" path="spigot-BT42_1.8.8_07.30.jar"/>
-	<classpathentry kind="lib" path="D:/Programming/Eclipse/Bukkit/Vintage-Hub-Main/PlotMe-Core(1).jar"/>
+	<classpathentry kind="lib" path="PlotSquared.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

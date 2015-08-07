@@ -20,11 +20,12 @@ import net.bobmandude9889.Commands.GKit;
 import net.bobmandude9889.Commands.HubCommand;
 import net.bobmandude9889.Commands.Kit;
 import net.bobmandude9889.Commands.Lel;
-import net.bobmandude9889.Commands.Plots;
+import net.bobmandude9889.Commands.Ranks;
 import net.bobmandude9889.Commands.Report;
-import net.bobmandude9889.Commands.SetFloor;
 import net.bobmandude9889.Commands.Trusted;
 import net.bobmandude9889.Gamemode.TeleportListener;
+import net.bobmandude9889.PlotEditor.PlotListener;
+import net.bobmandude9889.PlotEditor.SetFloor;
 
 public class Vars {
 
@@ -44,13 +45,13 @@ public class Vars {
 		main = plugin;
 		commands = new HubCommand[] { 
 				new CommandSpy(), 
-				new Lel(), 
-				new Plots(),
+				new Lel(),
 				new Report(),
 				new SetFloor(),
 				new Kit(),
 				new GKit(),
-				new Trusted()
+				new Trusted(),
+				new Ranks()
 				};
 		commandSpy = new HashMap<Player, CommandFilter>();
 		
@@ -64,6 +65,7 @@ public class Vars {
 		lis.add(new PlayerJoinListener());
 		lis.add(new TeleportListener());
 		lis.add(new CommandListener());
+		lis.add(new PlotListener());
 		for (Listener l : lis) {
 			plugin.getServer().getPluginManager().registerEvents(l, plugin);
 		}

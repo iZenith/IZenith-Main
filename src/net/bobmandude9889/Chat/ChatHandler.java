@@ -12,6 +12,7 @@ import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.plugin.Plugin;
 
 import net.bobmandude9889.Main.PermissionHandler;
+import net.bobmandude9889.Main.Util;
 
 public class ChatHandler implements Listener{
 
@@ -28,17 +29,7 @@ public class ChatHandler implements Listener{
 		String message = format.replaceAll("%player%", e.getPlayer().getDisplayName());
 		message = message.replaceAll("%message%", Matcher.quoteReplacement(e.getMessage()));
 		message = message.replaceAll("%prefix%", PermissionHandler.getGroup(e.getPlayer()).getPrefix());
-		String chars = "abcdefrlomn1234567890";
-		
-		for(Character c : chars.toCharArray()){
-			for(int i = 0; i < message.length() - 1; i++){
-				if(message.substring(i,i+2).equals("&" + c.toString())){
-					String replace = message.substring(i-1,i).equals("&")?"&" + c.toString():ChatColor.getByChar(c) + "";
-					message = message.substring(0,i - 1) + replace + message.substring(i+2,message.length());
-					i++;
-				}
-			}
-		}
+		message = Util.parseColors(message);
 		
 		if(format != null){
 			e.setCancelled(true);

@@ -2,7 +2,7 @@ name: VintageHub
 version: 1.0
 main: net.bobmandude9889.Main.Main
 author: bobmandude9889
-depend: [Multiverse-Core,PermissionsEx,PlotMe,Vault]
+depend: [Multiverse-Core,PermissionsEx,PlotSquared,Vault]
 
 commands:
   commandspy:
@@ -36,6 +36,9 @@ commands:
     description: Warp to trusted world
     usage: /<command>
     aliases: [void]
+  ranks:
+    description: List servers ranks
+    usage: /<command>
 
 permissions:
   commandspy.use:
