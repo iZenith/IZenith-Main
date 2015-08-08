@@ -45,7 +45,7 @@ permissions:
     description: gives access to /commandspy
     default: OP
   clock.create:
-    description: Gives access to /createclock
+    description: Gives access to /createclo
     default: OP
   setfloor.others:
     description: Set other player plot floor

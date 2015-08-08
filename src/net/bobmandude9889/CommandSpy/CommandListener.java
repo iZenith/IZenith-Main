@@ -24,7 +24,6 @@ public class CommandListener implements Listener{
 		for (Player p : Vars.main.getServer().getOnlinePlayers()) {
 			CommandFilter filter = Vars.commandSpy.get(p);
 			if (filter != null) {
-				System.out.println(p.getName());
 				if (filter.canPass(e)) {
 					p.sendMessage(ChatColor.RED + e.getPlayer().getName() + ChatColor.GRAY + " performed the command: " + ChatColor.GREEN + e.getMessage());
 				}

@@ -187,7 +187,7 @@ public class Util {
 
 	public static ChatColor getGroupColor(String group) {
 		ChatColor color = ChatColor.WHITE;
-		for (String s : Bukkit.getPluginManager().getPlugin("VintageHub").getConfig().getStringList("colors")) {
+		for (String s : Bukkit.getPluginManager().getPlugin("IZenith").getConfig().getStringList("colors")) {
 			String[] sp = s.split(",");
 			if (group.equalsIgnoreCase(sp[0])) {
 				color = ChatColor.getByChar(sp[1].toCharArray()[0]);
@@ -198,7 +198,7 @@ public class Util {
 	}
 
 	public static Main getMain() {
-		return (Main) Bukkit.getPluginManager().getPlugin("VintageHub");
+		return (Main) Bukkit.getPluginManager().getPlugin("IZenith");
 	}
 
 	public static Server getServer() {
