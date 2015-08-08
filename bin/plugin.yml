@@ -2,7 +2,7 @@ name: IZenith
 version: 1.0
 main: net.bobmandude9889.Main.Main
 author: bobmandude9889
-depend: [Multiverse-Core,PermissionsEx,PlotSquared,Vault]
+depend: [Multiverse-Core,PermissionsEx,PlotSquared,Vault,Essentials]
 
 commands:
   commandspy:
@@ -39,6 +39,15 @@ commands:
   ranks:
     description: List servers ranks
     usage: /<command>
+  suspend:
+    description: Suspend a player
+    usage: /<command>
+  ip:
+    description: Shows the server's Ip Address
+    usage: /<command>
+  info:
+    description: Warp to info
+    usage: /<command>
 
 permissions:
   commandspy.use:
@@ -55,4 +64,7 @@ permissions:
     default: OP
   gkit.use:
     description: Create and remove Global Kits
+    default: OP
+  hub.suspend:
+    description: Suspend players
     default: OP

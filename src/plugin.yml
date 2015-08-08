@@ -42,6 +42,12 @@ commands:
   suspend:
     description: Suspend a player
     usage: /<command>
+  ip:
+    description: Shows the server's Ip Address
+    usage: /<command>
+  info:
+    description: Warp to info
+    usage: /<command>
 
 permissions:
   commandspy.use:
