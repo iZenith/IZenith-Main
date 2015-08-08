@@ -88,16 +88,6 @@ public class Util {
 		return permission;
 	}
 
-	public static Economy getEconomy() {
-		Economy economy = null;
-		RegisteredServiceProvider<Economy> economyProvider = Bukkit.getServer().getServicesManager()
-				.getRegistration(net.milkbowl.vault.economy.Economy.class);
-		if (economyProvider != null) {
-			economy = economyProvider.getProvider();
-		}
-		return economy;
-	}
-
 	public static boolean isIn(Location loc1, Location loc2, Location loc3) {
 		int n = 0;
 		if (loc2.getBlockX() > loc3.getBlockX() && loc1.getBlockX() >= loc3.getBlockX()
