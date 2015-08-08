@@ -325,4 +325,19 @@ public class Util {
 		return new Location(Bukkit.getWorld(location.getWorld()),location.getX(),location.getY(),location.getZ());
 	}
 	
+	public static void suspend(Player player){
+		getConfig().set("suspended." + player.getUniqueId().toString(), getPermissions().getPlayerGroups(player)[0]);
+		Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "pex user " + player.getName() + " group set suspended");
+		player.sendMessage(ChatColor.RED + "You are now suspended and no longer have any permissions");
+		Util.getMain().saveConfig();
+	}
+	
+	public static void removeSuspend(Player player){
+		Util.getMain().reloadConfig();
+		Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "pex user " + player.getName() + " group set " + getConfig().getString("suspended." + player.getUniqueId().toString()));
+		getConfig().set("suspended." + player.getUniqueId().toString(), null);
+		player.sendMessage(ChatColor.GREEN + "You are no longer suspended!");
+		Util.getMain().saveConfig();
+	}
+	
 }

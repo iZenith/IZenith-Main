@@ -22,6 +22,7 @@ import net.bobmandude9889.Commands.Kit;
 import net.bobmandude9889.Commands.Lel;
 import net.bobmandude9889.Commands.Ranks;
 import net.bobmandude9889.Commands.Report;
+import net.bobmandude9889.Commands.Suspend;
 import net.bobmandude9889.Commands.Trusted;
 import net.bobmandude9889.Gamemode.TeleportListener;
 import net.bobmandude9889.PlotEditor.PlotListener;
@@ -51,7 +52,8 @@ public class Vars {
 				new Kit(),
 				new GKit(),
 				new Trusted(),
-				new Ranks()
+				new Ranks(),
+				new Suspend()
 				};
 		commandSpy = new HashMap<Player, CommandFilter>();
 		

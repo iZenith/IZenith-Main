@@ -1,12 +1,12 @@
 package net.bobmandude9889.Commands;
 
-import net.bobmandude9889.Main.Util;
-
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.permissions.Permission;
+
+import net.bobmandude9889.Main.Util;
 
 public class Suspend extends Util implements HubCommand {
 
@@ -23,10 +23,18 @@ public class Suspend extends Util implements HubCommand {
 	@Override
 	public void onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
 		try {
-			@SuppressWarnings("unused")
+			if(args.length > 1){
+				if(args[0].equalsIgnoreCase("remove")){
+					Player p = getServer().getPlayer(args[1]);
+					Util.removeSuspend(p);
+					sender.sendMessage(ChatColor.GREEN + "Removed players suspension");
+					return;
+				}
+			}
 			Player p = getServer().getPlayer(args[0]);
-			
-		} catch (Exception e) {
+			Util.suspend(p);
+			sender.sendMessage(ChatColor.RED + "Suspended player");
+		} catch (ArrayIndexOutOfBoundsException e) {
 			sender.sendMessage(ChatColor.RED + "Please enter a player");
 		}
 	}

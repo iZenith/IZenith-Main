@@ -7,5 +7,6 @@
 	<classpathentry kind="lib" path="spigot-BT42_1.8.8_07.30.jar"/>
 	<classpathentry kind="lib" path="PlotSquared.jar"/>
 	<classpathentry kind="lib" path="Vault.jar"/>
+	<classpathentry kind="lib" path="Essentials-2.x-SNAPSHOT.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
