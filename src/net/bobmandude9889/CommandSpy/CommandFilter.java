@@ -18,6 +18,7 @@ public class CommandFilter {
 
 	public boolean canPass(PlayerCommandPreprocessEvent e) {
 		Player p = e.getPlayer();
+		System.out.println(accept);
 		try {
 			String[] split = e.getMessage().split(" ");
 			String command = split[0].substring(1, split[0].length());

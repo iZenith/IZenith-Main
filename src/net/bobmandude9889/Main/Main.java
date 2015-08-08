@@ -22,7 +22,7 @@ public class Main extends JavaPlugin {
 		CommandSpy.loadFilters();
 		System.out.println("Vintage Hub Enabled");
 	}
-
+	
 	@Override
 	public void onDisable() {
 

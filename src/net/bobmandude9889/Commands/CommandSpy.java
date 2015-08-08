@@ -79,7 +79,7 @@ public class CommandSpy implements HubCommand, Listener {
 							}
 							List<String> accept = Vars.main.getConfig().getStringList("commandspy.filters." + args[0]);
 							accept.add(s + " " + args[3]);
-							Vars.main.getConfig().set("commandspy.filter." + args[0], accept);
+							Vars.main.getConfig().set("commandspy.filters." + args[0], accept);
 							Vars.main.saveConfig();
 							Vars.commandSpy.clear();
 							loadFilters();
@@ -100,7 +100,7 @@ public class CommandSpy implements HubCommand, Listener {
 							}
 							List<String> accept1 = Vars.main.getConfig().getStringList("commandspy.filters." + args[0]);
 							accept1.remove(s1 + " " + args[3]);
-							Vars.main.getConfig().set("commandspy.filter." + args[0], accept1);
+							Vars.main.getConfig().set("commandspy.filters." + args[0], accept1);
 							Vars.main.saveConfig();
 							Vars.commandSpy.clear();
 							loadFilters();
