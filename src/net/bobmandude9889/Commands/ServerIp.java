@@ -18,7 +18,7 @@ public class ServerIp implements HubCommand{
 
 	@Override
 	public void onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
-		sender.sendMessage(ChatColor.GRAY + "IP: " + ChatColor.RED + "iZenith.net");
+		sender.sendMessage(ChatColor.GRAY + "IP: " + ChatColor.RED + "play.iZenith.net");
 	}
 
 	@Override

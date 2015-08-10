@@ -26,12 +26,20 @@ public class Suspend extends Util implements HubCommand {
 			if(args.length > 1){
 				if(args[0].equalsIgnoreCase("remove")){
 					Player p = getServer().getPlayer(args[1]);
+					if(p == null){
+						sender.sendMessage(ChatColor.RED + "That player does not exist!");
+						return;
+					}
 					Util.removeSuspend(p);
 					sender.sendMessage(ChatColor.GREEN + "Removed players suspension");
 					return;
 				}
 			}
 			Player p = getServer().getPlayer(args[0]);
+			if(p == null){
+				sender.sendMessage(ChatColor.RED + "That player does not exist!");
+				return;
+			}
 			Util.suspend(p);
 			sender.sendMessage(ChatColor.RED + "Suspended player");
 		} catch (ArrayIndexOutOfBoundsException e) {

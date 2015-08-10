@@ -3,14 +3,20 @@ package net.bobmandude9889.Commands;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.bobmandude9889.Main.Vars;
-
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
+import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.permissions.Permission;
 
-public class Report implements HubCommand {
+import net.bobmandude9889.Main.Util;
+import net.bobmandude9889.Main.Vars;
+
+public class Report implements HubCommand, Listener{
 
 	@Override
 	public String getName() {
@@ -29,15 +35,16 @@ public class Report implements HubCommand {
 				if (args[0].equalsIgnoreCase("list")) {
 					List<String> list = Vars.main.getConfig().getStringList("reports");
 					sender.sendMessage(ChatColor.GREEN + "Reports:");
-					for (int i = 0; i < list.size(); i++) {
-						sender.sendMessage(ChatColor.GRAY + "[" + i + "]" + ChatColor.AQUA + list.get(i));
+					for (int i = 0; i < list.size()/2; i++) {
+						sender.sendMessage(ChatColor.GRAY + "[" + i + "]" + ChatColor.BLUE + list.get(i*2+1) + ChatColor.BLACK + ":" + ChatColor.GREEN + list.get(i*2));
 					}
 					return;
 				} else if (args[0].equalsIgnoreCase("remove")) {
 					int i = Integer.parseInt(args[1]);
 					List<String> list = Vars.main.getConfig().getStringList("reports");
 					if(list == null) list = new ArrayList<String>();
-					list.remove(i);
+					list.remove(i*2);
+					list.remove(i*2);
 					Vars.main.getConfig().set("reports", list);
 					Vars.main.saveConfig();
 					sender.sendMessage(ChatColor.GREEN + "Removed " + ChatColor.GRAY + i);
@@ -51,9 +58,15 @@ public class Report implements HubCommand {
 			List<String> list = Vars.main.getConfig().getStringList("reports");
 			if(list == null) list = new ArrayList<String>();
 			list.add(message);
+			list.add(sender.getName());
 			Vars.main.getConfig().set("reports", list);
 			Vars.main.saveConfig();
 			sender.sendMessage(ChatColor.GREEN + "Reported: " + ChatColor.RED + message);
+			for(Player player : Bukkit.getOnlinePlayers()){
+				if(player.hasPermission("report.admin")){
+					player.sendMessage(ChatColor.GREEN + sender.getName() + ChatColor.BLUE + " submitted a report!");
+				}
+			}
 		} catch (ArrayIndexOutOfBoundsException e) {
 			sender.sendMessage(ChatColor.RED + "Invalid arguments");
 		}
@@ -74,4 +87,12 @@ public class Report implements HubCommand {
 		return null;
 	}
 
+	@EventHandler
+	public void onJoin(PlayerJoinEvent e){
+		List<String> reports = Util.getConfig().getStringList("reports");
+		if(e.getPlayer().hasPermission("report.admin") && reports != null && reports.size() > 0){
+			e.getPlayer().sendMessage(ChatColor.BLUE + "There are " + ChatColor.GREEN + reports.size()/2 + ChatColor.BLUE + " reports!");
+		}
+	}
+	
 }

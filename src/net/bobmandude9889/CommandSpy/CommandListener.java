@@ -42,6 +42,11 @@ public class CommandListener implements Listener{
 			e.setCancelled(true);
 			e.getPlayer().performCommand("warp plots");
 		}
+		
+		if(Util.startsWithIgnoreCase(e.getMessage(), "/info")){
+			e.setCancelled(true);
+			Bukkit.dispatchCommand(e.getPlayer(), "warp info");
+		}
 	}
 	
 }

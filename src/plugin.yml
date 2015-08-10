@@ -48,6 +48,15 @@ commands:
   info:
     description: Warp to info
     usage: /<command>
+  donated:
+    description: Player donated
+    usage: /<command>
+  worldeditperms:
+    description: Add WE perms
+    usage: /<command>
+  addplot:
+    description: Access to another plot
+    usage: /<command>
 
 permissions:
   commandspy.use:
@@ -67,4 +76,7 @@ permissions:
     default: OP
   hub.suspend:
     description: Suspend players
+    default: OP
+  report.admin:
+    description: gives acces to /report list and remove
     default: OP
