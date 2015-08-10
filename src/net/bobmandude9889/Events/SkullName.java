@@ -16,8 +16,8 @@ public class SkullName implements Listener{
 		Action a = e.getAction();
 		if (a.equals(Action.RIGHT_CLICK_BLOCK)){
 			Player p = e.getPlayer();
-			BlockState b = e.getClickedBlock().getState();
-			if (b instanceof Skull){
+			BlockState b = e.getClickedBlock().getState(); //b is the block
+			if (b instanceof Skull){ //this test if b is a skull
 				Skull s = (Skull) b;
 				String owner = s.getOwner();
 				p.sendMessage(ChatColor.YELLOW + "That is the head of " + ChatColor.GOLD + owner + ChatColor.YELLOW + ".");			
