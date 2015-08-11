@@ -20,8 +20,13 @@ public class SkullName implements Listener{
 			if (b instanceof Skull){ //this test if b is a skull
 				Skull s = (Skull) b;
 				String owner = s.getOwner();
+				if (owner == null){
+				}else if (owner == "Flubber_MC"){
+					p.sendMessage(ChatColor.YELLOW + "That is the head of a really stupid person named " + ChatColor.GOLD + owner + ChatColor.YELLOW + ". PS. He is really mean so never be friends with him!!");
+				}else{
 				p.sendMessage(ChatColor.YELLOW + "That is the head of " + ChatColor.GOLD + owner + ChatColor.YELLOW + ".");
-				e.setCancelled(true);			
+				}
+				e.setCancelled(true);
 			}
 		}
 	}
