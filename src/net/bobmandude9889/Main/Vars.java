@@ -28,6 +28,7 @@ import net.bobmandude9889.Commands.ServerIp;
 import net.bobmandude9889.Commands.Suspend;
 import net.bobmandude9889.Commands.Trusted;
 import net.bobmandude9889.Commands.WorldEditPerms;
+import net.bobmandude9889.Events.SkullName;
 import net.bobmandude9889.Gamemode.TeleportListener;
 import net.bobmandude9889.PlotEditor.PlotListener;
 import net.bobmandude9889.PlotEditor.SetFloor;
@@ -77,6 +78,7 @@ public class Vars {
 		lis.add(new CommandListener());
 		lis.add(new PlotListener());
 		lis.add(new Report());
+		lis.add(new SkullName());
 		for (Listener l : lis) {
 			plugin.getServer().getPluginManager().registerEvents(l, plugin);
 		}
