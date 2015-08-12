@@ -10,10 +10,12 @@ import com.onarandombox.MultiverseCore.MultiverseCore;
 import com.onarandombox.MultiverseCore.api.MVWorldManager;
 import com.onarandombox.MultiverseCore.api.MultiverseWorld;
 
+import net.bobmandude9889.Main.Util;
+
 public class TeleportListener implements Listener {
 
 	@EventHandler
-	public void onTeleport(PlayerTeleportEvent e) {
+	public void onTeleport(final PlayerTeleportEvent e) {
 		if (!e.getFrom().getWorld().equals(e.getTo().getWorld())) {
 			Player p = e.getPlayer();
 			MultiverseCore mv = (MultiverseCore) Bukkit.getServer().getPluginManager().getPlugin("Multiverse-Core");
@@ -24,6 +26,14 @@ public class TeleportListener implements Listener {
 			if (toWorld != fromWorld && !p.getGameMode().equals(toWorld.getGameMode())) {
 				p.setGameMode(toWorld.getGameMode());
 			}
+		}
+		if(e.getTo().getWorld().getName().equals("spawn")){
+			Bukkit.getScheduler().scheduleSyncDelayedTask(Util.getMain(),new Runnable(){
+				@Override
+				public void run(){
+					Util.getKit(e.getPlayer(), "nether_star");
+				}
+			},40l);
 		}
 	}
 

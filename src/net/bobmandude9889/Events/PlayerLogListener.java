@@ -1,6 +1,4 @@
-package net.bobmandude9889.Color;
-
-import net.bobmandude9889.Main.Util;
+package net.bobmandude9889.Events;
 
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -8,11 +6,14 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.player.PlayerQuitEvent;
 
-public class PlayerJoinListener extends Util implements Listener {
+import net.bobmandude9889.Main.Util;
+
+public class PlayerLogListener extends Util implements Listener {
 
 	@EventHandler(priority = EventPriority.HIGH)
-	public void join(final PlayerJoinEvent e) {
+	public void onJoin(final PlayerJoinEvent e) {
 		Player player = e.getPlayer();
 		player.setPlayerListName(getColoredName(player));
 		setTeam(player);
@@ -31,6 +32,19 @@ public class PlayerJoinListener extends Util implements Listener {
 				}
 			},20);
 		}
+		
+		String message = Util.getConfig().getString("join_message");
+		message = Util.parseColors(message);
+		message = message.replaceAll("%player%",e.getPlayer().getName());
+		e.setJoinMessage(message);
 	}
 
+	@EventHandler(priority = EventPriority.HIGH)
+	public void onLeave(PlayerQuitEvent e){
+		String message = Util.getConfig().getString("leave_message");
+		message = Util.parseColors(message);
+		message = message.replace("%player%",e.getPlayer().getName());
+		e.setQuitMessage(message);
+	}
+	
 }

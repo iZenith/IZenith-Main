@@ -14,45 +14,54 @@ import org.bukkit.plugin.Plugin;
 import net.bobmandude9889.Main.PermissionHandler;
 import net.bobmandude9889.Main.Util;
 
-public class ChatHandler implements Listener{
+public class ChatHandler implements Listener {
 
-	Plugin main;
-	
-	public ChatHandler(Plugin main){
-		this.main = main;
-	}
-	
+	// Custom chat handler for mentioning players in chat and per group chat formats.
+
+	// Set to highest priority in order to override essentials chat handler
 	@EventHandler(priority = EventPriority.HIGHEST)
-	public void chat(AsyncPlayerChatEvent e){
-		try{
-		String format = main.getConfig().getString("chat." + PermissionHandler.getGroupName(e.getPlayer()));
-		String message = format.replaceAll("%player%", e.getPlayer().getDisplayName());
-		message = message.replaceAll("%message%", Matcher.quoteReplacement(e.getMessage()));
-		message = message.replaceAll("%prefix%", PermissionHandler.getGroup(e.getPlayer()).getPrefix());
-		message = Util.parseColors(message);
-		
-		if(format != null){
-			e.setCancelled(true);
-			for(final Player p : main.getServer().getOnlinePlayers()){
-				if(message.toLowerCase().contains(p.getName().toLowerCase()) && !e.getPlayer().equals(p)){
-					int i = message.toLowerCase().indexOf(p.getName().toLowerCase());
-					String messageP = message.substring(0, i) + ChatColor.RED + ChatColor.BOLD + message.substring(i, p.getName().length() + i) + ChatColor.getByChar(format.charAt(format.indexOf("%message%") - 1)) + message.substring(p.getName().length() + i);
-					p.sendMessage(messageP);
-					p.playSound(p.getLocation(), Sound.NOTE_PLING, 1f, 1f);
-					main.getServer().getScheduler().scheduleSyncDelayedTask(main, new Runnable(){
-						@Override
-						public void run(){
-							p.playSound(p.getLocation(), Sound.NOTE_PLING, 1f, 1.25f);
-						}
-					}, 10l);
-				} else {
-					p.sendMessage(message);
-				}
+	public void chat(AsyncPlayerChatEvent e) {
+		// Get main plugin class from Util
+		Plugin main = Util.getMain();
+		try {
+			// Get format for the group of a player from the config	
+			String format = main.getConfig().getString("chat." + PermissionHandler.getGroupName(e.getPlayer()));
+			// Replace the tags with there values
+			String message = format.replaceAll("%player%", e.getPlayer().getDisplayName());
+			message = message.replaceAll("%message%", Matcher.quoteReplacement(e.getMessage()));
+			message = message.replaceAll("%prefix%", PermissionHandler.getGroup(e.getPlayer()).getPrefix());
+			// Use Util to convert from & code to ChatColors
+			message = Util.parseColors(message);
+
+			// Make sure that a format for the players group exists
+			if (format != null) {
+				// Cancel the sending of the message so iZenith can handle send it instead
+				e.setCancelled(true);
+				// Loop through players rather than broadcast so that a different message could be set per player ie. Colored names for mentions
+				for (final Player player : main.getServer().getOnlinePlayers())
+					// Check if the current player is being mentioned and is not themselves
+					if (Util.containsIgnoreCase(message, player.getName()) && !e.getPlayer().equals(player)) {
+						// Get index of players name for replacement
+						int i = message.toLowerCase().indexOf(player.getName().toLowerCase());
+						// Color player name
+						String messageP = message.substring(0, i) + ChatColor.RED + ChatColor.BOLD + message.substring(i, player.getName().length() + i) + ChatColor.getByChar(format.charAt(format.indexOf("%message%") - 1)) + message.substring(player.getName().length() + i);
+						player.sendMessage(messageP);
+						// Send a tune to notify player
+						player.playSound(player.getLocation(), Sound.NOTE_PLING, 1f, 1f);
+						main.getServer().getScheduler().scheduleSyncDelayedTask(main, new Runnable() {
+							@Override
+							public void run() {
+								player.playSound(player.getLocation(), Sound.NOTE_PLING, 1f, 1.25f);
+							}
+						}, 10l);
+					} else {
+						// Send normal message if the player was not mentioned
+						player.sendMessage(message);
+					}
 			}
-		}
-		} catch(Exception ex){
+		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
 	}
-	
+
 }

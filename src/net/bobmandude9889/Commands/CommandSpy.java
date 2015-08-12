@@ -22,6 +22,8 @@ import net.bobmandude9889.Main.Vars;
 
 public class CommandSpy implements HubCommand, Listener {
 
+	// See HubCommand for formatting
+
 	@Override
 	public String getName() {
 		return "commandspy";
@@ -34,35 +36,45 @@ public class CommandSpy implements HubCommand, Listener {
 
 	@Override
 	public void onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
-		try{
+		try {
 			switch (args[0]) {
+			// Turn command spy off
 			case "off":
+				// Removes player from the list of commandspy players
 				Vars.commandSpy.remove((Player) sender);
+				// Chage and save commandspy in config
 				Vars.main.getConfig().set("commandspy.players." + ((Player) sender).getUniqueId(), null);
 				Vars.main.saveConfig();
+				// Notify player
 				sender.sendMessage(ChatColor.GREEN + "CommandSpy turrned off!");
 				break;
+			// Create a filter
 			case "create":
+				// Create a list that will later hold values for accepted commands
 				List<String> list = new ArrayList<String>();
-				if (args.length >= 3) {
-					List<String> temp = Vars.main.getConfig().getStringList("commandspy.filters." + args[2]);
-					if (temp != null)
-						list = temp;
-				}
+				// Get filter list if it already exists
+				List<String> temp = Vars.main.getConfig().getStringList("commandspy.filters." + args[2]);
+				if (temp != null)
+					list = temp;
+				// Save blank filter in config
 				Vars.main.getConfig().set("commandspy.filters." + args[1], list);
 				Vars.main.saveConfig();
+				// Notify player
 				sender.sendMessage(ChatColor.GREEN + "Created filter " + args[1]);
 				break;
+			// List all filters
 			case "list":
+				// Get list of filters from config
 				Set<String> filters = Util.getConfig().getConfigurationSection("commandspy.filters").getKeys(false);
+				// Send filters to player
 				sender.sendMessage(ChatColor.BLUE + "Filters:");
-				for(String filter : filters){
+				for (String filter : filters) {
 					sender.sendMessage(ChatColor.GREEN + filter);
 				}
 				break;
 			default:
-				if (Vars.main.getConfig().getStringList("commandspy.filters." + args[0]) != null) {
-					if (args.length > 1) {
+				// Check if filter exists
+				if (Vars.main.getConfig().getStringList("commandspy.filters." + args[0]) != null && args.length > 1) {
 						switch (args[1]) {
 						case "add":
 							String[] a = { "r", "p", "c", "a" };
@@ -138,9 +150,6 @@ public class CommandSpy implements HubCommand, Listener {
 						Vars.main.saveConfig();
 						sender.sendMessage(ChatColor.GREEN + "Switched filter to " + args[0]);
 					}
-				} else {
-					help(sender);
-				}
 				break;
 			}
 		} catch (ArrayIndexOutOfBoundsException e) {

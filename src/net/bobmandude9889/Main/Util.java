@@ -115,9 +115,9 @@ public class Util {
 		}
 	}
 
-	public static ItemStack newItemMeta(Material material, String name, String lore, int i) {
+	public static ItemStack newItemMeta(Material material, String name, String lore, int amount) {
 		name = parseColors(name);
-		ItemStack is = new ItemStack(material, i);
+		ItemStack is = new ItemStack(material, amount);
 		ItemMeta im = is.getItemMeta();
 		im.setDisplayName(name);
 		if (lore != null) {
@@ -133,8 +133,8 @@ public class Util {
 		return is;
 	}
 
-	public static ItemStack newItemMeta(Material material, String name, String lore, int i, short durability) {
-		ItemStack is = newItemMeta(material, name, lore, i);
+	public static ItemStack newItemMeta(Material material, String name, String lore, int amount, short durability) {
+		ItemStack is = newItemMeta(material, name, lore, amount);
 		is.setDurability(durability);
 		return is;
 	}
@@ -146,6 +146,7 @@ public class Util {
 			Vars.scoreboard.registerNewTeam("MemberP").setPrefix(parseColors("&a"));
 			Vars.scoreboard.registerNewTeam("Trusted").setPrefix(parseColors("&b"));
 			Vars.scoreboard.registerNewTeam("Mod").setPrefix(parseColors("&9"));
+			Vars.scoreboard.registerNewTeam("Developer").setPrefix(parseColors("&e"));
 			Vars.scoreboard.registerNewTeam("Admin").setPrefix(parseColors("&c"));
 			Vars.scoreboard.registerNewTeam("Owner").setPrefix(parseColors("&4"));
 		} catch (Exception e) {

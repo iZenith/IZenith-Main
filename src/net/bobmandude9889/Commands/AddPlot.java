@@ -10,6 +10,8 @@ import net.md_5.bungee.api.ChatColor;
 
 public class AddPlot implements HubCommand{
 
+	// See HubCommand for formatting
+	
 	@Override
 	public String getName() {
 		return "addplot";
@@ -22,14 +24,20 @@ public class AddPlot implements HubCommand{
 
 	@Override
 	public void onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
+		// Make sure the command came from the console
 		if(sender instanceof Player){
 			sender.sendMessage(ChatColor.RED + "This command can only be used from the console.");
 			return;
 		}
+		// Get the targeted player
 		Player player = Bukkit.getPlayer(args[0]);
+		// Check that the player exists
 		if(player != null){
+			// Up to 100 extra plots
 			for(int i = 1; i < 100; i++){
+				// Find the amount of plots the player has
 				if(player.hasPermission("plots.plot." + i)){
+					// Remove current plot permission and add 1
 					Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "pex user " + player.getName() + " add -plots.plot." + i);
 					Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "pex user " + player.getName() + " add plots.plot." + i + 1);
 					break;

@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import org.bukkit.Bukkit;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 import org.bukkit.scoreboard.Scoreboard;
@@ -12,7 +13,6 @@ import org.bukkit.scoreboard.ScoreboardManager;
 import org.bukkit.scoreboard.Team;
 
 import net.bobmandude9889.Chat.ChatHandler;
-import net.bobmandude9889.Color.PlayerJoinListener;
 import net.bobmandude9889.CommandSpy.CommandFilter;
 import net.bobmandude9889.CommandSpy.CommandListener;
 import net.bobmandude9889.Commands.AddPlot;
@@ -28,7 +28,12 @@ import net.bobmandude9889.Commands.ServerIp;
 import net.bobmandude9889.Commands.Suspend;
 import net.bobmandude9889.Commands.Trusted;
 import net.bobmandude9889.Commands.WorldEditPerms;
-import net.bobmandude9889.Events.SkullName;
+import net.bobmandude9889.Events.DamageListener;
+import net.bobmandude9889.Events.InteractListener;
+import net.bobmandude9889.Events.PlayerLogListener;
+import net.bobmandude9889.Events.PlayerMoveListener;
+import net.bobmandude9889.GUI.GUI;
+import net.bobmandude9889.GUI.GUIHandler;
 import net.bobmandude9889.Gamemode.TeleportListener;
 import net.bobmandude9889.PlotEditor.PlotListener;
 import net.bobmandude9889.PlotEditor.SetFloor;
@@ -43,8 +48,33 @@ public class Vars {
 	public static ScoreboardManager manager;
 	public static Scoreboard scoreboard;
 	public static List<Team> teams;
+	public static GUIHandler guiHandler;
+	public static GUI tpGUI;
  
 	public static void init(Main plugin) {
+		guiHandler = new GUIHandler(plugin);
+		tpGUI = new GUI(9,Util.parseColors("&6&liZenith &f&lWarps"),guiHandler);
+		tpGUI.addButton(Util.newItemMeta(Material.BRICK, Util.parseColors("&aPlots"), Util.parseColors("&aWarp to creative plot world."), 1), 1, new Runnable(){
+			@Override
+			public void run(){
+				Bukkit.dispatchCommand(tpGUI.getWhoClicked(), "warp plots");
+			}
+		});
+		
+		tpGUI.addButton(Util.newItemMeta(Material.SIGN, Util.parseColors("&aInfo"), Util.parseColors("&aWarp to info area."), 1), 4, new Runnable(){
+			@Override
+			public void run(){
+				Bukkit.dispatchCommand(tpGUI.getWhoClicked(), "warp info");
+			}
+		});
+		
+		tpGUI.addButton(Util.newItemMeta(Material.EXP_BOTTLE, Util.parseColors("&aTrusted"), Util.parseColors("&aWarp to trusted only world."), 1), 7, new Runnable(){
+			@Override
+			public void run(){
+				Bukkit.dispatchCommand(tpGUI.getWhoClicked(), "void");
+			}
+		});
+		
 		manager = Bukkit.getScoreboardManager();
 		scoreboard = manager.getMainScoreboard();
 		teams = new ArrayList<Team>();
@@ -72,13 +102,15 @@ public class Vars {
 		 */
 		List<Listener> lis = new ArrayList<Listener>();
 		//lis.add(new PlayerInteractHandler());
-		lis.add(new ChatHandler(plugin));
-		lis.add(new PlayerJoinListener());
+		lis.add(new ChatHandler());
+		lis.add(new PlayerLogListener());
 		lis.add(new TeleportListener());
 		lis.add(new CommandListener());
 		lis.add(new PlotListener());
 		lis.add(new Report());
-		lis.add(new SkullName());
+		lis.add(new InteractListener());
+		lis.add(new PlayerMoveListener());
+		lis.add(new DamageListener());
 		for (Listener l : lis) {
 			plugin.getServer().getPluginManager().registerEvents(l, plugin);
 		}
