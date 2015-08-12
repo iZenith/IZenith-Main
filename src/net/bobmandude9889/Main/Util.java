@@ -158,7 +158,7 @@ public class Util {
 
 	public static void setTeam(Player player) {
 		for (Team t : Vars.teams) {
-			if (t.getName().equalsIgnoreCase(getPermissions().getPrimaryGroup(player))) {
+			if (t.getName().equalsIgnoreCase(PermissionHandler.getGroupName(player))) {
 				t.addPlayer(player);
 				return;
 			}
@@ -166,7 +166,7 @@ public class Util {
 	}
 
 	public static String getColoredName(Player player) {
-		ChatColor color = getGroupColor(getPermissions().getPrimaryGroup(player));
+		ChatColor color = getGroupColor(PermissionHandler.getGroupName(player));
 		String name = player.getName();
 		int length = name.length();
 		if (length > 14) {

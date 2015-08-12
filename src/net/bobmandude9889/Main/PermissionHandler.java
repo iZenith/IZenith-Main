@@ -8,11 +8,12 @@ import ru.tehkode.permissions.bukkit.PermissionsEx;
 public class PermissionHandler {
 
 	public static String getGroupName(Player p){
-		return PermissionsEx.getUser(p).getGroups(p.getWorld().getName())[0].getName();
+		return getGroup(p).getName();
 	}
 	
 	public static PermissionGroup getGroup(Player p){
-		return PermissionsEx.getUser(p).getGroups(p.getWorld().getName())[0];
+		PermissionGroup[] groups = PermissionsEx.getUser(p).getGroups(p.getWorld().getName()); 
+		return groups[groups.length - 1];
 	}
 	
 }
