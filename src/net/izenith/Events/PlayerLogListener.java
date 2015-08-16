@@ -9,6 +9,7 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 
 import net.izenith.Main.Util;
+import net.izenith.Main.Vars;
 
 public class PlayerLogListener extends Util implements Listener {
 
@@ -27,7 +28,7 @@ public class PlayerLogListener extends Util implements Listener {
 					Bukkit.dispatchCommand(Bukkit.getConsoleSender(),
 							"title " + name + " subtitle {text:\"" + name + "\",color:\"gray\"}");
 					Bukkit.dispatchCommand(Bukkit.getConsoleSender(),
-							"title " + name + " title {text:\"Welcome to \",color:\"dark_gray\",extra:[{text:\"Vintage\",color:\"green\"},{text:\"Hub\",color:\"red\"}]}");
+							"title " + name + " title {text:\"Welcome to \",color:\"dark_gray\",extra:[{text:\"iZenith\",color:\"white\"},{text:\" Minecraft\",color:\"gold\"}]}");
 					Util.setJoined(e.getPlayer());
 				}
 			},20);
@@ -37,6 +38,8 @@ public class PlayerLogListener extends Util implements Listener {
 		message = Util.parseColors(message);
 		message = message.replaceAll("%player%",e.getPlayer().getName());
 		e.setJoinMessage(message);
+		
+		Vars.times.put(e.getPlayer(),System.currentTimeMillis());
 	}
 
 	@EventHandler(priority = EventPriority.HIGH)
@@ -45,6 +48,8 @@ public class PlayerLogListener extends Util implements Listener {
 		message = Util.parseColors(message);
 		message = message.replace("%player%",e.getPlayer().getName());
 		e.setQuitMessage(message);
+		
+		Util.setOnlineTime(e.getPlayer());
 	}
 	
 }

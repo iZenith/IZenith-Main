@@ -1,6 +1,6 @@
 name: IZenith
 version: 1.0
-main: net.bobmandude9889.Main.Main
+main: net.izenith.Main.Main
 author: bobmandude9889
 depend: [Multiverse-Core,PermissionsEx,PlotSquared,Vault,Essentials]
 
@@ -57,6 +57,10 @@ commands:
   addplot:
     description: Access to another plot
     usage: /<command>
+  playtime:
+    description: Get the time the player has played.
+    usage: /<command> <player>
+    aliases: [playtime,givemearimjobandbitemyear]
 
 permissions:
   commandspy.use:

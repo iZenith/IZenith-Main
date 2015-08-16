@@ -36,10 +36,9 @@ public class AddPlot implements HubCommand{
 			// Up to 100 extra plots
 			for(int i = 1; i < 100; i++){
 				// Find the amount of plots the player has
-				if(player.hasPermission("plots.plot." + i)){
-					// Remove current plot permission and add 1
-					Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "pex user " + player.getName() + " add -plots.plot." + i);
-					Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "pex user " + player.getName() + " add plots.plot." + i + 1);
+				if(!player.hasPermission("plots.plot." + i)){
+					// Add permission for 1 more plot
+					Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "pex user " + player.getName() + " add plots.plot." + i);
 					break;
 				}
 			}

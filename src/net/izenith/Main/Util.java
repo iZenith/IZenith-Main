@@ -344,5 +344,16 @@ public class Util {
 		player.sendMessage(ChatColor.GREEN + "You are no longer suspended!");
 		Util.getMain().saveConfig();
 	}
+
+	public static long getOnlineTime(Player player){
+		Long time = getConfig().getLong("times." + player.getUniqueId());
+		time = time == null ? 0 : time;
+		return time + Vars.times.get(player);
+	}
+	
+	public static void setOnlineTime(Player player){
+		getConfig().set("times." + player.getUniqueId(), getOnlineTime(player));
+		getMain().saveConfig();
+	}
 	
 }

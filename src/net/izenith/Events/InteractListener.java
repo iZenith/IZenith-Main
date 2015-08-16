@@ -21,9 +21,6 @@ public class InteractListener implements Listener {
 			Player p = e.getPlayer();
 			BlockState b = e.getClickedBlock().getState(); //b is the block
 			if (b instanceof Skull) { //this test if b is a skull
-				if (p.equals("Flubber_MC")){
-					p.sendMessage(ChatColor.RED + "You're a fag.")
-				}
 				Skull s = (Skull) b;
 				String owner = s.getOwner();
 				if (owner == null) {
@@ -37,5 +34,7 @@ public class InteractListener implements Listener {
 		if (e.getPlayer().getLocation().getWorld().getName().equals("spawn") && e.getItem().getType().equals(Material.NETHER_STAR)) {
 			Vars.tpGUI.open(e.getPlayer());
 		}
+		
+		
 	}
 }

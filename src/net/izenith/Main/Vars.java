@@ -50,6 +50,7 @@ public class Vars {
 	public static List<Team> teams;
 	public static GUIHandler guiHandler;
 	public static GUI tpGUI;
+	public static HashMap<Player,Long> times;
  
 	public static void init(Main plugin) {
 		guiHandler = new GUIHandler(plugin);
@@ -95,6 +96,7 @@ public class Vars {
 				new AddPlot()
 				};
 		commandSpy = new HashMap<Player, CommandFilter>();
+		times = new HashMap<Player,Long>();
 		
 		/*
 		 * createClock = new HashMap<Player, String>(); clocks =

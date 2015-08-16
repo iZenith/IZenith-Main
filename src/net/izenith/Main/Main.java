@@ -13,7 +13,7 @@ import net.izenith.Commands.CommandSpy;
 import net.izenith.Commands.HubCommand;
 
 public class Main extends JavaPlugin {
-
+	
 	@Override
 	public void onEnable() {
 		saveDefaultConfig();
