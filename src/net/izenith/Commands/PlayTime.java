@@ -1,5 +1,7 @@
 package net.izenith.Commands;
 
+import java.text.DecimalFormat;
+
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -24,7 +26,9 @@ public class PlayTime implements HubCommand{
 	public void onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
 		Long time = Util.getOnlineTime(Bukkit.getPlayer(args[0]));
 		Double timeHours = new Double(time)/(1000*60*60);
-		sender.sendMessage(ChatColor.BLUE + args[0] + " has played for " + ChatColor.GREEN + timeHours + " hours");
+		DecimalFormat df = new DecimalFormat("#.##");
+		String shortTime = df.format(timeHours);
+		sender.sendMessage(ChatColor.BLUE + args[0] + " has played for " + ChatColor.GREEN + shortTime + " hours");
 	}
 
 	@Override
