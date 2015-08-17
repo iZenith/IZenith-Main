@@ -348,12 +348,35 @@ public class Util {
 	public static long getOnlineTime(Player player){
 		Long time = getConfig().getLong("times." + player.getUniqueId());
 		time = time == null ? 0 : time;
-		return time + Vars.times.get(player);
+		return time + (System.currentTimeMillis() - Vars.times.get(player));
 	}
 	
 	public static void setOnlineTime(Player player){
 		getConfig().set("times." + player.getUniqueId(), getOnlineTime(player));
 		getMain().saveConfig();
+	}
+	
+	public static void setAllOnlineTimes(){
+		for(Player player : Bukkit.getOnlinePlayers()){
+			setOnlineTime(player);
+		}
+	}
+	
+	public static void loadOnlineTime(Player player){
+		Vars.times.put(player,System.currentTimeMillis());
+	}
+	
+	public static void loadAllOnlineTimes(){
+		for(Player player : Bukkit.getOnlinePlayers()){
+			loadOnlineTime(player);
+		}
+	}
+	
+	public static void updatePlayerList(){
+		for(Player player : Bukkit.getOnlinePlayers()){
+			player.setPlayerListName(getColoredName(player));
+			setTeam(player);
+		}
 	}
 	
 }

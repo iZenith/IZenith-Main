@@ -24,11 +24,13 @@ import net.izenith.Commands.GKit;
 import net.izenith.Commands.HubCommand;
 import net.izenith.Commands.Kit;
 import net.izenith.Commands.Lel;
+import net.izenith.Commands.PlayTime;
 import net.izenith.Commands.Ranks;
 import net.izenith.Commands.Report;
 import net.izenith.Commands.ServerIp;
 import net.izenith.Commands.Suspend;
 import net.izenith.Commands.Trusted;
+import net.izenith.Commands.UpdateList;
 import net.izenith.Commands.WorldEditPerms;
 import net.izenith.Events.DamageListener;
 import net.izenith.Events.InteractListener;
@@ -93,7 +95,9 @@ public class Vars {
 				new ServerIp(),
 				new Donated(),
 				new WorldEditPerms(),
-				new AddPlot()
+				new AddPlot(),
+				new PlayTime(),
+				new UpdateList()
 				};
 		commandSpy = new HashMap<Player, CommandFilter>();
 		times = new HashMap<Player,Long>();

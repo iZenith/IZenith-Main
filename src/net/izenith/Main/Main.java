@@ -20,12 +20,13 @@ public class Main extends JavaPlugin {
 		Vars.init(this);
 		Util.initScoreboard();
 		CommandSpy.loadFilters();
+		Util.loadAllOnlineTimes();
 		System.out.println("Vintage Hub Enabled");
 	}
 	
 	@Override
 	public void onDisable() {
-
+		Util.setAllOnlineTimes();
 	}
 
 	@Override

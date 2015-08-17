@@ -12,7 +12,7 @@ import net.izenith.Commands.CommandSpy;
 import net.izenith.Main.Util;
 import net.izenith.Main.Vars;
 
-public class CommandListener implements Listener{
+public class CommandListener implements Listener {
 
 	@EventHandler
 	public void onJoin(PlayerJoinEvent e) {
@@ -29,24 +29,33 @@ public class CommandListener implements Listener{
 				}
 			}
 		}
-		
-		if(Util.startsWithIgnoreCase(e.getMessage(),"/suicide")){
+
+		if (Util.startsWithIgnoreCase(e.getMessage(), "/suicide")) {
 			e.setCancelled(true);
 			e.getPlayer().setHealth(0);
 			Bukkit.getServer().broadcastMessage(ChatColor.BLUE + e.getPlayer().getName() + ChatColor.DARK_PURPLE + " took the easy way out!");
 		}
-		
-		if(Util.startsWithIgnoreCase(e.getMessage(), "/reload")) e.setCancelled(true);
-		
-		if(Util.startsWithIgnoreCase(e.getMessage(), "/plots")){
+
+		if (Util.startsWithIgnoreCase(e.getMessage(), "/reload"))
+			e.setCancelled(true);
+
+		if (Util.startsWithIgnoreCase(e.getMessage(), "/plots")) {
 			e.setCancelled(true);
 			e.getPlayer().performCommand("warp plots");
 		}
-		
-		if(Util.startsWithIgnoreCase(e.getMessage(), "/info")){
+
+		if (Util.startsWithIgnoreCase(e.getMessage(), "/info")) {
 			e.setCancelled(true);
 			Bukkit.dispatchCommand(e.getPlayer(), "warp info");
 		}
+
+		if (Util.startsWithIgnoreCase(e.getMessage(), "/pex")) {
+			Bukkit.getScheduler().scheduleSyncDelayedTask(Util.getMain(), new Runnable() {
+				public void run() {
+					Util.updatePlayerList();
+				}
+			}, 20L);
+		}
 	}
-	
+
 }

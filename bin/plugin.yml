@@ -61,6 +61,9 @@ commands:
     description: Get the time the player has played.
     usage: /<command> <player>
     aliases: [playtime,givemearimjobandbitemyear]
+  updatelist:
+    description: Update the tab list
+    usage: /<command>
 
 permissions:
   commandspy.use:

@@ -1,30 +1,26 @@
 package net.izenith.Commands;
 
-import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.permissions.Permission;
 
 import net.izenith.Main.Util;
-import net.md_5.bungee.api.ChatColor;
 
-public class PlayTime implements HubCommand{
+public class UpdateList implements HubCommand{
 
 	@Override
 	public String getName() {
-		return "playtime";
+		return "updatelist";
 	}
 
 	@Override
 	public String[] getAliases() {
-		return new String[]{"play","givemearimjobandbitemyear"};
+		return null;
 	}
 
 	@Override
 	public void onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
-		Long time = Util.getOnlineTime(Bukkit.getPlayer(args[0]));
-		Double timeHours = new Double(time)/(1000*60*60);
-		sender.sendMessage(ChatColor.BLUE + args[0] + " has played for " + ChatColor.GREEN + timeHours + " hours");
+		Util.updatePlayerList();
 	}
 
 	@Override
@@ -42,5 +38,6 @@ public class PlayTime implements HubCommand{
 		return null;
 	}
 
-}
 	
+	
+}
