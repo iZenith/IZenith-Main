@@ -61,6 +61,10 @@ commands:
   updatelist:
     description: Update the tab list
     usage: /<command>
+  adminchat:
+    description: Send message or toggle
+    usage: /<command>
+    aliases: [ac]
 
 permissions:
   commandspy.use:
@@ -83,4 +87,7 @@ permissions:
     default: OP
   report.admin:
     description: gives acces to /report list and remove
+    default: OP
+  izenith.adminchat:
+    description: Can talk in admin chat
     default: OP

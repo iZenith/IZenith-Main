@@ -24,7 +24,7 @@ import org.yaml.snakeyaml.external.biz.base64Coder.Base64Coder;
 
 import com.intellectualcrafters.plot.api.PlotAPI;
 
-import net.milkbowl.vault.economy.Economy;
+import net.izenith.Commands.AdminChat;
 import net.milkbowl.vault.permission.Permission;
 
 @SuppressWarnings("deprecation")
@@ -379,4 +379,11 @@ public class Util {
 		}
 	}
 	
+	public static void sendAdminMessage(String message, Player sender){
+		for(Player player : Bukkit.getOnlinePlayers()){
+			if(player.hasPermission(new AdminChat().getPermission())){
+				player.sendMessage(ChatColor.WHITE + "Admin" + ChatColor.GOLD + "Chat " + sender.getDisplayName() + ChatColor.GRAY + ": " + ChatColor.RED + message);
+			}
+		}
+	}
 }

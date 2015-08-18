@@ -18,6 +18,7 @@ import net.izenith.Chat.ChatHandler;
 import net.izenith.CommandSpy.CommandFilter;
 import net.izenith.CommandSpy.CommandListener;
 import net.izenith.Commands.AddPlot;
+import net.izenith.Commands.AdminChat;
 import net.izenith.Commands.CommandSpy;
 import net.izenith.Commands.Donated;
 import net.izenith.Commands.GKit;
@@ -53,6 +54,7 @@ public class Vars {
 	public static GUIHandler guiHandler;
 	public static GUI tpGUI;
 	public static HashMap<Player,Long> times;
+	public static List<Player> adminChat;
  
 	public static void init(Main plugin) {
 		guiHandler = new GUIHandler(plugin);
@@ -97,10 +99,12 @@ public class Vars {
 				new WorldEditPerms(),
 				new AddPlot(),
 				new PlayTime(),
-				new UpdateList()
+				new UpdateList(),
+				new AdminChat()
 				};
 		commandSpy = new HashMap<Player, CommandFilter>();
 		times = new HashMap<Player,Long>();
+		adminChat = new ArrayList<Player>();
 		
 		/*
 		 * createClock = new HashMap<Player, String>(); clocks =

@@ -13,6 +13,7 @@ import org.bukkit.plugin.Plugin;
 
 import net.izenith.Main.PermissionHandler;
 import net.izenith.Main.Util;
+import net.izenith.Main.Vars;
 
 public class ChatHandler implements Listener {
 
@@ -21,6 +22,12 @@ public class ChatHandler implements Listener {
 	// Set to highest priority in order to override essentials chat handler
 	@EventHandler(priority = EventPriority.HIGHEST)
 	public void chat(AsyncPlayerChatEvent e) {
+		if(Vars.adminChat.contains(e.getPlayer())){
+			e.setCancelled(true);
+			Util.sendAdminMessage(e.getMessage(), e.getPlayer());
+			return;
+		}
+		
 		// Get main plugin class from Util
 		Plugin main = Util.getMain();
 		try {
