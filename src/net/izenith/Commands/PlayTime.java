@@ -32,10 +32,9 @@ public class PlayTime implements HubCommand{
 			time = Util.getOnlineTime((Player) sender);
 		}
 		Double timeHours = new Double(time)/(1000*60*60);
-		sender.sendMessage(ChatColor.BLUE + (args.length > 0 ? args[0] : sender.getName()) + " has played for " + ChatColor.GREEN + timeHours + " hours");
 		DecimalFormat df = new DecimalFormat("#.##");
 		String shortTime = df.format(timeHours);
-		sender.sendMessage(ChatColor.BLUE + args[0] + " has played for " + ChatColor.GREEN + shortTime + " hours");
+		sender.sendMessage(ChatColor.BLUE + (args.length > 0 ? args[0] : sender.getName()) + " has played for " + ChatColor.GREEN + shortTime + " hours");
 	}
 
 	@Override
