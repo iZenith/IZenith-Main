@@ -39,7 +39,7 @@ public class CommandListener implements Listener {
 		if (Util.startsWithIgnoreCase(e.getMessage(), "/reload"))
 			e.setCancelled(true);
 
-		if (Util.startsWithIgnoreCase(e.getMessage(), "/plots")) {
+		if (Util.startsWithIgnoreCase(e.getMessage(), "/plots") || Util.startsWithIgnoreCase(e.getMessage(), "/cr")) {
 			e.setCancelled(true);
 			e.getPlayer().performCommand("warp plots");
 		}

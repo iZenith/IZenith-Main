@@ -14,7 +14,7 @@ public class Trusted implements HubCommand{
 
 	@Override
 	public String[] getAliases() {
-		return new String[] {"void"};
+		return new String[] {"void","tr"};
 	}
 
 	@Override

@@ -16,9 +16,6 @@ commands:
   createclock:
     description: creates a clock
     usage: /<command>
-  plots:
-    description: Warps to plots
-    usage: /<command>
   report:
     description: Used to report problems
     usage: /<command>
@@ -35,7 +32,7 @@ commands:
   trusted:
     description: Warp to trusted world
     usage: /<command>
-    aliases: [void]
+    aliases: [void,tr]
   ranks:
     description: List servers ranks
     usage: /<command>
