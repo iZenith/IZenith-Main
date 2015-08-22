@@ -2,7 +2,7 @@ name: IZenith
 version: 1.0
 main: net.izenith.Main.Main
 author: bobmandude9889
-depend: [Multiverse-Core,PermissionsEx,PlotSquared,Vault,Essentials]
+depend: [Multiverse-Core,PermissionsEx,Vault,Essentials]
 
 commands:
   commandspy:
@@ -91,3 +91,6 @@ permissions:
   izenith.adminchat:
     description: Can talk in admin chat
     default: OP
+  izenith.updatelist:
+    description: Gives /updatelist
+    deafult: OP

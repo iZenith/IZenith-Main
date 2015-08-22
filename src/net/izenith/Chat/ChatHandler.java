@@ -22,9 +22,9 @@ public class ChatHandler implements Listener {
 	// Set to highest priority in order to override essentials chat handler
 	@EventHandler(priority = EventPriority.HIGHEST)
 	public void chat(AsyncPlayerChatEvent e) {
-		if(Vars.adminChat.contains(e.getPlayer())){
+		if(Vars.adminChat.contains(e.getPlayer()) || e.getMessage().startsWith(",") && e.getPlayer().hasPermission("izenith.adminchat")){
 			e.setCancelled(true);
-			Util.sendAdminMessage(e.getMessage(), e.getPlayer());
+			Util.sendAdminMessage(e.getMessage().startsWith(",") ? e.getMessage().substring(1) : e.getMessage(), e.getPlayer());
 			return;
 		}
 		

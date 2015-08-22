@@ -10,5 +10,6 @@
 	<classpathentry kind="lib" path="Essentials-2.x-SNAPSHOT.jar"/>
 	<classpathentry kind="lib" path="Custom GUI.jar"/>
 	<classpathentry kind="lib" path="ProtocolLib.jar"/>
+	<classpathentry kind="lib" path="FrameAPI.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

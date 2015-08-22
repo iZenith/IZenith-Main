@@ -34,6 +34,7 @@ import net.izenith.Commands.Trusted;
 import net.izenith.Commands.UpdateList;
 import net.izenith.Commands.WorldEditPerms;
 import net.izenith.Events.DamageListener;
+import net.izenith.Events.FrameListener;
 import net.izenith.Events.InteractListener;
 import net.izenith.Events.PlayerLogListener;
 import net.izenith.Events.PlayerMoveListener;
@@ -121,6 +122,7 @@ public class Vars {
 		lis.add(new InteractListener());
 		lis.add(new PlayerMoveListener());
 		lis.add(new DamageListener());
+		lis.add(new FrameListener());
 		for (Listener l : lis) {
 			plugin.getServer().getPluginManager().registerEvents(l, plugin);
 		}

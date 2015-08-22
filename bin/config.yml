@@ -1,10 +1,4 @@
-chat:
-  Visitor: '%player% -> %message%'
-  Member: '%player% -> %message%'
-  Mod: '%player% -> &b%message%'
-  Admin: '%player% -> &b%message%'
-  Owner: '%player% -> &b%message%'
-  
+chat_format: '%player% -> %message%
 commandspy:
   filters:
     default:

@@ -15,8 +15,7 @@ public class PlayerLogListener extends Util implements Listener {
 	@EventHandler(priority = EventPriority.HIGH)
 	public void onJoin(final PlayerJoinEvent e) {
 		Player player = e.getPlayer();
-		player.setPlayerListName(getColoredName(player));
-		setTeam(player);
+		Util.updatePlayerList();
 
 		if (!Util.hasJoined(e.getPlayer())) {
 			Bukkit.getScheduler().scheduleSyncDelayedTask(Util.getMain(), new Runnable(){

@@ -374,8 +374,9 @@ public class Util {
 	
 	public static void updatePlayerList(){
 		for(Player player : Bukkit.getOnlinePlayers()){
-			player.setPlayerListName(getColoredName(player));
+			//player.setPlayerListName(getColoredName(player));
 			setTeam(player);
+			
 		}
 	}
 	

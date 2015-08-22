@@ -21,6 +21,7 @@ public class Main extends JavaPlugin {
 		Util.initScoreboard();
 		CommandSpy.loadFilters();
 		Util.loadAllOnlineTimes();
+		Util.updatePlayerList();
 		System.out.println("Vintage Hub Enabled");
 	}
 	

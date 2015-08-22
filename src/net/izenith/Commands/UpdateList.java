@@ -37,7 +37,7 @@ public class UpdateList implements HubCommand{
 
 	@Override
 	public Permission getPermission() {
-		return null;
+		return new Permission("izenith.updatelist");
 	}
 
 	
