@@ -3,6 +3,7 @@ package net.izenith.Main;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -18,11 +19,12 @@ public class Main extends JavaPlugin {
 	public void onEnable() {
 		saveDefaultConfig();
 		Vars.init(this);
+		IPlayerHandler.init();
 		Util.initScoreboard();
 		CommandSpy.loadFilters();
 		Util.loadAllOnlineTimes();
 		Util.updatePlayerList();
-		System.out.println("Vintage Hub Enabled");
+		System.out.println("iZenith Enabled");
 	}
 	
 	@Override

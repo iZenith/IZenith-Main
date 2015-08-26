@@ -9,13 +9,12 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
-import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.player.PlayerCommandPreprocessEvent;
-import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.permissions.Permission;
 
 import net.izenith.CommandSpy.CommandFilter;
+import net.izenith.Main.IPlayer;
+import net.izenith.Main.IPlayerHandler;
 import net.izenith.Main.Main;
 import net.izenith.Main.Util;
 import net.izenith.Main.Vars;
@@ -37,14 +36,14 @@ public class CommandSpy implements HubCommand, Listener {
 	@Override
 	public void onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
 		try {
+			IPlayer iPlayer = IPlayerHandler.getPlayer((Player) sender);
 			switch (args[0]) {
 			// Turn command spy off
 			case "off":
 				// Removes player from the list of commandspy players
 				Vars.commandSpy.remove((Player) sender);
 				// Chage and save commandspy in config
-				Vars.main.getConfig().set("commandspy.players." + ((Player) sender).getUniqueId(), null);
-				Vars.main.saveConfig();
+				iPlayer.setCommandSpy(null);
 				// Notify player
 				sender.sendMessage(ChatColor.GREEN + "CommandSpy turrned off!");
 				break;
@@ -146,8 +145,7 @@ public class CommandSpy implements HubCommand, Listener {
 							Vars.commandSpy.remove((Player) sender);
 						}
 						Vars.commandSpy.put((Player) sender, new CommandFilter(accept));
-						Vars.main.getConfig().set("commandspy.players." + ((Player) sender).getUniqueId() + ".filter", args[0]);
-						Vars.main.saveConfig();
+						iPlayer.setCommandSpy(args[0]);
 						sender.sendMessage(ChatColor.GREEN + "Switched filter to " + args[0]);
 					}
 				break;
@@ -196,11 +194,11 @@ public class CommandSpy implements HubCommand, Listener {
 	}
 
 	public static void setupFilter(Player player) {
+		IPlayer iPlayer = IPlayerHandler.getPlayer(player);
 		Main main = Vars.main;
 		FileConfiguration config = main.getConfig();
-		Object o = config.get("commandspy.players." + player.getUniqueId());
-		if (o != null) {
-			String filterName = config.getString("commandspy.players." + player.getUniqueId() + ".filter");
+		String filterName = iPlayer.getCommandSpy();
+		if (filterName != null) {
 			List<String> list = config.getStringList("commandspy.filters." + filterName);
 			if (list != null) {
 				Vars.commandSpy.put(player, new CommandFilter(list));

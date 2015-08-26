@@ -8,26 +8,32 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 
+import net.izenith.Main.IPlayer;
+import net.izenith.Main.IPlayerHandler;
 import net.izenith.Main.Util;
 
 public class PlayerLogListener extends Util implements Listener {
 
 	@EventHandler(priority = EventPriority.HIGH)
-	public void onJoin(final PlayerJoinEvent e) {
+	public void onJoin(PlayerJoinEvent e) {
+		final PlayerJoinEvent event = e;
 		Player player = e.getPlayer();
+		IPlayerHandler.addPlayer(player);
+		final IPlayer iPlayer = IPlayerHandler.getPlayer(player);
 		Util.updatePlayerList();
+		Util.loadOnlineTime(player);
 
 		if (!Util.hasJoined(e.getPlayer())) {
 			Bukkit.getScheduler().scheduleSyncDelayedTask(Util.getMain(), new Runnable(){
 				@Override
 				public void run(){
-					String name = e.getPlayer().getName();
+					String name = event.getPlayer().getName();
 					Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "title " + name + " times 20 60 20");
 					Bukkit.dispatchCommand(Bukkit.getConsoleSender(),
 							"title " + name + " subtitle {text:\"" + name + "\",color:\"gray\"}");
 					Bukkit.dispatchCommand(Bukkit.getConsoleSender(),
 							"title " + name + " title {text:\"Welcome to \",color:\"dark_gray\",extra:[{text:\"iZenith\",color:\"white\"},{text:\" Minecraft\",color:\"gold\"}]}");
-					Util.setJoined(e.getPlayer());
+					iPlayer.createFile();
 				}
 			},20);
 		}
@@ -36,8 +42,7 @@ public class PlayerLogListener extends Util implements Listener {
 		message = Util.parseColors(message);
 		message = message.replaceAll("%player%",e.getPlayer().getName());
 		e.setJoinMessage(message);
-		
-		Util.loadOnlineTime(player);
+		iPlayer.setLastName(e.getPlayer().getName());
 	}
 
 	@EventHandler(priority = EventPriority.HIGH)
@@ -47,7 +52,8 @@ public class PlayerLogListener extends Util implements Listener {
 		message = message.replace("%player%",e.getPlayer().getName());
 		e.setQuitMessage(message);
 		
-		Util.setOnlineTime(e.getPlayer());
+		IPlayerHandler.getPlayer(e.getPlayer()).setOnlineTime();
+		IPlayerHandler.removePlayer(e.getPlayer());
 	}
 	
 }

@@ -10,6 +10,7 @@ import com.onarandombox.MultiverseCore.MultiverseCore;
 import com.onarandombox.MultiverseCore.api.MVWorldManager;
 import com.onarandombox.MultiverseCore.api.MultiverseWorld;
 
+import net.izenith.Main.IPlayerHandler;
 import net.izenith.Main.Util;
 
 public class TeleportListener implements Listener {
@@ -31,7 +32,7 @@ public class TeleportListener implements Listener {
 			Bukkit.getScheduler().scheduleSyncDelayedTask(Util.getMain(),new Runnable(){
 				@Override
 				public void run(){
-					Util.getKit(e.getPlayer(), "nether_star");
+					IPlayerHandler.getPlayer(e.getPlayer()).getKit("nether_star");
 				}
 			},40l);
 		}

@@ -7,6 +7,8 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.permissions.Permission;
 
+import net.izenith.Main.IPlayer;
+import net.izenith.Main.IPlayerHandler;
 import net.izenith.Main.Util;
 import net.md_5.bungee.api.ChatColor;
 
@@ -25,6 +27,7 @@ public class Kit implements HubCommand {
 	@Override
 	public void onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
 		Player player = (Player) sender;
+		IPlayer iPlayer = IPlayerHandler.getPlayer(player);
 		if (args.length == 0) {
 			player.sendMessage(ChatColor.BLUE + "Global Kits");
 			if (Util.getConfig().contains("kits.global")) {
@@ -49,7 +52,7 @@ public class Kit implements HubCommand {
 			switch (args[0]) {
 			case "create":
 				if (args.length > 1) {
-					Util.setKit((Player) sender, args[1]);
+					iPlayer.setKit(args[1]);
 					sender.sendMessage(ChatColor.BLUE + "Created kit " + ChatColor.GREEN + args[1]);
 				} else {
 					sender.sendMessage(ChatColor.RED + "/kit create <name>");
@@ -57,7 +60,7 @@ public class Kit implements HubCommand {
 				break;
 			case "remove":
 				if (args.length > 1) {
-					Util.removeKit(player, args[1]);
+					iPlayer.removeKit(args[1]);
 					player.sendMessage(ChatColor.BLUE + "Removed the kit " + ChatColor.GREEN + args[1]);
 				} else {
 					sender.sendMessage(ChatColor.RED + "/kit remove <name>");
@@ -65,9 +68,9 @@ public class Kit implements HubCommand {
 				break;
 			default:
 				String name = args[0].toLowerCase();
-				if (Util.getConfig().get("kits." + player.getUniqueId() + "." + name) != null
+				if (iPlayer.config.get("kits." + name) != null
 						|| Util.getConfig().get("kits.global." + name) != null) {
-					Util.getKit(player, name);
+					iPlayer.getKit(name);
 				} else {
 					player.sendMessage(ChatColor.RED + "There is not a kit named " + args[0] + ".");
 				}

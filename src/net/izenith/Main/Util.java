@@ -2,9 +2,12 @@ package net.izenith.Main;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.swing.JOptionPane;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -12,6 +15,7 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Server;
 import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
@@ -158,26 +162,6 @@ public class Util {
 		}
 	}
 
-	public static void setTeam(Player player) {
-		for (Team t : Vars.teams) {
-			if (t.getName().equalsIgnoreCase(PermissionHandler.getGroupName(player))) {
-				t.addPlayer(player);
-				return;
-			}
-		}
-	}
-
-	public static String getColoredName(Player player) {
-		ChatColor color = getGroupColor(PermissionHandler.getGroupName(player));
-		String name = player.getName();
-		int length = name.length();
-		if (length > 14) {
-			int subtract = length - 14;
-			name = name.substring(0, length - subtract - 1);
-		}
-		return color + name;
-	}
-
 	public static ChatColor getGroupColor(String group) {
 		ChatColor color = ChatColor.WHITE;
 		for (String s : Bukkit.getPluginManager().getPlugin("IZenith").getConfig().getStringList("colors")) {
@@ -249,34 +233,6 @@ public class Util {
 		}
 	}
 
-	public static void getKit(Player player, String name) {
-		name = name.toLowerCase();
-		getMain().reloadConfig();
-		List<String> kit = getConfig().getStringList("kits." + player.getUniqueId() + "." + name);
-		if (kit.size() == 0)
-			kit = getConfig().getStringList("kits.global." + name);
-		if (kit != null) {
-			try {
-				ItemStack[] contents = itemStackArrayFromBase64(kit.get(0));
-				ItemStack[] armor = itemStackArrayFromBase64(kit.get(1));
-				player.getInventory().setContents(contents);
-				player.getInventory().setArmorContents(armor);
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		}
-	}
-
-	public static void setKit(Player player, String name) {
-		name = name.toLowerCase();
-		String[] arrayKit = playerInventoryToBase64(player.getInventory());
-		List<String> kit = new ArrayList<String>();
-		kit.add(arrayKit[0]);
-		kit.add(arrayKit[1]);
-		getConfig().set("kits." + player.getUniqueId() + "." + name, kit);
-		getMain().saveConfig();
-	}
-
 	public static void setGlobalKit(Player player, String name) {
 		name = name.toLowerCase();
 		String[] arrayKit = playerInventoryToBase64(player.getInventory());
@@ -287,12 +243,6 @@ public class Util {
 		getMain().saveConfig();
 	}
 
-	public static void removeKit(Player player, String name) {
-		name = name.toLowerCase();
-		getConfig().set("kits." + player.getUniqueId() + "." + name, null);
-		getMain().saveConfig();
-	}
-
 	public static void removeGlobalKit(String name) {
 		name = name.toLowerCase();
 		getConfig().set("kits.global." + name, null);
@@ -300,20 +250,8 @@ public class Util {
 	}
 
 	public static boolean hasJoined(Player player) {
-		getMain().reloadConfig();
-		List<String> players = getConfig().getStringList("players");
-		if (!getConfig().contains("players"))
-			return false;
-		return players.contains(player.getUniqueId().toString());
-	}
-
-	public static void setJoined(Player player) {
-		List<String> players = getConfig().getStringList("players");
-		if (players == null)
-			players = new ArrayList<String>();
-		players.add(player.getUniqueId().toString());
-		getConfig().set("players", players);
-		getMain().saveConfig();
+		File dataFolder = new File(Util.getMain().getDataFolder().getPath() + System.getProperty("file.separator") + "players");
+		return new File(dataFolder.getPath() + System.getProperty("file.separator") + player.getUniqueId() + ".yml").exists();
 	}
 
 	public static boolean containsIgnoreCase(String message, String regex) {
@@ -344,21 +282,10 @@ public class Util {
 		player.sendMessage(ChatColor.GREEN + "You are no longer suspended!");
 		Util.getMain().saveConfig();
 	}
-
-	public static long getOnlineTime(Player player){
-		Long time = getConfig().getLong("times." + player.getUniqueId());
-		time = time == null ? 0 : time;
-		return time + (System.currentTimeMillis() - Vars.times.get(player));
-	}
-	
-	public static void setOnlineTime(Player player){
-		getConfig().set("times." + player.getUniqueId(), getOnlineTime(player));
-		getMain().saveConfig();
-	}
 	
 	public static void setAllOnlineTimes(){
 		for(Player player : Bukkit.getOnlinePlayers()){
-			setOnlineTime(player);
+			IPlayerHandler.getPlayer(player).setOnlineTime();
 		}
 	}
 	
@@ -374,9 +301,7 @@ public class Util {
 	
 	public static void updatePlayerList(){
 		for(Player player : Bukkit.getOnlinePlayers()){
-			//player.setPlayerListName(getColoredName(player));
-			setTeam(player);
-			
+			IPlayerHandler.getPlayer(player).setTeam();
 		}
 	}
 	
@@ -387,4 +312,29 @@ public class Util {
 			}
 		}
 	}
+	
+	public static void convertFileSystem(){
+		for(String uuid : getConfig().getStringList("players")){
+			File dataFolder = new File(Util.getMain().getDataFolder().getPath() + System.getProperty("file.separator") + "players");
+			if (!dataFolder.exists())
+				dataFolder.mkdir();
+			File file = new File(dataFolder.getPath() + System.getProperty("file.separator") + uuid + ".yml");
+			try {
+				file.createNewFile();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			YamlConfiguration config = YamlConfiguration.loadConfiguration(file);
+			config.set("last_name", "unknown");
+			config.set("commandspy", getConfig().getString("commandspy.players." + uuid + ".filter"));
+			config.set("kits", getConfig().get("kits." + uuid));
+			config.set("time", getConfig().getLong("times." + uuid));
+			try {
+				config.save(file);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	
 }

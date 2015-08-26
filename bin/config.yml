@@ -1,4 +1,6 @@
-chat_format: '%player% -> %message%
+join_message: '&8[&aIZ&8] &7%player%'
+leave_message: '&8[&cIZ&8] &7%player%'
+chat_format: '%player% -> %message%'
 commandspy:
   filters:
     default:
