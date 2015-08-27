@@ -198,6 +198,7 @@ public class CommandSpy implements HubCommand, Listener {
 		Main main = Vars.main;
 		FileConfiguration config = main.getConfig();
 		String filterName = iPlayer.getCommandSpy();
+		System.out.println(filterName);
 		if (filterName != null) {
 			List<String> list = config.getStringList("commandspy.filters." + filterName);
 			if (list != null) {

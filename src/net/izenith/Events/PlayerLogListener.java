@@ -8,6 +8,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 
+import net.izenith.Commands.CommandSpy;
 import net.izenith.Main.IPlayer;
 import net.izenith.Main.IPlayerHandler;
 import net.izenith.Main.Util;
@@ -43,6 +44,7 @@ public class PlayerLogListener extends Util implements Listener {
 		message = message.replaceAll("%player%",e.getPlayer().getName());
 		e.setJoinMessage(message);
 		iPlayer.setLastName(e.getPlayer().getName());
+		CommandSpy.setupFilter(e.getPlayer());
 	}
 
 	@EventHandler(priority = EventPriority.HIGH)

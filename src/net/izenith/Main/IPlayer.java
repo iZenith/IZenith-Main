@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -19,10 +20,10 @@ public class IPlayer {
 
 	public IPlayer(Player player) {
 		this.player = player;
-		File dataFolder = new File(Util.getMain().getDataFolder().getPath() + System.getProperty("line.separator") + "players");
+		File dataFolder = new File(Util.getMain().getDataFolder().getPath(),"players");
 		if (!dataFolder.exists())
 			dataFolder.mkdir();
-		this.file = new File(dataFolder.getPath() + System.getProperty("line.separator") + player.getUniqueId() + ".yml");
+		this.file = new File(dataFolder.getPath(),player.getUniqueId() + ".yml");
 		this.config = YamlConfiguration.loadConfiguration(file);
 	}
 
@@ -117,6 +118,10 @@ public class IPlayer {
 	public void setCommandSpy(String filter){
 		config.set("commandspy", filter);
 		try {
+			Scanner scanner = new Scanner(file);
+			while(scanner.hasNextLine()){
+				System.out.println(scanner.nextLine());
+			}
 			config.save(file);
 		} catch (IOException e) {
 			e.printStackTrace();
