@@ -15,6 +15,7 @@ public class PlayerInteractHandler implements Listener {
 
 	@EventHandler
 	public void onInteract(PlayerInteractEvent e){
+		// TODO finish and comment
 		if(Vars.createClock.containsKey(e.getPlayer())){
 			e.setCancelled(true);
 			Location clicked = e.getClickedBlock().getLocation();

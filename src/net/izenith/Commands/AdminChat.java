@@ -11,6 +11,8 @@ import net.md_5.bungee.api.ChatColor;
 
 public class AdminChat implements HubCommand {
 
+	// See HubCommand for formatting
+	
 	@Override
 	public String getName() {
 		return "adminchat";
@@ -23,8 +25,10 @@ public class AdminChat implements HubCommand {
 
 	@Override
 	public void onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
-		if(args.length > 0 && args.length < 2){
+		// Make sure there is only one argument and not a message that starts with toggle
+		if(args.length == 1){
 			if(args[0].equalsIgnoreCase("toggle")){
+				// if admin chat is enabled, disable. if admin chat is disabled, enable.
 				if(Vars.adminChat.contains((Player)sender)){
 					Vars.adminChat.remove((Player) sender);
 					sender.sendMessage(ChatColor.GREEN + "Admin Chat disabled!");
@@ -32,13 +36,17 @@ public class AdminChat implements HubCommand {
 					Vars.adminChat.add((Player) sender);
 					sender.sendMessage(ChatColor.GREEN + "Admin Chat enabled!");
 				}
+				// return so it doesn't continue on and send the message "toggle"
 				return;
 			}
 		}
+		// Create a string for the message
 		String message = "";
+		// Add all arguments to the message
 		for(String arg : args){
 			message+=arg + " ";
 		}
+		// Send message to admins
 		Util.sendAdminMessage(message, ((Player)sender));
 	}
 

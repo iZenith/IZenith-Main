@@ -11,6 +11,7 @@ import net.izenith.Main.Vars;
 public class TimeHandler {
 
 	public TimeHandler() {
+		// TODO finish and comment
 		Vars.main.getServer().getScheduler().scheduleSyncRepeatingTask(Vars.main, new Runnable() {
 			@Override
 			public void run() {
