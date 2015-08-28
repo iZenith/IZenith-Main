@@ -24,8 +24,8 @@ public class InteractListener implements Listener {
 				Skull s = (Skull) b;
 				String owner = s.getOwner();
 				if (owner == null) {
-					if (p == "Flubber_MC"){
-						p.sendMessage(ChatColor.RED + "You're a bitch <3 Pandoh")
+					if (p.getName().equals("Flubber_MC")){
+						p.sendMessage(ChatColor.RED + "You're a bitch <3 Pandoh");
 					}
 				} else {
 					p.sendMessage(ChatColor.YELLOW + "That is the head of " + ChatColor.GOLD + owner + ChatColor.YELLOW + ".");
