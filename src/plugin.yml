@@ -66,9 +66,9 @@ commands:
     usage: /<command>
     aliases: [ac]
   clearchat:
-  	description: Clear the server chat
-  	usage: /<command>
-  	aliases: [cc]
+    description: Clear the server chat
+    usage: /<command>
+    aliases: [cc]
 
 permissions:
   commandspy.use:
@@ -90,8 +90,8 @@ permissions:
     description: Suspend players
     default: OP
   hub.cc:
-  	description: Clear Chats
-  	default: OP
+    description: Clear Chats
+    default: OP
   report.admin:
     description: gives access to /report list and remove
     default: OP
