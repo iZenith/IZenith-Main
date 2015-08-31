@@ -32,7 +32,7 @@ public class TeleportListener implements Listener {
 			Bukkit.getScheduler().scheduleSyncDelayedTask(Util.getMain(),new Runnable(){
 				@Override
 				public void run(){
-					IPlayerHandler.getPlayer(e.getPlayer()).getKit("nether_star");
+					IPlayerHandler.getPlayer(e.getPlayer()).getKit("nether_star",false);
 				}
 			},40l);
 		}

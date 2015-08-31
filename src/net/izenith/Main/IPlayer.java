@@ -76,7 +76,7 @@ public class IPlayer {
 		}
 	}
 	
-	public void getKit(String name) {
+	public void getKit(String name, boolean message) {
 		name = name.toLowerCase();
 		List<String> kit = config.getStringList("kits." + name);
 		if (kit.size() == 0)
@@ -91,7 +91,8 @@ public class IPlayer {
 				e.printStackTrace();
 			}
 		}
-		player.sendMessage(ChatColor.GREEN + "You have been given the kit " + ChatColor.BLUE + name);
+		if(message)
+			player.sendMessage(ChatColor.GREEN + "You have been given the kit " + ChatColor.BLUE + name);
 	}
 	
 	public String getColoredName() {

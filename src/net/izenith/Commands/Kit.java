@@ -70,7 +70,7 @@ public class Kit implements HubCommand {
 				String name = args[0].toLowerCase();
 				if (iPlayer.config.get("kits." + name) != null
 						|| Util.getConfig().get("kits.global." + name) != null) {
-					iPlayer.getKit(name);
+					iPlayer.getKit(name,true);
 				} else {
 					player.sendMessage(ChatColor.RED + "There is not a kit named " + args[0] + ".");
 				}

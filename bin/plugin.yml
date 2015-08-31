@@ -65,6 +65,10 @@ commands:
     description: Send message or toggle
     usage: /<command>
     aliases: [ac]
+  clearchat:
+    description: Clear the server chat
+    usage: /<command>
+    aliases: [cc]
 
 permissions:
   commandspy.use:
@@ -85,8 +89,11 @@ permissions:
   hub.suspend:
     description: Suspend players
     default: OP
+  hub.cc:
+    description: Clear Chats
+    default: OP
   report.admin:
-    description: gives acces to /report list and remove
+    description: gives access to /report list and remove
     default: OP
   izenith.adminchat:
     description: Can talk in admin chat
