@@ -11,7 +11,7 @@ public class ClearChat implements HubCommand {
 
 	@Override
 	public String getName() {
-		return "chatclear";
+		return "clearchat";
 	}
 
 	@Override
@@ -21,7 +21,7 @@ public class ClearChat implements HubCommand {
 
 	@Override
 	public void onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
-		for(int i=0; i<50; i++){
+		for(int i=0; i<100; i++){
 			Bukkit.broadcastMessage("");
        }
 		if (!(sender instanceof Player)){
