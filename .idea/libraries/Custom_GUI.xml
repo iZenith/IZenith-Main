@@ -1,7 +1,7 @@
 <component name="libraryTable">
-  <library name="Vault-1.4.1">
+  <library name="Custom GUI">
     <CLASSES>
-      <root url="jar://$PROJECT_DIR$/Vault-1.4.1.jar!/" />
+      <root url="jar://$USER_HOME$/Downloads/Plugins/Custom GUI.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />

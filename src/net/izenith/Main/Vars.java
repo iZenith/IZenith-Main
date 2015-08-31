@@ -19,6 +19,7 @@ import net.izenith.CommandSpy.CommandFilter;
 import net.izenith.CommandSpy.CommandListener;
 import net.izenith.Commands.AddPlot;
 import net.izenith.Commands.AdminChat;
+import net.izenith.Commands.ClearChat;
 import net.izenith.Commands.CommandSpy;
 import net.izenith.Commands.Donated;
 import net.izenith.Commands.GKit;
@@ -99,7 +100,8 @@ public class Vars {
 				new AddPlot(),
 				new PlayTime(),
 				new UpdateList(),
-				new AdminChat()
+				new AdminChat(),
+				new ClearChat(),
 				};
 		commandSpy = new HashMap<Player, CommandFilter>();
 		times = new HashMap<Player,Long>();
