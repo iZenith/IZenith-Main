@@ -21,15 +21,17 @@ public class InteractListener implements Listener {
 			Player p = e.getPlayer();
 			BlockState b = e.getClickedBlock().getState(); //b is the block
 			if (b instanceof Skull) { //this test if b is a skull
-				Skull s = (Skull) b;
-				String owner = s.getOwner();
-				if (owner == null) {
-					if (p.getName().equals("Flubber_MC")){
-						p.sendMessage(ChatColor.RED + "You're a bitch <3 Pandoh");
+				if (!(p.isSneaking())){
+					Skull s = (Skull) b;
+					String owner = s.getOwner();
+					if (owner == null) {
+						if (p.getName().equals("Flubber_MC")){
+							p.sendMessage(ChatColor.RED + "You're a bitch <3 Pandoh");
+						}
+					} else {
+						p.sendMessage(ChatColor.YELLOW + "That is the head of " + ChatColor.GOLD + owner + ChatColor.YELLOW + ".");
+						e.setCancelled(true);
 					}
-				} else {
-					p.sendMessage(ChatColor.YELLOW + "That is the head of " + ChatColor.GOLD + owner + ChatColor.YELLOW + ".");
-					e.setCancelled(true);
 				}
 			}
 		}
@@ -37,7 +39,7 @@ public class InteractListener implements Listener {
 		if (e.getPlayer().getLocation().getWorld().getName().equals("spawn") && e.getItem().getType().equals(Material.NETHER_STAR)) {
 			Vars.tpGUI.open(e.getPlayer());
 		}
-		
-		
+
+
 	}
 }
