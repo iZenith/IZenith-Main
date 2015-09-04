@@ -1,13 +1,16 @@
 package net.izenith.Main;
 
+import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
-
-import javax.swing.JOptionPane;
+import java.util.Map;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -24,8 +27,11 @@ import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.scoreboard.Team;
 import org.bukkit.util.io.BukkitObjectInputStream;
 import org.bukkit.util.io.BukkitObjectOutputStream;
+import org.json.simple.JSONObject;
 import org.yaml.snakeyaml.external.biz.base64Coder.Base64Coder;
 
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import com.intellectualcrafters.plot.api.PlotAPI;
 
 import net.izenith.Commands.AdminChat;
@@ -335,6 +341,58 @@ public class Util {
 				e.printStackTrace();
 			}
 		}
+	}
+	
+	public static String getTranslation(String message,String from, String to){
+		try {
+			String[] messageSplit = message.split(" ");
+			message = "";
+			for(String s : messageSplit){
+				message += s + "+";
+			}
+			String urlString = "https://translate.yandex.net/api/v1.5/tr.json/translate?key=trnsl.1.1.20150904T210220Z.b1f160b5f9c09f25.4c3976574f85d91ace1918b0a717b655fcc63ae8&lang=" + from + "-" + to + "&text=" + message;
+			URL url = new URL(urlString);
+			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+			conn.setRequestMethod("GET");
+			BufferedReader rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+			String line;
+			String jsonCode = "";
+			while((line = rd.readLine()) != null) {
+				jsonCode += line;
+			}
+			JsonParser parser = new JsonParser();
+			JsonObject obj = parser.parse(jsonCode).getAsJsonObject();
+			return obj.get("text").getAsString();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	public static String detectLanguage(String message){
+		try {
+			String[] messageSplit = message.split(" ");
+			message = "";
+			for(String s : messageSplit){
+				message += s + "+";
+			}
+			String urlString = "https://translate.yandex.net/api/v1.5/tr.json/detect?key=trnsl.1.1.20150904T210220Z.b1f160b5f9c09f25.4c3976574f85d91ace1918b0a717b655fcc63ae8&text=" + message;
+			URL url = new URL(urlString);
+			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+			conn.setRequestMethod("GET");
+			BufferedReader rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+			String line;
+			String jsonCode = "";
+			while((line = rd.readLine()) != null) {
+				jsonCode += line;
+			}
+			JsonParser parser = new JsonParser();
+			JsonObject obj = parser.parse(jsonCode).getAsJsonObject();
+			return obj.get("lang").getAsString();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 	
 }
