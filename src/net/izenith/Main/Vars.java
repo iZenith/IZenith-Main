@@ -31,6 +31,7 @@ import net.izenith.Commands.Ranks;
 import net.izenith.Commands.Report;
 import net.izenith.Commands.ServerIp;
 import net.izenith.Commands.Suspend;
+import net.izenith.Commands.Translate;
 import net.izenith.Commands.Trusted;
 import net.izenith.Commands.UpdateList;
 import net.izenith.Commands.WorldEditPerms;
@@ -102,6 +103,7 @@ public class Vars {
 				new UpdateList(),
 				new AdminChat(),
 				new ClearChat(),
+				new Translate()
 				};
 		commandSpy = new HashMap<Player, CommandFilter>();
 		times = new HashMap<Player,Long>();

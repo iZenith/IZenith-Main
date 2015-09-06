@@ -5,8 +5,10 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+import java.util.regex.Matcher;
 
 import org.bukkit.ChatColor;
+import org.bukkit.Sound;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -140,6 +142,46 @@ public class IPlayer {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	public void sendChatMessage(String text){
+		// Get format for the group of a player from the config	
+					String format = Util.getConfig().getString("chat." + PermissionHandler.getGroupName(player));
+					// Replace the tags with there values
+					String message = format.replaceAll("%player%", player.getDisplayName());
+					message = message.replaceAll("%prefix%", PermissionHandler.getGroup(player).getPrefix());
+					// Use Util to convert from & code to ChatColors
+					message = Util.parseColors(message);
+
+					// Bukkit replaces formats message colors by default
+					// ut = untranslated
+					String pMessage = Matcher.quoteReplacement(text);
+					String utMessage = message.replaceAll("%message%", pMessage);
+					
+					// Make sure that a format for the players group exists
+					if (format != null) {
+						// Loop through players rather than broadcast so that a different utMessage could be set per player ie. Colored names for mentions
+						for (final Player player : Util.getMain().getServer().getOnlinePlayers())
+							// Check if the current player is being mentioned and is not themselves
+							if (Util.containsIgnoreCase(utMessage, player.getName()) && !player.equals(player)) {
+								// Get index of players name for replacement
+								int i = utMessage.toLowerCase().indexOf(player.getName().toLowerCase());
+								// Color player name
+								String utMessageP = utMessage.substring(0, i) + ChatColor.RED + ChatColor.BOLD + utMessage.substring(i, player.getName().length() + i) + ChatColor.getByChar(format.charAt(format.indexOf("%utMessage%") - 1)) + utMessage.substring(player.getName().length() + i);
+								player.sendMessage(utMessageP);
+								// Send a tune to notify player
+								player.playSound(player.getLocation(), Sound.NOTE_PLING, 1f, 1f);
+								Util.getMain().getServer().getScheduler().scheduleSyncDelayedTask(Util.getMain(), new Runnable() {
+									@Override
+									public void run() {
+										player.playSound(player.getLocation(), Sound.NOTE_PLING, 1f, 1.25f);
+									}
+								}, 10l);
+							} else {
+								// Send normal utMessage if the player was not mentioned
+								player.sendMessage(utMessage);
+							}
+					}
 	}
 	
 }

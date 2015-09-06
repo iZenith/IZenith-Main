@@ -343,56 +343,12 @@ public class Util {
 		}
 	}
 	
-	public static String getTranslation(String message,String from, String to){
-		try {
-			String[] messageSplit = message.split(" ");
-			message = "";
-			for(String s : messageSplit){
-				message += s + "+";
-			}
-			String urlString = "https://translate.yandex.net/api/v1.5/tr.json/translate?key=trnsl.1.1.20150904T210220Z.b1f160b5f9c09f25.4c3976574f85d91ace1918b0a717b655fcc63ae8&lang=" + from + "-" + to + "&text=" + message;
-			URL url = new URL(urlString);
-			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-			conn.setRequestMethod("GET");
-			BufferedReader rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-			String line;
-			String jsonCode = "";
-			while((line = rd.readLine()) != null) {
-				jsonCode += line;
-			}
-			JsonParser parser = new JsonParser();
-			JsonObject obj = parser.parse(jsonCode).getAsJsonObject();
-			return obj.get("text").getAsString();
-		} catch (IOException e) {
-			e.printStackTrace();
+	public static String buildString(String[] args, String seperator){
+		String ret = "";
+		for(String s : args){
+			ret+=s+seperator;
 		}
-		return null;
-	}
-	
-	public static String detectLanguage(String message){
-		try {
-			String[] messageSplit = message.split(" ");
-			message = "";
-			for(String s : messageSplit){
-				message += s + "+";
-			}
-			String urlString = "https://translate.yandex.net/api/v1.5/tr.json/detect?key=trnsl.1.1.20150904T210220Z.b1f160b5f9c09f25.4c3976574f85d91ace1918b0a717b655fcc63ae8&text=" + message;
-			URL url = new URL(urlString);
-			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-			conn.setRequestMethod("GET");
-			BufferedReader rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-			String line;
-			String jsonCode = "";
-			while((line = rd.readLine()) != null) {
-				jsonCode += line;
-			}
-			JsonParser parser = new JsonParser();
-			JsonObject obj = parser.parse(jsonCode).getAsJsonObject();
-			return obj.get("lang").getAsString();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		return null;
+		return ret.substring(0,ret.length() - seperator.length());
 	}
 	
 }
