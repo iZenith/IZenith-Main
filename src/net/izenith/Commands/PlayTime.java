@@ -31,6 +31,7 @@ public class PlayTime implements HubCommand{
 	public void onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
 		Long time = null;
 		String name = null;
+		IPlayer iPlayer = null;
 		if(args.length > 0){
 			Player player = Bukkit.getPlayer(args[0]);
 			if(player == null){
@@ -43,12 +44,12 @@ public class PlayTime implements HubCommand{
 					}
 				}
 			} else {
-				IPlayer iPlayer = IPlayerHandler.getPlayer(player);
+				iPlayer = IPlayerHandler.getPlayer(player);
 				time = iPlayer.getOnlineTime();
 				name = player.getName();
 			}
 		} else {
-			IPlayer iPlayer = new IPlayer((Player)sender);
+			iPlayer = new IPlayer((Player)sender);
 			System.out.println(iPlayer);
 			time = iPlayer.getOnlineTime();
 			name = sender.getName();
@@ -57,9 +58,7 @@ public class PlayTime implements HubCommand{
 			sender.sendMessage(ChatColor.RED + "Player not found.");
 			return;
 		}
-		Double timeHours = new Double(time)/(1000*60*60);
-		DecimalFormat df = new DecimalFormat("#.##");
-		String shortTime = df.format(timeHours);
+		String shortTime = iPlayer.getOnlineTimeHours();
 		sender.sendMessage(ChatColor.BLUE + (name + " has played for " + ChatColor.GREEN + shortTime + " hours"));
 	}
 

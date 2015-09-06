@@ -2,17 +2,21 @@ package net.izenith.Main;
 
 import java.io.File;
 import java.io.IOException;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Sound;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scoreboard.Team;
+
+import net.izenith.Commands.Translate;
 
 public class IPlayer {
 
@@ -54,6 +58,12 @@ public class IPlayer {
 		return time + (System.currentTimeMillis() - Vars.times.get(player));
 	}
 
+	public String getOnlineTimeHours(){
+		Double timeHours = new Double(getOnlineTime())/(1000*60*60);
+		DecimalFormat df = new DecimalFormat("#.##");
+		return df.format(timeHours);
+	}
+	
 	public void removeKit(String name) {
 		name = name.toLowerCase();
 		config.set("kits." + name, null);
@@ -126,6 +136,7 @@ public class IPlayer {
 				System.out.println(scanner.nextLine());
 			}
 			config.save(file);
+			scanner.close();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -144,7 +155,40 @@ public class IPlayer {
 		}
 	}
 	
-	public void sendChatMessage(String text){
+	public void setLanguage(String lang){
+		config.set("language", lang);
+		try {
+			config.save(file);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public String getLanguage(){
+		String lang = config.getString("language");
+		if(lang == null){
+			return "en";
+		}
+		return lang;
+	}
+	
+	public void setTranslate(boolean translate){
+		config.set("translate", translate);
+		try {
+			config.save(file);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public boolean getTranslate(){
+		if(!config.contains("translate")){
+			return true;
+		}
+		return config.getBoolean("translate");
+	}
+	
+	/*public void sendChatMessage(String text){
 		// Get format for the group of a player from the config	
 					String format = Util.getConfig().getString("chat." + PermissionHandler.getGroupName(player));
 					// Replace the tags with there values
@@ -163,7 +207,7 @@ public class IPlayer {
 						// Loop through players rather than broadcast so that a different utMessage could be set per player ie. Colored names for mentions
 						for (final Player player : Util.getMain().getServer().getOnlinePlayers())
 							// Check if the current player is being mentioned and is not themselves
-							if (Util.containsIgnoreCase(utMessage, player.getName()) && !player.equals(player)) {
+							if (Util.containsIgnoreCase(pMessage, player.getName()) && !player.equals(player)) {
 								// Get index of players name for replacement
 								int i = utMessage.toLowerCase().indexOf(player.getName().toLowerCase());
 								// Color player name
@@ -182,6 +226,66 @@ public class IPlayer {
 								player.sendMessage(utMessage);
 							}
 					}
+	}*/
+	
+	public void sendChatMessage(final String text){
+		final IPlayer iPlayer = this;
+		final String message = Matcher.quoteReplacement(text);
+		for(final Player player : Bukkit.getOnlinePlayers()){
+			new Thread(new Runnable(){
+				@Override
+				public void run() {
+					String command = null;
+					String name = player.getName();
+					String translation = "No translation";
+					String toLanguage = IPlayerHandler.getPlayer(player).getLanguage();
+					if(getTranslate()){
+						String fromLanguage = Translate.detectLanguage(message);
+						translation = Translate.getTranslation("No translation","en",toLanguage);
+						
+						if(!fromLanguage.equals(toLanguage)){
+							translation = Translate.getTranslation(message,fromLanguage,toLanguage);
+							if(translation == null || translation.equals(message)){
+								translation = Translate.getTranslation("No translation","en",toLanguage);
+							}
+						}
+					}
+					if(Util.containsIgnoreCase(message, name)){
+						int playerIndex = message.toLowerCase().indexOf(name.toLowerCase());
+						command = "tellraw " + name + " [\"\",{\"text\":\"" + iPlayer.player.getDisplayName() + " \",\"hoverEvent\":{\"action\":\"show_text\",\"value\":{\"text\":\"\",\""
+								+ "extra\":[{\"text\":\"" + PermissionHandler.getGroupName(iPlayer.player) + "\\n\",\"color\":\"" + Util.getGroupColor(PermissionHandler.getGroupName(iPlayer.player)).name().toLowerCase() + "\"},"
+								+ "{\"text\":\"Language: \",\"color\":\"blue\"},{\"text\":\"" + getLanguage() + "\\n\",\"color\":\"green\"},"
+								+ "{\"text\":\"Playtime: \",\"color\":\"blue\"},{\"text\":\"" + getOnlineTimeHours() + " hours\",\"color\":\"green\"}]}}},{\"text\":\"\u2192 \",\"color\":\"black\"},"
+								+ "{\"text\":\"" + ChatColor.WHITE + message.substring(0,playerIndex) + ChatColor.RED + ChatColor.BOLD + player.getName() + ChatColor.RESET 
+								+ message.substring(playerIndex + player.getName().length()) 
+								+ "\",\"hoverEvent\":{\"action\":\"show_text\",\"value\":{\"text\":\"\",\"extra\":[{\"text\":\"Language: \",\"color\":\"blue\"},"
+								+ "{\"text\":\"" + toLanguage + "\\n\",\"color\":\"green\"},"
+								+ "{\"text\":\"" + translation + "\",\"color\":\"white\"}]}}}]";
+						
+						player.playSound(player.getLocation(), Sound.NOTE_PLING, 1f, 1f);
+						Util.getMain().getServer().getScheduler().scheduleSyncDelayedTask(Util.getMain(), new Runnable() {
+							@Override
+							public void run() {
+								player.playSound(player.getLocation(), Sound.NOTE_PLING, 1f, 1.25f);
+							}
+						}, 10l);
+					} else {
+						command = "tellraw " + name + " [\"\",{\"text\":\"" + iPlayer.player.getDisplayName() + " \",\"hoverEvent\":{\"action\":\"show_text\",\"value\":{\"text\":\"\",\""
+								+ "extra\":[{\"text\":\"" + PermissionHandler.getGroupName(iPlayer.player) + "\\n\",\"color\":\"" + Util.getGroupColor(PermissionHandler.getGroupName(iPlayer.player)).name().toLowerCase() + "\"},"
+								+ "{\"text\":\"Language: \",\"color\":\"blue\"},{\"text\":\"" + getLanguage() + "\\n\",\"color\":\"green\"},"
+								+ "{\"text\":\"Playtime: \",\"color\":\"blue\"},{\"text\":\"" + getOnlineTimeHours() + " hours\",\"color\":\"green\"}]}}},{\"text\":\"\u2192 \",\"color\":\"black\"},"
+								+ "{\"text\":\"" + message + "\",\"hoverEvent\":{\"action\":\"show_text\",\"value\":{\"text\":\"\",\"extra\":[{\"text\":\"Language: \",\"color\":\"blue\"},"
+								+ "{\"text\":\"" + toLanguage + "\\n\",\"color\":\"green\"},"
+								+ "{\"text\":\"" + translation + "\",\"color\":\"white\"}]}}}]";
+					}
+					Bukkit.dispatchCommand(Bukkit.getConsoleSender(), command);
+				}
+			}).start();
+		}
+	}
+	
+	public static void main(String[] args) {
+		
 	}
 	
 }

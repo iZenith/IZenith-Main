@@ -319,7 +319,7 @@ public class Util {
 		}
 	}
 	
-	public static void convertFileSystem(){
+	/*public static void convertFileSystem(){
 		for(String uuid : getConfig().getStringList("players")){
 			File dataFolder = new File(Util.getMain().getDataFolder().getPath() + System.getProperty("file.separator") + "players");
 			if (!dataFolder.exists())
@@ -341,7 +341,7 @@ public class Util {
 				e.printStackTrace();
 			}
 		}
-	}
+	}*/
 	
 	public static String buildString(String[] args, String seperator){
 		String ret = "";

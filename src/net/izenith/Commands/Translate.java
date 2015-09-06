@@ -16,7 +16,7 @@ import com.google.gson.JsonParser;
 
 import net.izenith.Main.IPlayer;
 import net.izenith.Main.IPlayerHandler;
-import net.izenith.Main.Util;
+import net.md_5.bungee.api.ChatColor;
 
 public class Translate implements HubCommand {
 
@@ -27,14 +27,24 @@ public class Translate implements HubCommand {
 
 	@Override
 	public String[] getAliases() {
-		return null;
+		return new String[] {"tc"};
 	}
 
 	@Override
 	public void onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
 		IPlayer player = IPlayerHandler.getPlayer((Player) sender);
-		String message = Util.buildString(args, " ");
-		player.sendChatMessage(getTranslation(message,detectLanguage(message),"en"));
+		if(args.length > 0){
+			if(args[0].equals("off")){
+				player.setTranslate(false);
+				sender.sendMessage(ChatColor.BLUE + "Translations have been turned off.");
+			} else {
+				player.setLanguage(args[0]);
+				player.setTranslate(true);
+				sender.sendMessage(ChatColor.BLUE + "Your language has been set to " + ChatColor.GREEN + args[0]);
+			}
+		} else {
+			sender.sendMessage(ChatColor.GREEN + "Use \"/tc <language_code>\" to automatically translate all messages in to a language or \"/tc off\" to disable translations. You can find the language codes here: http://www.lingoes.net/en/translator/langcode.htm");
+		}
 	}
 
 	@Override

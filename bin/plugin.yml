@@ -72,6 +72,7 @@ commands:
   translate:
     description: Translate message and send in chat
     usage: /<command> <message>
+    aliases: [tc]
 
 permissions:
   commandspy.use:
