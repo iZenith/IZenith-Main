@@ -76,7 +76,7 @@ public class PlotListener implements Listener{
 	@SuppressWarnings("deprecation")
 	@EventHandler
 	public void onDelete(PlotDeleteEvent e){
-		Plot plot = new Plot(e.getWorld(),e.getPlotId(),null,true);
+		Plot plot = new Plot(e.getWorld(),e.getPlotId(),null);
 		Location l1 = new Location(plot.getWorld(),plot.getTop().getX() + 1,66,plot.getTop().getZ() + 1);
 		Location l2 = new Location(plot.getWorld(),plot.getBottom().getX(),66,plot.getTop().getZ() + 1);
 		Location l3 = new Location(plot.getWorld(),plot.getBottom().getX(),66,plot.getBottom().getZ());
