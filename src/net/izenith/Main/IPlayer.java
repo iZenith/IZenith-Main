@@ -239,6 +239,8 @@ public class IPlayer {
 					String name = player.getName();
 					String translation = "No translation";
 					String toLanguage = IPlayerHandler.getPlayer(player).getLanguage();
+					Language toLanguageEnum = Language.getByCode(toLanguage);
+					Language playerLanguageEnum = Language.getByCode(getLanguage());
 					if(getTranslate()){
 						String fromLanguage = Translate.detectLanguage(message);
 						translation = Translate.getTranslation("No translation","en",toLanguage);
@@ -254,12 +256,12 @@ public class IPlayer {
 						int playerIndex = message.toLowerCase().indexOf(name.toLowerCase());
 						command = "tellraw " + name + " [\"\",{\"text\":\"" + iPlayer.player.getDisplayName() + " \",\"hoverEvent\":{\"action\":\"show_text\",\"value\":{\"text\":\"\",\""
 								+ "extra\":[{\"text\":\"" + PermissionHandler.getGroupName(iPlayer.player) + "\\n\",\"color\":\"" + Util.getGroupColor(PermissionHandler.getGroupName(iPlayer.player)).name().toLowerCase() + "\"},"
-								+ "{\"text\":\"Language: \",\"color\":\"blue\"},{\"text\":\"" + getLanguage() + "\\n\",\"color\":\"green\"},"
+								+ "{\"text\":\"Language: \",\"color\":\"blue\"},{\"text\":\"" + (playerLanguageEnum == null ? "ENGLISH" : playerLanguageEnum.name()) + "\\n\",\"color\":\"green\"},"
 								+ "{\"text\":\"Playtime: \",\"color\":\"blue\"},{\"text\":\"" + getOnlineTimeHours() + " hours\",\"color\":\"green\"}]}}},{\"text\":\"\u2192 \",\"color\":\"black\"},"
 								+ "{\"text\":\"" + ChatColor.WHITE + message.substring(0,playerIndex) + ChatColor.RED + ChatColor.BOLD + player.getName() + ChatColor.RESET 
 								+ message.substring(playerIndex + player.getName().length()) 
 								+ "\",\"hoverEvent\":{\"action\":\"show_text\",\"value\":{\"text\":\"\",\"extra\":[{\"text\":\"Language: \",\"color\":\"blue\"},"
-								+ "{\"text\":\"" + toLanguage + "\\n\",\"color\":\"green\"},"
+								+ "{\"text\":\"" + (toLanguageEnum == null ? "ENGLISH" : toLanguageEnum.name()) + "\\n\",\"color\":\"green\"},"
 								+ "{\"text\":\"" + translation + "\",\"color\":\"white\"}]}}}]";
 						
 						player.playSound(player.getLocation(), Sound.NOTE_PLING, 1f, 1f);
@@ -272,20 +274,16 @@ public class IPlayer {
 					} else {
 						command = "tellraw " + name + " [\"\",{\"text\":\"" + iPlayer.player.getDisplayName() + " \",\"hoverEvent\":{\"action\":\"show_text\",\"value\":{\"text\":\"\",\""
 								+ "extra\":[{\"text\":\"" + PermissionHandler.getGroupName(iPlayer.player) + "\\n\",\"color\":\"" + Util.getGroupColor(PermissionHandler.getGroupName(iPlayer.player)).name().toLowerCase() + "\"},"
-								+ "{\"text\":\"Language: \",\"color\":\"blue\"},{\"text\":\"" + getLanguage() + "\\n\",\"color\":\"green\"},"
+								+ "{\"text\":\"Language: \",\"color\":\"blue\"},{\"text\":\"" + (playerLanguageEnum == null ? "ENGLISH" : playerLanguageEnum.name()) + "\\n\",\"color\":\"green\"},"
 								+ "{\"text\":\"Playtime: \",\"color\":\"blue\"},{\"text\":\"" + getOnlineTimeHours() + " hours\",\"color\":\"green\"}]}}},{\"text\":\"\u2192 \",\"color\":\"black\"},"
 								+ "{\"text\":\"" + message + "\",\"hoverEvent\":{\"action\":\"show_text\",\"value\":{\"text\":\"\",\"extra\":[{\"text\":\"Language: \",\"color\":\"blue\"},"
-								+ "{\"text\":\"" + toLanguage + "\\n\",\"color\":\"green\"},"
+								+ "{\"text\":\"" + (toLanguageEnum == null ? "ENGLISH" : toLanguageEnum.name()) + "\\n\",\"color\":\"green\"},"
 								+ "{\"text\":\"" + translation + "\",\"color\":\"white\"}]}}}]";
 					}
 					Bukkit.dispatchCommand(Bukkit.getConsoleSender(), command);
 				}
 			}).start();
 		}
-	}
-	
-	public static void main(String[] args) {
-		
 	}
 	
 }
