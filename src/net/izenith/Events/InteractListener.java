@@ -11,6 +11,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.block.Action;
+import org.bukkit.inventory.ItemStack;
 
 public class InteractListener implements Listener {
 
@@ -21,7 +22,7 @@ public class InteractListener implements Listener {
 			Player p = e.getPlayer();
 			BlockState b = e.getClickedBlock().getState(); //b is the block
 			if (b instanceof Skull) { //this test if b is a skull
-				if (!(p.isSneaking())){
+				if (!(p.isSneaking()) || (p.getItemInHand().getType() == Material.AIR)){
 					Skull s = (Skull) b;
 					String owner = s.getOwner();
 					if (owner == null) {
