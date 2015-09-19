@@ -44,6 +44,7 @@ public class PlayerLogListener extends Util implements Listener {
 		message = message.replaceAll("%player%",e.getPlayer().getName());
 		e.setJoinMessage(message);
 		iPlayer.setLastName(e.getPlayer().getName());
+		iPlayer.sendTabFootHeader();
 		CommandSpy.setupFilter(e.getPlayer());
 	}
 

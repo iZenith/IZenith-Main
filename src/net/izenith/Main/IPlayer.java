@@ -2,6 +2,7 @@ package net.izenith.Main;
 
 import java.io.File;
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -10,11 +11,20 @@ import java.util.regex.Matcher;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.block.Action;
+import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scoreboard.Team;
+
+import com.comphenix.protocol.PacketType;
+import com.comphenix.protocol.events.PacketContainer;
+import com.comphenix.protocol.wrappers.WrappedChatComponent;
 
 import net.izenith.Commands.Translate;
 
@@ -52,6 +62,15 @@ public class IPlayer {
 		}
 	}
 
+	public void setOnlineTime(Long time){
+		try {
+			config.set("time", time);
+			config.save(file);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
 	public long getOnlineTime() {
 		Long time = config.getLong("time");
 		time = time == null ? 0 : time;
@@ -107,11 +126,11 @@ public class IPlayer {
 			player.sendMessage(ChatColor.GREEN + "You have been given the kit " + ChatColor.BLUE + name);
 	}
 	
-	public String getColoredName() {
+	public String getColoredName(boolean truncate) {
 		ChatColor color = Util.getGroupColor(PermissionHandler.getGroupName(player));
 		String name = player.getName();
 		int length = name.length();
-		if (length > 14) {
+		if (length > 14 && truncate) {
 			int subtract = length - 14;
 			name = name.substring(0, length - subtract - 1);
 		}
@@ -230,7 +249,7 @@ public class IPlayer {
 	
 	public void sendChatMessage(final String text){
 		final IPlayer iPlayer = this;
-		final String message = Matcher.quoteReplacement(text);
+		final String message = Matcher.quoteReplacement(text).replaceAll("\"", "\\\\\"");
 		for(final Player player : Bukkit.getOnlinePlayers()){
 			new Thread(new Runnable(){
 				@Override
@@ -280,9 +299,22 @@ public class IPlayer {
 								+ "{\"text\":\"" + (toLanguageEnum == null ? "ENGLISH" : toLanguageEnum.name()) + "\\n\",\"color\":\"green\"},"
 								+ "{\"text\":\"" + translation + "\",\"color\":\"white\"}]}}}]";
 					}
+					System.out.println(command);
 					Bukkit.dispatchCommand(Bukkit.getConsoleSender(), command);
 				}
 			}).start();
+		}
+	}
+	
+	public void sendTabFootHeader(){
+		PacketContainer pc = Vars.protocolManager.createPacket(PacketType.Play.Server.PLAYER_LIST_HEADER_FOOTER);
+		pc.getChatComponents()
+		.write(0,WrappedChatComponent.fromText(Util.parseColors("         &7&l&m--------&f&lWelcome to &6&liZenith &7&l&m--------")))
+		.write(1, WrappedChatComponent.fromText(Util.parseColors("&7&l&m--------[&9&lDonate: &5&lstore.izenith.net&7&l&m]--------\n&7&l&m--------[&9&lTeamSpeak: &5&ltalk.izenith.net&7&l&m]--------")));
+		try {
+			Vars.protocolManager.sendServerPacket(player, pc);
+		} catch (InvocationTargetException e) {
+			e.printStackTrace();
 		}
 	}
 	

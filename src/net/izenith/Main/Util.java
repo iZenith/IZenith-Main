@@ -1,16 +1,12 @@
 package net.izenith.Main;
 
-import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -18,7 +14,6 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Server;
 import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
@@ -27,11 +22,10 @@ import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.scoreboard.Team;
 import org.bukkit.util.io.BukkitObjectInputStream;
 import org.bukkit.util.io.BukkitObjectOutputStream;
-import org.json.simple.JSONObject;
 import org.yaml.snakeyaml.external.biz.base64Coder.Base64Coder;
 
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
+import com.comphenix.protocol.wrappers.WrappedGameProfile;
+import com.comphenix.protocol.wrappers.WrappedServerPing;
 import com.intellectualcrafters.plot.api.PlotAPI;
 
 import net.izenith.Commands.AdminChat;
@@ -63,17 +57,7 @@ public class Util {
 	}
 
 	public static String parseColors(String message) {
-		String chars = "abcdefrlomn1234567890";
-
-		for(int i = 0; i < message.length() - 1; i++){
-			Character currentChar = message.charAt(i);
-			Character nextChar = message.charAt(i+1);
-			if(currentChar == '&' && contains(chars.toCharArray(),nextChar) && (i == 0 || message.charAt(i-1) != '&')){
-				message = message.substring(0,i) + ChatColor.getByChar(nextChar) + (message.length() > i+2 ? message.substring(i+2):"");
-			}
-		}
-		message.replace("&&", "&");
-		return message;
+		return ChatColor.translateAlternateColorCodes('&',message);
 	}
 
 	public static boolean contains(char[] array, Character character){
@@ -307,7 +291,9 @@ public class Util {
 	
 	public static void updatePlayerList(){
 		for(Player player : Bukkit.getOnlinePlayers()){
-			IPlayerHandler.getPlayer(player).setTeam();
+			IPlayer iPlayer = IPlayerHandler.getPlayer(player); 
+			iPlayer.setTeam();
+			iPlayer.sendTabFootHeader();
 		}
 	}
 	

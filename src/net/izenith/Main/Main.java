@@ -3,6 +3,7 @@ package net.izenith.Main;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -56,6 +57,7 @@ public class Main extends JavaPlugin {
 				try {
 					hC.onCommand(sender, cmd, label, args);
 				} catch (ArrayIndexOutOfBoundsException e) {
+					e.printStackTrace();
 					sender.sendMessage(ChatColor.RED + "Invalid arguments!");
 				}
 				return true;

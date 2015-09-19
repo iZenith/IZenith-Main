@@ -12,6 +12,9 @@ import org.bukkit.scoreboard.Scoreboard;
 import org.bukkit.scoreboard.ScoreboardManager;
 import org.bukkit.scoreboard.Team;
 
+import com.comphenix.protocol.ProtocolLibrary;
+import com.comphenix.protocol.ProtocolManager;
+
 import net.bobmandude9889.GUI.GUI;
 import net.bobmandude9889.GUI.GUIHandler;
 import net.izenith.Chat.ChatHandler;
@@ -37,6 +40,7 @@ import net.izenith.Commands.UpdateList;
 import net.izenith.Commands.WorldEditPerms;
 import net.izenith.Events.DamageListener;
 import net.izenith.Events.InteractListener;
+import net.izenith.Events.PacketListener;
 import net.izenith.Events.PlayerLogListener;
 import net.izenith.Events.PlayerMoveListener;
 import net.izenith.Gamemode.TeleportListener;
@@ -56,6 +60,7 @@ public class Vars {
 	public static GUI tpGUI;
 	public static HashMap<Player,Long> times;
 	public static List<Player> adminChat;
+	public static ProtocolManager protocolManager;
  
 	public static void init(Main plugin) {
 		guiHandler = new GUIHandler(plugin);
@@ -124,11 +129,13 @@ public class Vars {
 		lis.add(new InteractListener());
 		lis.add(new PlayerMoveListener());
 		lis.add(new DamageListener());
+		lis.add(new PacketListener());
 		//lis.add(new FrameListener());
 		for (Listener l : lis) {
 			plugin.getServer().getPluginManager().registerEvents(l, plugin);
 		}
 		/* new TimeHandler(); */
+		protocolManager = ProtocolLibrary.getProtocolManager();
 	}
 
 }
