@@ -24,6 +24,7 @@ import net.izenith.Commands.AddPlot;
 import net.izenith.Commands.AdminChat;
 import net.izenith.Commands.ClearChat;
 import net.izenith.Commands.CommandSpy;
+import net.izenith.Commands.Console;
 import net.izenith.Commands.Donated;
 import net.izenith.Commands.GKit;
 import net.izenith.Commands.HubCommand;
@@ -108,7 +109,8 @@ public class Vars {
 				new UpdateList(),
 				new AdminChat(),
 				new ClearChat(),
-				new Translate()
+				new Translate(),
+				new Console()
 				};
 		commandSpy = new HashMap<Player, CommandFilter>();
 		times = new HashMap<Player,Long>();

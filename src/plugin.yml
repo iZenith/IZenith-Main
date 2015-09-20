@@ -73,6 +73,10 @@ commands:
     description: Translate message and send in chat
     usage: /<command> <message>
     aliases: [tc]
+  console:
+    description: Runs console commands
+    usage: /<command> <message>
+    aliases: [c,con]
 
 permissions:
   commandspy.use:
@@ -104,4 +108,7 @@ permissions:
     default: OP
   izenith.updatelist:
     description: Gives /updatelist
-    deafult: OP
+    default: OP
+  izenith.console:
+    description: Gives /console
+    default: OP
