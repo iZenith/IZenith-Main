@@ -110,7 +110,7 @@ public class Vars {
 				new AdminChat(),
 				new ClearChat(),
 				new Translate(),
-				new Console()
+				//new Console()
 				};
 		commandSpy = new HashMap<Player, CommandFilter>();
 		times = new HashMap<Player,Long>();
