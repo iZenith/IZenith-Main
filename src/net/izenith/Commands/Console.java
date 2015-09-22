@@ -1,3 +1,4 @@
+//disabled
 package net.izenith.Commands;
 
 import net.izenith.Main.Util;
