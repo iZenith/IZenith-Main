@@ -299,7 +299,6 @@ public class IPlayer {
 								+ "{\"text\":\"" + (toLanguageEnum == null ? "ENGLISH" : toLanguageEnum.name()) + "\\n\",\"color\":\"green\"},"
 								+ "{\"text\":\"" + translation + "\",\"color\":\"white\"}]}}}]";
 					}
-					System.out.println(command);
 					Bukkit.dispatchCommand(Bukkit.getConsoleSender(), command);
 				}
 			}).start();
@@ -309,8 +308,8 @@ public class IPlayer {
 	public void sendTabFootHeader(){
 		PacketContainer pc = Vars.protocolManager.createPacket(PacketType.Play.Server.PLAYER_LIST_HEADER_FOOTER);
 		pc.getChatComponents()
-		.write(0,WrappedChatComponent.fromText(Util.parseColors("         &7&l&m--------&f&lWelcome to &6&liZenith &7&l&m--------")))
-		.write(1, WrappedChatComponent.fromText(Util.parseColors("&7&l&m--------[&9&lDonate: &5&lstore.izenith.net&7&l&m]--------\n&7&l&m--------[&9&lTeamSpeak: &5&ltalk.izenith.net&7&l&m]--------")));
+		.write(0,WrappedChatComponent.fromText(Util.parseColors("&7&l&m--------&f&lWelcome to &6&liZenith&7&l&m--------")))
+		.write(1, WrappedChatComponent.fromText(Util.parseColors("&7&l&m--------[&9&lDonate: &5&lstore.izenith.net&7&l&m]--------\n&7&l&m   --------[&9&lTeamSpeak: &5&ltalk.izenith.net&7&l&m]--------")));
 		try {
 			Vars.protocolManager.sendServerPacket(player, pc);
 		} catch (InvocationTargetException e) {

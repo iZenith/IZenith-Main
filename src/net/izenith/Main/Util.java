@@ -5,7 +5,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 
 import org.bukkit.Bukkit;
@@ -24,8 +24,6 @@ import org.bukkit.util.io.BukkitObjectInputStream;
 import org.bukkit.util.io.BukkitObjectOutputStream;
 import org.yaml.snakeyaml.external.biz.base64Coder.Base64Coder;
 
-import com.comphenix.protocol.wrappers.WrappedGameProfile;
-import com.comphenix.protocol.wrappers.WrappedServerPing;
 import com.intellectualcrafters.plot.api.PlotAPI;
 
 import net.izenith.Commands.AdminChat;
@@ -329,12 +327,26 @@ public class Util {
 		}
 	}*/
 	
-	public static String buildString(String[] args, String seperator){
+	public static String buildString(Collection<String> args, String seperator, int startingArg, int maxLength){
+		List<String> retList = new ArrayList<String>();
 		String ret = "";
-		for(String s : args){
+		for(int i = startingArg; i < args.size(); i++){
+			String s = (String) args.toArray()[i];
 			ret+=s+seperator;
+			if(ret.length() > maxLength){
+				retList.add(ret);
+				ret = "";
+			}
 		}
-		return ret.substring(0,ret.length() - seperator.length());
+		retList.add(ret);
+		ret = "";
+		for(String s : retList){
+			ret+=s+"\n";
+		}
+		if(ret.length() > 0){
+			ret = ret.substring(0,((ret.length() - 2) - seperator.length()) + 1); 
+		}
+		return ret;
 	}
 	
 }
