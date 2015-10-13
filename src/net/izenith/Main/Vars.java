@@ -1,5 +1,6 @@
 package net.izenith.Main;
 
+import java.net.ServerSocket;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -24,9 +25,9 @@ import net.izenith.Commands.AddPlot;
 import net.izenith.Commands.AdminChat;
 import net.izenith.Commands.ClearChat;
 import net.izenith.Commands.CommandSpy;
-import net.izenith.Commands.Console;
 import net.izenith.Commands.Donated;
 import net.izenith.Commands.GKit;
+import net.izenith.Commands.GetConsoleKey;
 import net.izenith.Commands.HubCommand;
 import net.izenith.Commands.Kit;
 import net.izenith.Commands.Lel;
@@ -39,11 +40,12 @@ import net.izenith.Commands.Translate;
 import net.izenith.Commands.Trusted;
 import net.izenith.Commands.UpdateList;
 import net.izenith.Commands.WorldEditPerms;
+import net.izenith.Events.BowListener;
 import net.izenith.Events.DamageListener;
 import net.izenith.Events.InteractListener;
-import net.izenith.Events.ServerListHandler;
 import net.izenith.Events.PlayerLogListener;
 import net.izenith.Events.PlayerMoveListener;
+import net.izenith.Events.ServerListHandler;
 import net.izenith.Gamemode.TeleportListener;
 import net.izenith.PlotEditor.SetFloor;
 
@@ -62,6 +64,7 @@ public class Vars {
 	public static HashMap<Player,Long> times;
 	public static List<Player> adminChat;
 	public static ProtocolManager protocolManager;
+	public static ServerSocket remoteConsoleSocket;
  
 	public static void init(Main plugin) {
 		guiHandler = new GUIHandler(plugin);
@@ -110,6 +113,7 @@ public class Vars {
 				new AdminChat(),
 				new ClearChat(),
 				new Translate(),
+				new GetConsoleKey(),
 				//new Console()
 				};
 		commandSpy = new HashMap<Player, CommandFilter>();
@@ -131,6 +135,7 @@ public class Vars {
 		lis.add(new InteractListener());
 		lis.add(new PlayerMoveListener());
 		lis.add(new DamageListener());
+		lis.add(new BowListener());
 		new ServerListHandler();
 		//lis.add(new FrameListener());
 		for (Listener l : lis) {

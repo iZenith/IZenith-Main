@@ -1,9 +1,9 @@
 package net.izenith.Main;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -24,12 +24,18 @@ public class Main extends JavaPlugin {
 		CommandSpy.loadFilters();
 		Util.loadAllOnlineTimes();
 		Util.updatePlayerList();
+		//Vars.remoteConsoleSocket = Util.openRemoteConsoleServer();
 		System.out.println("iZenith Enabled");
 	}
 	
 	@Override
 	public void onDisable() {
 		Util.setAllOnlineTimes();
+		try {
+			Vars.remoteConsoleSocket.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 	@Override

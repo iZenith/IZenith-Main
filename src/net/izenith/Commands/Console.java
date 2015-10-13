@@ -1,17 +1,13 @@
 //disabled
 package net.izenith.Commands;
 
-import net.izenith.Main.Util;
-import net.izenith.Main.Vars;
-
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
 import org.bukkit.permissions.Permission;
 
-import com.sun.org.apache.bcel.internal.generic.GETSTATIC;
+import net.izenith.Main.Vars;
 
 public class Console implements HubCommand {
 

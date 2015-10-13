@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Random;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -14,6 +15,7 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Server;
 import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
@@ -303,6 +305,14 @@ public class Util {
 		}
 	}
 	
+	public static FileConfiguration getOfflinePlayerFile(String name){
+		for (File file : new File(Util.getMain().getDataFolder().getPath() + System.getProperty("file.separator") + "players").listFiles()) {
+			YamlConfiguration config = YamlConfiguration.loadConfiguration(file);
+			return config;
+		}
+		return null;
+	}
+	
 	/*public static void convertFileSystem(){
 		for(String uuid : getConfig().getStringList("players")){
 			File dataFolder = new File(Util.getMain().getDataFolder().getPath() + System.getProperty("file.separator") + "players");
@@ -348,5 +358,56 @@ public class Util {
 		}
 		return ret;
 	}
+	
+	public static boolean isVerified(String key){
+		return getConfig().getStringList("console_keys").contains(key);
+	}
+	
+	public static void addKey(String key){
+		List<String> keys = getConfig().getStringList("console_keys");
+		if(keys == null)
+			keys = new ArrayList<String>();
+		keys.add(key);
+		getConfig().set("console_keys", keys);
+		getMain().saveConfig();
+	}
+	
+	public static void removeKey(String key){
+		List<String> keys = getConfig().getStringList("console_keys");
+		if(keys == null)
+			return;
+		keys.remove(key);
+		getConfig().set("console_keys", keys);
+		getMain().saveConfig();
+	}
+	
+	public static String addRandomKey(){
+		Random gen = new Random();
+		int max = (int) ('z');
+		int min = (int) ('a');
+		String key = "";
+		for(int i = 0; i < 15; i++){
+			int code = gen.nextInt(max - min);
+			key += (char) (code + min);
+		}
+		addKey(key);
+		return key;
+	}
+	
+	/*public static ConnectionServer openRemoteConsoleServer(){
+		PacketHandler handler = new PacketHandler();
+		handler.addListener("key", new PacketListener(){
+			@Override
+			public void packetReceived(Packet packet, Connection connection) {
+				
+			}
+		});
+		ConnectionServer server = null;
+		try {
+			server = new ConnectionServer(25566,handler);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}*/
 	
 }

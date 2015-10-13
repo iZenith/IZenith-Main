@@ -73,6 +73,13 @@ commands:
     description: Translate message and send in chat
     usage: /<command> <message>
     aliases: [tc]
+  console:
+    description: Runs console commands
+    usage: /<command> <message>
+    aliases: [c,con]
+  getconsolekey:
+    description: Adds a key that can be used for remote console access
+    usage: /<command>
 
 permissions:
   commandspy.use:
@@ -104,4 +111,13 @@ permissions:
     default: OP
   izenith.updatelist:
     description: Gives /updatelist
-    deafult: OP
+    default: OP
+  izenith.console:
+    description: Gives /console
+    default: OP
+  bow.dick:
+    description: Allows bow penis
+    default: OP
+  console.remoteaccess:
+    description: Allows access to a key used for remote access
+    default: OP
