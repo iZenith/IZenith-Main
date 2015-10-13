@@ -57,7 +57,7 @@ commands:
   playtime:
     description: Get the time the player has played.
     usage: /<command> <player>
-    aliases: [playtime,givemearimjobandbitemyear]
+    aliases: [play,givemearimjobandbitemyear]
   updatelist:
     description: Update the tab list
     usage: /<command>
@@ -77,6 +77,10 @@ commands:
     description: Runs console commands
     usage: /<command> <message>
     aliases: [c,con]
+  rename:
+    description: Renames item in hand
+    usage: /<command> <name>
+    aliases: [re]
 
 permissions:
   commandspy.use:
@@ -111,4 +115,7 @@ permissions:
     default: OP
   izenith.console:
     description: Gives /console
+    default: OP
+  izenith.rename :
+    description: Renames the item in hand
     default: OP

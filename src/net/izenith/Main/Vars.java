@@ -32,6 +32,7 @@ import net.izenith.Commands.Kit;
 import net.izenith.Commands.Lel;
 import net.izenith.Commands.PlayTime;
 import net.izenith.Commands.Ranks;
+import net.izenith.Commands.Rename;
 import net.izenith.Commands.Report;
 import net.izenith.Commands.ServerIp;
 import net.izenith.Commands.Suspend;
@@ -39,6 +40,7 @@ import net.izenith.Commands.Translate;
 import net.izenith.Commands.Trusted;
 import net.izenith.Commands.UpdateList;
 import net.izenith.Commands.WorldEditPerms;
+import net.izenith.Events.BlockPlaceListener;
 import net.izenith.Events.DamageListener;
 import net.izenith.Events.InteractListener;
 import net.izenith.Events.ServerListHandler;
@@ -110,6 +112,7 @@ public class Vars {
 				new AdminChat(),
 				new ClearChat(),
 				new Translate(),
+				new Rename(),
 				//new Console()
 				};
 		commandSpy = new HashMap<Player, CommandFilter>();
@@ -131,6 +134,7 @@ public class Vars {
 		lis.add(new InteractListener());
 		lis.add(new PlayerMoveListener());
 		lis.add(new DamageListener());
+		lis.add(new BlockPlaceListener());
 		new ServerListHandler();
 		//lis.add(new FrameListener());
 		for (Listener l : lis) {
