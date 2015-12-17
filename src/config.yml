@@ -15,10 +15,10 @@ commandspy:
 colors:
   - 'Visitor,7'
   - 'Member,a'
-  - 'MemberP,a'
+  - 'MemberP,2'
   - 'Trusted,b'
-  - 'Mod,9'
-  - 'Admin,c'
+  - 'Mod,c'
+  - 'Admin,9'
   - 'Owner,4'
   
 ranks:
