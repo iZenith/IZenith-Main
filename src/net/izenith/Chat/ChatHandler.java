@@ -19,6 +19,9 @@ public class ChatHandler implements Listener {
 	@EventHandler(priority = EventPriority.HIGHEST)
 	public void chat(AsyncPlayerChatEvent e) {
 		if(Vars.adminChat.contains(e.getPlayer()) || e.getMessage().startsWith(",") && e.getPlayer().hasPermission("izenith.adminchat")){
+			if (e.getMessage().length() == 1){
+				return;
+			}
 			e.setCancelled(true);
 			Util.sendAdminMessage(e.getMessage().startsWith(",") ? e.getMessage().substring(1) : e.getMessage(), e.getPlayer());
 			return;
