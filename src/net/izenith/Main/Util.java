@@ -139,13 +139,14 @@ public class Util {
 		try {
 			Vars.scoreboard.registerNewTeam("Visitor").setPrefix(parseColors("&7"));
 			Vars.scoreboard.registerNewTeam("Member").setPrefix(parseColors("&a"));
-			Vars.scoreboard.registerNewTeam("MemberP").setPrefix(parseColors("&a"));
+			Vars.scoreboard.registerNewTeam("MemberP").setPrefix(parseColors("&2"));
 			Vars.scoreboard.registerNewTeam("Trusted").setPrefix(parseColors("&b"));
-			Vars.scoreboard.registerNewTeam("Mod").setPrefix(parseColors("&9"));
+			Vars.scoreboard.registerNewTeam("Mod").setPrefix(parseColors("&c"));
 			Vars.scoreboard.registerNewTeam("Developer").setPrefix(parseColors("&e"));
-			Vars.scoreboard.registerNewTeam("Admin").setPrefix(parseColors("&c"));
+			Vars.scoreboard.registerNewTeam("Admin").setPrefix(parseColors("&4"));
 			Vars.scoreboard.registerNewTeam("Owner").setPrefix(parseColors("&4"));
 		} catch (Exception e) {
+			e.printStackTrace();
 		}
 		for (Team t : Vars.scoreboard.getTeams()) {
 			Vars.teams.add(t);
