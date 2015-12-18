@@ -27,6 +27,10 @@ import org.bukkit.util.io.BukkitObjectOutputStream;
 import org.yaml.snakeyaml.external.biz.base64Coder.Base64Coder;
 
 import com.intellectualcrafters.plot.api.PlotAPI;
+import com.intellectualcrafters.plot.commands.RequiredType;
+import com.intellectualcrafters.plot.object.Plot;
+import com.intellectualcrafters.plot.object.PlotPlayer;
+import com.plotsquared.general.commands.Command;
 
 import net.izenith.Commands.AdminChat;
 import net.milkbowl.vault.permission.Permission;
@@ -41,6 +45,38 @@ public class Util {
 			plotAPI = new PlotAPI(getMain());
 		}
 		return plotAPI;
+	}
+	
+	public static void RegisterPlotCommands(){
+		Command<PlotPlayer> cmd = new Command<PlotPlayer>("middle", "/p middle", "Teleport you to the center of the plot", "plot.middle", new String[] {"center", "m"}, RequiredType.PLAYER){
+
+			@Override
+			public boolean onCommand(PlotPlayer p, String[] args) {
+				Plot plot = p.getCurrentPlot();
+				if (plot == null){
+					p.sendMessage("§7§l[§6§liZenith§r§lPlots§7§l] §3You are not in a plot.");
+					return false;
+				}
+				com.intellectualcrafters.plot.object.Location b = plot.getBottom();
+				com.intellectualcrafters.plot.object.Location t = plot.getTop();
+				double midX = b.getX() + t.getX();
+				midX = midX / 2;
+				double midZ = b.getZ() + t.getZ();
+				midZ = midZ / 2;
+				com.intellectualcrafters.plot.object.Location midLoc = null;
+				int y = 256;
+				boolean isOnLand = false;
+				while (isOnLand == false) {
+					midLoc = new com.intellectualcrafters.plot.object.Location(p.getLocation().getWorld(), (int) midX, y, (int) midZ);
+					if (((Location) midLoc.toBukkitLocation()).getBlock().getType() != Material.AIR) {
+						isOnLand = true;
+					} else y--;
+				}
+				p.sendMessage("§7§l[§6§liZenith§r§lPlots§7§l] §3You have been teleported to the center of the plot.");
+				p.teleport(midLoc);
+				return true;
+			}		
+		};
 	}
 
 	public static void line(Location l1, Location l2, Material material) {
@@ -139,14 +175,13 @@ public class Util {
 		try {
 			Vars.scoreboard.registerNewTeam("Visitor").setPrefix(parseColors("&7"));
 			Vars.scoreboard.registerNewTeam("Member").setPrefix(parseColors("&a"));
-			Vars.scoreboard.registerNewTeam("MemberP").setPrefix(parseColors("&2"));
+			Vars.scoreboard.registerNewTeam("MemberP").setPrefix(parseColors("&a"));
 			Vars.scoreboard.registerNewTeam("Trusted").setPrefix(parseColors("&b"));
-			Vars.scoreboard.registerNewTeam("Mod").setPrefix(parseColors("&c"));
+			Vars.scoreboard.registerNewTeam("Mod").setPrefix(parseColors("&9"));
 			Vars.scoreboard.registerNewTeam("Developer").setPrefix(parseColors("&e"));
-			Vars.scoreboard.registerNewTeam("Admin").setPrefix(parseColors("&4"));
+			Vars.scoreboard.registerNewTeam("Admin").setPrefix(parseColors("&c"));
 			Vars.scoreboard.registerNewTeam("Owner").setPrefix(parseColors("&4"));
 		} catch (Exception e) {
-			e.printStackTrace();
 		}
 		for (Team t : Vars.scoreboard.getTeams()) {
 			Vars.teams.add(t);

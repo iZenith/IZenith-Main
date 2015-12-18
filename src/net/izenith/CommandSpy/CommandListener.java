@@ -2,16 +2,22 @@ package net.izenith.CommandSpy;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
+
+import com.intellectualcrafters.plot.api.PlotAPI;
+import com.intellectualcrafters.plot.object.Plot;
 
 import net.izenith.Main.Util;
 import net.izenith.Main.Vars;
 
 public class CommandListener implements Listener {
 
+	@SuppressWarnings("deprecation")
 	@EventHandler
 	public void onPlayerCommand(PlayerCommandPreprocessEvent e) {
 		for (Player p : Vars.main.getServer().getOnlinePlayers()) {
@@ -41,7 +47,7 @@ public class CommandListener implements Listener {
 			e.setCancelled(true);
 			Bukkit.dispatchCommand(e.getPlayer(), "warp info");
 		}
-
+		
 		if (Util.startsWithIgnoreCase(e.getMessage(), "/pex")) {
 			Bukkit.getScheduler().scheduleSyncDelayedTask(Util.getMain(), new Runnable() {
 				public void run() {
