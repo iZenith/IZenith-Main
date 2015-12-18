@@ -27,6 +27,7 @@ import org.bukkit.util.io.BukkitObjectOutputStream;
 import org.yaml.snakeyaml.external.biz.base64Coder.Base64Coder;
 
 import com.intellectualcrafters.plot.api.PlotAPI;
+import com.intellectualcrafters.plot.commands.MainCommand;
 import com.intellectualcrafters.plot.commands.RequiredType;
 import com.intellectualcrafters.plot.object.Plot;
 import com.intellectualcrafters.plot.object.PlotPlayer;
@@ -46,14 +47,14 @@ public class Util {
 		}
 		return plotAPI;
 	}
-	
-	public static void RegisterPlotCommands(){
-		Command<PlotPlayer> cmd = new Command<PlotPlayer>("middle", "/p middle", "Teleport you to the center of the plot", "plot.middle", new String[] {"center", "m"}, RequiredType.PLAYER){
+
+	public static void RegisterPlotCommands() {
+		Command<PlotPlayer> cmd = new Command<PlotPlayer>("middle", "/p middle", "Teleport you to the center of the plot", "plot.middle", new String[] { "center", "m" }, RequiredType.PLAYER) {
 
 			@Override
 			public boolean onCommand(PlotPlayer p, String[] args) {
 				Plot plot = p.getCurrentPlot();
-				if (plot == null){
+				if (plot == null) {
 					p.sendMessage("§7§l[§6§liZenith§r§lPlots§7§l] §3You are not in a plot.");
 					return false;
 				}
@@ -64,19 +65,23 @@ public class Util {
 				double midZ = b.getZ() + t.getZ();
 				midZ = midZ / 2;
 				com.intellectualcrafters.plot.object.Location midLoc = null;
-				int y = 256;
 				boolean isOnLand = false;
-				while (isOnLand == false) {
+				for (int y = 256; y >= 0; y--) {
 					midLoc = new com.intellectualcrafters.plot.object.Location(p.getLocation().getWorld(), (int) midX, y, (int) midZ);
 					if (((Location) midLoc.toBukkitLocation()).getBlock().getType() != Material.AIR) {
 						isOnLand = true;
-					} else y--;
+					}
 				}
-				p.sendMessage("§7§l[§6§liZenith§r§lPlots§7§l] §3You have been teleported to the center of the plot.");
+				Player bP = (Player) p;
+				if(!isOnLand){
+					bP.setFlying(true);
+				}
+				p.sendMessage("You have been teleported to the center of the plot.");
 				p.teleport(midLoc);
 				return true;
-			}		
+			}
 		};
+		MainCommand.getInstance().addCommand(cmd);
 	}
 
 	public static void line(Location l1, Location l2, Material material) {
@@ -86,23 +91,23 @@ public class Util {
 		double y = l1.getBlockY();
 		double z = l1.getBlockZ();
 		double interval = 1 / (Math.abs(ySlope) > Math.abs(zSlope) ? ySlope : zSlope);
-		for (double x = l1.getBlockX(); x - l1.getBlockX() < Math
-				.abs(xSlope); x += interval, y += ySlope, z += zSlope) {
+		for (double x = l1.getBlockX(); x - l1.getBlockX() < Math.abs(xSlope); x += interval, y += ySlope, z += zSlope) {
 			new Location(l1.getWorld(), x, y, z).getBlock().setType(material);
 		}
 	}
 
 	public static String parseColors(String message) {
-		return ChatColor.translateAlternateColorCodes('&',message);
+		return ChatColor.translateAlternateColorCodes('&', message);
 	}
 
-	public static boolean contains(char[] array, Character character){
-		for(Character c : array){
-			if(c == character) return true;
+	public static boolean contains(char[] array, Character character) {
+		for (Character c : array) {
+			if (c == character)
+				return true;
 		}
 		return false;
 	}
-	
+
 	public static String getItemName(ItemStack is) {
 		if (is != null && is.hasItemMeta() && is.getItemMeta().hasDisplayName()) {
 			return is.getItemMeta().getDisplayName();
@@ -112,8 +117,7 @@ public class Util {
 
 	public static Permission getPermissions() {
 		Permission permission = null;
-		RegisteredServiceProvider<Permission> permissionProvider = Bukkit.getServer().getServicesManager()
-				.getRegistration(net.milkbowl.vault.permission.Permission.class);
+		RegisteredServiceProvider<Permission> permissionProvider = Bukkit.getServer().getServicesManager().getRegistration(net.milkbowl.vault.permission.Permission.class);
 		if (permissionProvider != null) {
 			permission = permissionProvider.getProvider();
 		}
@@ -122,20 +126,17 @@ public class Util {
 
 	public static boolean isIn(Location loc1, Location loc2, Location loc3) {
 		int n = 0;
-		if (loc2.getBlockX() > loc3.getBlockX() && loc1.getBlockX() >= loc3.getBlockX()
-				&& loc1.getBlockX() <= loc2.getBlockX()) {
+		if (loc2.getBlockX() > loc3.getBlockX() && loc1.getBlockX() >= loc3.getBlockX() && loc1.getBlockX() <= loc2.getBlockX()) {
 			n++;
 		} else if (loc1.getBlockX() >= loc2.getBlockX() && loc1.getBlockX() <= loc3.getBlockX()) {
 			n++;
 		}
-		if (loc2.getBlockY() > loc3.getBlockY() && loc1.getBlockY() >= loc3.getBlockY()
-				&& loc1.getBlockY() <= loc2.getBlockY()) {
+		if (loc2.getBlockY() > loc3.getBlockY() && loc1.getBlockY() >= loc3.getBlockY() && loc1.getBlockY() <= loc2.getBlockY()) {
 			n++;
 		} else if (loc1.getBlockY() >= loc2.getBlockY() && loc1.getBlockY() <= loc3.getBlockY()) {
 			n++;
 		}
-		if (loc2.getBlockZ() > loc3.getBlockZ() && loc1.getBlockZ() >= loc3.getBlockZ()
-				&& loc1.getBlockZ() <= loc2.getBlockZ()) {
+		if (loc2.getBlockZ() > loc3.getBlockZ() && loc1.getBlockZ() >= loc3.getBlockZ() && loc1.getBlockZ() <= loc2.getBlockZ()) {
 			n++;
 		} else if (loc1.getBlockZ() >= loc2.getBlockZ() && loc1.getBlockZ() <= loc3.getBlockZ()) {
 			n++;
@@ -288,19 +289,19 @@ public class Util {
 		return message.toLowerCase().startsWith(regex.toLowerCase());
 	}
 
-	public static Location getLocation(com.intellectualcrafters.plot.object.Location location){
-		return new Location(Bukkit.getWorld(location.getWorld()),location.getX(),location.getY(),location.getZ());
+	public static Location getLocation(com.intellectualcrafters.plot.object.Location location) {
+		return new Location(Bukkit.getWorld(location.getWorld()), location.getX(), location.getY(), location.getZ());
 	}
-	
-	public static void suspend(Player player){
+
+	public static void suspend(Player player) {
 		getConfig().set("suspended." + player.getUniqueId().toString(), getPermissions().getPlayerGroups(player)[0]);
 		Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "pex user " + player.getName() + " group set suspended");
 		Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "pex user " + player.getName() + " add -*");
 		player.sendMessage(ChatColor.RED + "You are now suspended and no longer have any permissions");
 		Util.getMain().saveConfig();
 	}
-	
-	public static void removeSuspend(Player player){
+
+	public static void removeSuspend(Player player) {
 		Util.getMain().reloadConfig();
 		Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "pex user " + player.getName() + " group set " + getConfig().getString("suspended." + player.getUniqueId().toString()));
 		Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "pex user " + player.getName() + " remove -*");
@@ -308,47 +309,47 @@ public class Util {
 		player.sendMessage(ChatColor.GREEN + "You are no longer suspended!");
 		Util.getMain().saveConfig();
 	}
-	
-	public static void setAllOnlineTimes(){
-		for(Player player : Bukkit.getOnlinePlayers()){
+
+	public static void setAllOnlineTimes() {
+		for (Player player : Bukkit.getOnlinePlayers()) {
 			IPlayerHandler.getPlayer(player).setOnlineTime();
 		}
 	}
-	
-	public static void loadOnlineTime(Player player){
-		Vars.times.put(player,System.currentTimeMillis());
+
+	public static void loadOnlineTime(Player player) {
+		Vars.times.put(player, System.currentTimeMillis());
 	}
-	
-	public static void loadAllOnlineTimes(){
-		for(Player player : Bukkit.getOnlinePlayers()){
+
+	public static void loadAllOnlineTimes() {
+		for (Player player : Bukkit.getOnlinePlayers()) {
 			loadOnlineTime(player);
 		}
 	}
-	
-	public static void updatePlayerList(){
-		for(Player player : Bukkit.getOnlinePlayers()){
-			IPlayer iPlayer = IPlayerHandler.getPlayer(player); 
+
+	public static void updatePlayerList() {
+		for (Player player : Bukkit.getOnlinePlayers()) {
+			IPlayer iPlayer = IPlayerHandler.getPlayer(player);
 			iPlayer.setTeam();
 			iPlayer.sendTabFootHeader();
 		}
 	}
-	
-	public static void sendAdminMessage(String message, Player sender){
-		for(Player player : Bukkit.getOnlinePlayers()){
-			if(player.hasPermission(new AdminChat().getPermission())){
+
+	public static void sendAdminMessage(String message, Player sender) {
+		for (Player player : Bukkit.getOnlinePlayers()) {
+			if (player.hasPermission(new AdminChat().getPermission())) {
 				player.sendMessage(ChatColor.WHITE + "Admin" + ChatColor.GOLD + "Chat " + sender.getDisplayName() + ChatColor.GRAY + ": " + ChatColor.RED + message);
 			}
 		}
 	}
-	
-	public static FileConfiguration getOfflinePlayerFile(String name){
+
+	public static FileConfiguration getOfflinePlayerFile(String name) {
 		for (File file : new File(Util.getMain().getDataFolder().getPath() + System.getProperty("file.separator") + "players").listFiles()) {
 			YamlConfiguration config = YamlConfiguration.loadConfiguration(file);
 			return config;
 		}
 		return null;
 	}
-	
+
 	/*public static void convertFileSystem(){
 		for(String uuid : getConfig().getStringList("players")){
 			File dataFolder = new File(Util.getMain().getDataFolder().getPath() + System.getProperty("file.separator") + "players");
@@ -372,64 +373,64 @@ public class Util {
 			}
 		}
 	}*/
-	
-	public static String buildString(Collection<String> args, String seperator, int startingArg, int maxLength){
+
+	public static String buildString(Collection<String> args, String seperator, int startingArg, int maxLength) {
 		List<String> retList = new ArrayList<String>();
 		String ret = "";
-		for(int i = startingArg; i < args.size(); i++){
+		for (int i = startingArg; i < args.size(); i++) {
 			String s = (String) args.toArray()[i];
-			ret+=s+seperator;
-			if(ret.length() > maxLength){
+			ret += s + seperator;
+			if (ret.length() > maxLength) {
 				retList.add(ret);
 				ret = "";
 			}
 		}
 		retList.add(ret);
 		ret = "";
-		for(String s : retList){
-			ret+=s+"\n";
+		for (String s : retList) {
+			ret += s + "\n";
 		}
-		if(ret.length() > 0){
-			ret = ret.substring(0,((ret.length() - 2) - seperator.length()) + 1); 
+		if (ret.length() > 0) {
+			ret = ret.substring(0, ((ret.length() - 2) - seperator.length()) + 1);
 		}
 		return ret;
 	}
-	
-	public static boolean isVerified(String key){
+
+	public static boolean isVerified(String key) {
 		return getConfig().getStringList("console_keys").contains(key);
 	}
-	
-	public static void addKey(String key){
+
+	public static void addKey(String key) {
 		List<String> keys = getConfig().getStringList("console_keys");
-		if(keys == null)
+		if (keys == null)
 			keys = new ArrayList<String>();
 		keys.add(key);
 		getConfig().set("console_keys", keys);
 		getMain().saveConfig();
 	}
-	
-	public static void removeKey(String key){
+
+	public static void removeKey(String key) {
 		List<String> keys = getConfig().getStringList("console_keys");
-		if(keys == null)
+		if (keys == null)
 			return;
 		keys.remove(key);
 		getConfig().set("console_keys", keys);
 		getMain().saveConfig();
 	}
-	
-	public static String addRandomKey(){
+
+	public static String addRandomKey() {
 		Random gen = new Random();
 		int max = (int) ('z');
 		int min = (int) ('a');
 		String key = "";
-		for(int i = 0; i < 15; i++){
+		for (int i = 0; i < 15; i++) {
 			int code = gen.nextInt(max - min);
 			key += (char) (code + min);
 		}
 		addKey(key);
 		return key;
 	}
-	
+
 	/*public static ConnectionServer openRemoteConsoleServer(){
 		PacketHandler handler = new PacketHandler();
 		handler.addListener("key", new PacketListener(){
@@ -445,5 +446,5 @@ public class Util {
 			e.printStackTrace();
 		}
 	}*/
-	
+
 }

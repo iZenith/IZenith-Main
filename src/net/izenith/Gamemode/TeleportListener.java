@@ -1,7 +1,6 @@
 package net.izenith.Gamemode;
 
 import org.bukkit.Bukkit;
-import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -14,15 +13,19 @@ import com.onarandombox.MultiverseCore.api.MultiverseWorld;
 
 import net.izenith.Main.IPlayerHandler;
 import net.izenith.Main.Util;
+import net.md_5.bungee.api.ChatColor;
 
 public class TeleportListener implements Listener {
 
 	@EventHandler
 	public void onTeleport(final PlayerTeleportEvent e) {
 		final Player p = e.getPlayer();
-		if (p.getGameMode().equals(GameMode.SPECTATOR)
-				&& e.getCause().equals(TeleportCause.SPECTATE)
-				&& !(p.hasPermission("essentials.tp"))) e.setCancelled(true);
+		if (e.getCause().equals(TeleportCause.SPECTATE)
+				&& !(p.hasPermission("essentials.tp"))){ 
+			e.setCancelled(true);
+			p.sendMessage(ChatColor.RED + "You do not have permission to /tp");
+		}
+		
 		if (!e.getFrom().getWorld().equals(e.getTo().getWorld())) {
 			MultiverseCore mv = (MultiverseCore) Bukkit.getServer()
 					.getPluginManager().getPlugin("Multiverse-Core");

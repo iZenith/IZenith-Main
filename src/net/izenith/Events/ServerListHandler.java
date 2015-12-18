@@ -35,7 +35,6 @@ public class ServerListHandler {
 	@SuppressWarnings("deprecation")
 	public void handlePing(WrappedServerPing ping) {
 		List<String> playerNames = new ArrayList<String>();
-		System.out.println(Bukkit.getOnlinePlayers());
 		for (Player player : Bukkit.getOnlinePlayers()) {
 			playerNames.add(IPlayerHandler.getPlayer(player).getColoredName(false));
 		}
