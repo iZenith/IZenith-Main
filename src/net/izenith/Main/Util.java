@@ -31,6 +31,8 @@ import com.intellectualcrafters.plot.commands.MainCommand;
 import com.intellectualcrafters.plot.commands.RequiredType;
 import com.intellectualcrafters.plot.object.Plot;
 import com.intellectualcrafters.plot.object.PlotPlayer;
+import com.intellectualcrafters.plot.util.MainUtil;
+import com.plotsquared.bukkit.object.BukkitPlayer;
 import com.plotsquared.general.commands.Command;
 
 import net.izenith.Commands.AdminChat;
@@ -55,11 +57,13 @@ public class Util {
 			public boolean onCommand(PlotPlayer p, String[] args) {
 				Plot plot = p.getCurrentPlot();
 				if (plot == null) {
-					p.sendMessage("§7§l[§6§liZenith§r§lPlots§7§l] §3You are not in a plot.");
+					p.sendMessage(Util.parseColors("&7&l[&6&liZenith&f&lPlots&7&l] &6You are not in a plot."));
 					return false;
 				}
-				com.intellectualcrafters.plot.object.Location b = plot.getBottom();
-				com.intellectualcrafters.plot.object.Location t = plot.getTop();
+				com.intellectualcrafters.plot.object.Location b = plot.getCorners()[0];
+				com.intellectualcrafters.plot.object.Location t = plot.getCorners()[1];
+				
+				System.out.println(b + ", " + t);
 				double midX = b.getX() + t.getX();
 				midX = midX / 2;
 				double midZ = b.getZ() + t.getZ();
@@ -70,13 +74,15 @@ public class Util {
 					midLoc = new com.intellectualcrafters.plot.object.Location(p.getLocation().getWorld(), (int) midX, y, (int) midZ);
 					if (((Location) midLoc.toBukkitLocation()).getBlock().getType() != Material.AIR) {
 						isOnLand = true;
+						midLoc.add(0, 1, 0);
+						break;
 					}
 				}
-				Player bP = (Player) p;
+				BukkitPlayer bP = (BukkitPlayer) p;
 				if(!isOnLand){
-					bP.setFlying(true);
+					bP.setFlight(true);
 				}
-				p.sendMessage("You have been teleported to the center of the plot.");
+				p.sendMessage(Util.parseColors("&7&l[&6&liZenith&f&lPlots&7&l] &6You have been teleported to the center of the plot."));
 				p.teleport(midLoc);
 				return true;
 			}

@@ -25,10 +25,10 @@ public class PlotListener implements Listener{
 			@Override
 			public void run() {
 				Plot plot = e.getPlot();
-				Location l1 = new Location(plot.getWorld(),plot.getTop().getX() + 1,66,plot.getTop().getZ() + 1);
-				Location l2 = new Location(plot.getWorld(),plot.getBottom().getX(),66,plot.getTop().getZ() + 1);
-				Location l3 = new Location(plot.getWorld(),plot.getBottom().getX(),66,plot.getBottom().getZ());
-				Location l4 = new Location(plot.getWorld(),plot.getTop().getX() + 1,66,plot.getBottom().getZ());
+				Location l1 = new Location(plot.getWorld().toString(),plot.getTop().getX() + 1,66,plot.getTop().getZ() + 1);
+				Location l2 = new Location(plot.getWorld().toString(),plot.getBottom().getX(),66,plot.getTop().getZ() + 1);
+				Location l3 = new Location(plot.getWorld().toString(),plot.getBottom().getX(),66,plot.getBottom().getZ());
+				Location l4 = new Location(plot.getWorld().toString(),plot.getTop().getX() + 1,66,plot.getBottom().getZ());
 				
 				Block b1 = Util.getLocation(l1).getBlock(); 
 				b1.setTypeIdAndData(Material.SKULL.getId(), (byte) 1, true);
@@ -77,10 +77,10 @@ public class PlotListener implements Listener{
 	@EventHandler
 	public void onDelete(PlotDeleteEvent e){
 		Plot plot = new Plot(e.getWorld(),e.getPlotId(),null);
-		Location l1 = new Location(plot.getWorld(),plot.getTop().getX() + 1,66,plot.getTop().getZ() + 1);
-		Location l2 = new Location(plot.getWorld(),plot.getBottom().getX(),66,plot.getTop().getZ() + 1);
-		Location l3 = new Location(plot.getWorld(),plot.getBottom().getX(),66,plot.getBottom().getZ());
-		Location l4 = new Location(plot.getWorld(),plot.getTop().getX() + 1,66,plot.getBottom().getZ());
+		Location l1 = new Location(plot.getWorld().toString(),plot.getTop().getX() + 1,66,plot.getTop().getZ() + 1);
+		Location l2 = new Location(plot.getWorld().toString(),plot.getBottom().getX(),66,plot.getTop().getZ() + 1);
+		Location l3 = new Location(plot.getWorld().toString(),plot.getBottom().getX(),66,plot.getBottom().getZ());
+		Location l4 = new Location(plot.getWorld().toString(),plot.getTop().getX() + 1,66,plot.getBottom().getZ());
 		
 		Util.getLocation(l1).getBlock().setTypeId(0);
 		Util.getLocation(l1.subtract(0, 1, 0)).getBlock().setTypeId(44);
