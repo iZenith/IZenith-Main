@@ -1,10 +1,12 @@
 package net.izenith.Gamemode;
 
 import org.bukkit.Bukkit;
+import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerTeleportEvent;
+import org.bukkit.event.player.PlayerTeleportEvent.TeleportCause;
 
 import com.onarandombox.MultiverseCore.MultiverseCore;
 import com.onarandombox.MultiverseCore.api.MVWorldManager;
@@ -17,25 +19,33 @@ public class TeleportListener implements Listener {
 
 	@EventHandler
 	public void onTeleport(final PlayerTeleportEvent e) {
+		final Player p = e.getPlayer();
+		if (p.getGameMode().equals(GameMode.SPECTATOR)
+				&& e.getCause().equals(TeleportCause.SPECTATE)
+				&& !(p.hasPermission("essentials.tp"))) e.setCancelled(true);
 		if (!e.getFrom().getWorld().equals(e.getTo().getWorld())) {
-			Player p = e.getPlayer();
-			MultiverseCore mv = (MultiverseCore) Bukkit.getServer().getPluginManager().getPlugin("Multiverse-Core");
+			MultiverseCore mv = (MultiverseCore) Bukkit.getServer()
+					.getPluginManager().getPlugin("Multiverse-Core");
 			MVWorldManager wm = mv.getMVWorldManager();
-			MultiverseWorld toWorld = wm.getMVWorld(e.getTo().getWorld().getName());
-			MultiverseWorld fromWorld = wm.getMVWorld(e.getFrom().getWorld().getName());
+			MultiverseWorld toWorld = wm.getMVWorld(e.getTo().getWorld()
+					.getName());
+			MultiverseWorld fromWorld = wm.getMVWorld(e.getFrom().getWorld()
+					.getName());
 			System.out.println(toWorld.getName());
-			if (toWorld != fromWorld && !p.getGameMode().equals(toWorld.getGameMode())) {
+			if (toWorld != fromWorld
+					&& !p.getGameMode().equals(toWorld.getGameMode())) {
 				p.setGameMode(toWorld.getGameMode());
 			}
 		}
-		if(e.getTo().getWorld().getName().equals("spawn")){
-			Bukkit.getScheduler().scheduleSyncDelayedTask(Util.getMain(),new Runnable(){
-				@Override
-				public void run(){
-					IPlayerHandler.getPlayer(e.getPlayer()).getKit("nether_star",false);
-				}
-			},40l);
+		if (e.getTo().getWorld().getName().equals("spawn")) {
+			Bukkit.getScheduler().scheduleSyncDelayedTask(Util.getMain(),
+					new Runnable() {
+						@Override
+						public void run() {
+							IPlayerHandler.getPlayer(p).getKit("nether_star",
+									false);
+						}
+					}, 40l);
 		}
 	}
-
 }
