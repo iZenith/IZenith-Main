@@ -14,6 +14,10 @@ import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Server;
+import org.bukkit.SkullType;
+import org.bukkit.block.Block;
+import org.bukkit.block.BlockFace;
+import org.bukkit.block.Skull;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
@@ -31,7 +35,6 @@ import com.intellectualcrafters.plot.commands.MainCommand;
 import com.intellectualcrafters.plot.commands.RequiredType;
 import com.intellectualcrafters.plot.object.Plot;
 import com.intellectualcrafters.plot.object.PlotPlayer;
-import com.intellectualcrafters.plot.util.MainUtil;
 import com.plotsquared.bukkit.object.BukkitPlayer;
 import com.plotsquared.general.commands.Command;
 
@@ -48,6 +51,52 @@ public class Util {
 			plotAPI = new PlotAPI(getMain());
 		}
 		return plotAPI;
+	}
+
+	public static void CreatePlotSkull(Plot plot, String owner,
+			com.intellectualcrafters.plot.object.Location l1,
+			com.intellectualcrafters.plot.object.Location l2,
+			com.intellectualcrafters.plot.object.Location l3,
+			com.intellectualcrafters.plot.object.Location l4) {
+		Block b1 = Util.getLocation(l1).getBlock();
+		b1.setTypeIdAndData(Material.SKULL.getId(), (byte) 1, true);
+		Skull skull1 = ((Skull) b1.getState());
+		skull1.setSkullType(SkullType.PLAYER);
+		skull1.setOwner(owner);
+		skull1.setRotation(BlockFace.SOUTH_EAST);
+		skull1.update(true);
+		Block slabs1 = Util.getLocation(l1).subtract(0, 1, 0).getBlock();
+		slabs1.setTypeIdAndData(43, (byte) 8, true);
+
+		Block b2 = Util.getLocation(l2).getBlock();
+		b2.setTypeIdAndData(Material.SKULL.getId(), (byte) 1, true);
+		Skull skull2 = (Skull) b2.getState();
+		skull2.setSkullType(SkullType.PLAYER);
+		skull2.setOwner(owner);
+		skull2.setRotation(BlockFace.SOUTH_WEST);
+		skull2.update(true);
+		Block slabs2 = Util.getLocation(l2).subtract(0, 1, 0).getBlock();
+		slabs2.setTypeIdAndData(43, (byte) 8, true);
+
+		Block b3 = Util.getLocation(l3).getBlock();
+		b3.setTypeIdAndData(Material.SKULL.getId(), (byte) 1, true);
+		Skull skull3 = ((Skull) b3.getState());
+		skull3.setSkullType(SkullType.PLAYER);
+		skull3.setOwner(owner);
+		skull3.setRotation(BlockFace.NORTH_WEST);
+		skull3.update(true);
+		Block slabs3 = Util.getLocation(l3).subtract(0, 1, 0).getBlock();
+		slabs3.setTypeIdAndData(43, (byte) 8, true);
+
+		Block b4 = Util.getLocation(l4).getBlock();
+		b4.setTypeIdAndData(Material.SKULL.getId(), (byte) 1, true);
+		Skull skull4 = ((Skull) b4.getState());
+		skull4.setSkullType(SkullType.PLAYER);
+		skull4.setOwner(owner);
+		skull4.setRotation(BlockFace.NORTH_EAST);
+		skull4.update(true);
+		Block slabs4 = Util.getLocation(l4).subtract(0, 1, 0).getBlock();
+		slabs4.setTypeIdAndData(43, (byte) 8, true);
 	}
 
 	public static void RegisterPlotCommands() {

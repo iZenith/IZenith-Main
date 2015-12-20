@@ -1,15 +1,17 @@
 package net.izenith.CommandSpy;
 
+import java.util.HashSet;
+import java.util.UUID;
+
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.Location;
-import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 
 import com.intellectualcrafters.plot.api.PlotAPI;
+import com.intellectualcrafters.plot.object.Location;
 import com.intellectualcrafters.plot.object.Plot;
 
 import net.izenith.Main.Util;
@@ -17,7 +19,6 @@ import net.izenith.Main.Vars;
 
 public class CommandListener implements Listener {
 
-	@SuppressWarnings("deprecation")
 	@EventHandler
 	public void onPlayerCommand(PlayerCommandPreprocessEvent e) {
 		for (Player p : Vars.main.getServer().getOnlinePlayers()) {
@@ -46,6 +47,36 @@ public class CommandListener implements Listener {
 		if (Util.startsWithIgnoreCase(e.getMessage(), "/info")) {
 			e.setCancelled(true);
 			Bukkit.dispatchCommand(e.getPlayer(), "warp info");
+		}
+		
+		if (Util.startsWithIgnoreCase(e.getMessage(), "/p")){
+			Player p = e.getPlayer();
+			if (!(p instanceof Player)) return;
+			PlotAPI api = Util.getPlotAPI();
+			Plot plot = api.getPlot(p);
+			if (plot == null) return;
+			HashSet<UUID> owners = plot.getOwners();
+			String owner = owners.toString();
+			if (owners.size() >= 1) {
+				owner = "MHF_Exclamation";
+			}
+			@SuppressWarnings("deprecation")
+			Location l1 = new Location(plot.getWorld().toString(),
+					plot.getCorners()[0].getX() + 1, 66, plot
+							.getCorners()[0].getZ() + 1);
+			@SuppressWarnings("deprecation")
+			Location l2 = new Location(plot.getWorld().toString(),
+					plot.getCorners()[1].getX(), 66, plot
+							.getCorners()[1].getZ() + 1);
+			@SuppressWarnings("deprecation")
+			Location l3 = new Location(plot.getWorld().toString(),
+					plot.getCorners()[2].getX(), 66, plot
+							.getCorners()[2].getZ());
+			@SuppressWarnings("deprecation")
+			Location l4 = new Location(plot.getWorld().toString(),
+					plot.getCorners()[3].getX() + 1, 66, plot
+							.getCorners()[3].getZ());
+			Util.CreatePlotSkull(plot, owner, l1, l2, l3, l4);
 		}
 		
 		if (Util.startsWithIgnoreCase(e.getMessage(), "/pex")) {
