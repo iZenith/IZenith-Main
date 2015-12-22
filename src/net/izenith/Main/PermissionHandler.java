@@ -11,6 +11,7 @@ public class PermissionHandler {
 		return getGroup(p).getName();
 	}
 	
+	@SuppressWarnings("deprecation")
 	public static PermissionGroup getGroup(Player p){
 		PermissionGroup[] groups = PermissionsEx.getUser(p).getGroups(p.getWorld().getName()); 
 		return groups[groups.length - 1];

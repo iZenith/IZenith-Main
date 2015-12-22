@@ -25,6 +25,7 @@ public class ChatHandler implements Listener {
 		}
 		
 		// Get main plugin class from Util
+		@SuppressWarnings("unused")
 		Plugin main = Util.getMain();
 		try {
 			e.setCancelled(true);
