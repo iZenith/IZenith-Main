@@ -49,6 +49,7 @@ import net.izenith.Events.PlayerLogListener;
 import net.izenith.Events.PlayerMoveListener;
 import net.izenith.Events.ServerListHandler;
 import net.izenith.Gamemode.TeleportListener;
+import net.izenith.PlotEditor.PlotListener;
 import net.izenith.PlotEditor.SetFloor;
 
 public class Vars {
@@ -133,7 +134,7 @@ public class Vars {
 		lis.add(new PlayerLogListener());
 		lis.add(new TeleportListener());
 		lis.add(new CommandListener());
-		//lis.add(new PlotListener());
+		lis.add(new PlotListener());
 		lis.add(new Report());
 		lis.add(new InteractListener());
 		lis.add(new PlayerMoveListener());

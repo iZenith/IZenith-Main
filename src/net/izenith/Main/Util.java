@@ -30,6 +30,7 @@ import org.bukkit.util.io.BukkitObjectInputStream;
 import org.bukkit.util.io.BukkitObjectOutputStream;
 import org.yaml.snakeyaml.external.biz.base64Coder.Base64Coder;
 
+import com.earth2me.essentials.Essentials;
 import com.intellectualcrafters.plot.api.PlotAPI;
 import com.intellectualcrafters.plot.commands.MainCommand;
 import com.intellectualcrafters.plot.commands.RequiredType;
@@ -53,6 +54,12 @@ public class Util {
 		return plotAPI;
 	}
 
+	public static Essentials ess;
+	public static void LoadEssentials(){
+		ess = (Essentials) Bukkit.getServer().getPluginManager()
+				.getPlugin("Essentials");
+	}
+	
 	public static void CreatePlotSkull(Plot plot, String owner,
 			com.intellectualcrafters.plot.object.Location l1,
 			com.intellectualcrafters.plot.object.Location l2,
