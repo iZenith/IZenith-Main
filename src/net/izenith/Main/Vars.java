@@ -45,6 +45,7 @@ import net.izenith.Events.BowListener;
 import net.izenith.Events.BlockPlaceListener;
 import net.izenith.Events.DamageListener;
 import net.izenith.Events.InteractListener;
+import net.izenith.Events.InventoryClickListener;
 import net.izenith.Events.PlayerLogListener;
 import net.izenith.Events.PlayerMoveListener;
 import net.izenith.Events.ServerListHandler;
@@ -140,6 +141,7 @@ public class Vars {
 		lis.add(new DamageListener());
 		lis.add(new BowListener());
 		lis.add(new BlockPlaceListener());
+		lis.add(new InventoryClickListener());
 		new ServerListHandler();
 		//lis.add(new FrameListener());
 		for (Listener l : lis) {

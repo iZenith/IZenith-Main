@@ -29,3 +29,6 @@ ranks:
   - "&9Mod"
   - "&cAdmin"
   - "&4Owner"
+
+inventory_interact_worlds:
+  - "spawn"
