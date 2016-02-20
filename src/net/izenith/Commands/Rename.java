@@ -20,7 +20,7 @@ public class Rename implements HubCommand {
 	@Override
 	public String[] getAliases() {
 		// TODO Auto-generated method stub
-		return new String[] {"re"};
+		return new String[] { "re" };
 	}
 
 	@Override
@@ -28,26 +28,27 @@ public class Rename implements HubCommand {
 			String commandLabel, String[] args) {
 		// TODO Auto-generated method stub
 		Player p = (Player) sender;
-		
+
 		if (p.getItemInHand().equals(Material.AIR)) {
 			p.sendMessage(ChatColor.RED + "You can't rename nothing.");
+			return;
+		}
+		ItemStack i = p.getItemInHand();
+		ItemMeta im = i.getItemMeta();
+		String name = "";
+		for (String s : args) {
+			name += s + " ";
+		}
+		if (args.length == 0) {
+			p.sendMessage(ChatColor.BLUE + "Name has been set to default!");
 		} else {
-			ItemStack i = p.getItemInHand();
-			ItemMeta im = i.getItemMeta();
-			String name = "";
-			for (String s : args) {
-				name += s + " ";
-			}
-			if (args.length == 0) {
-				p.sendMessage(ChatColor.BLUE + "Name has been set to default!");
-			}else{
 			p.sendMessage(ChatColor.BLUE + "Your item has been renamed to: "
 					+ ChatColor.GREEN + name);
-			}
-			im.setDisplayName((ChatColor.translateAlternateColorCodes('&', name)));
-			i.setItemMeta(im);
-			p.setItemInHand(i);
 		}
+		im.setDisplayName((ChatColor.translateAlternateColorCodes('&', name)));
+		i.setItemMeta(im);
+		p.setItemInHand(i);
+
 	}
 
 	@Override

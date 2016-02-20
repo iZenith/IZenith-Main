@@ -1,5 +1,7 @@
 package net.izenith.Events;
 
+import net.izenith.Main.Util;
+
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
@@ -8,7 +10,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockPlaceEvent;
-import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitScheduler;
 
 public class BlockPlaceListener implements Listener {
@@ -22,7 +23,7 @@ public class BlockPlaceListener implements Listener {
 			if (e.getBlock().getType().equals(Material.CAULDRON)) {
 				e.getBlock().setData((byte) 3);
 			}
-			/*if (e.getBlock().getType().equals(Material.REDSTONE_BLOCK)
+			if (e.getBlock().getType().equals(Material.REDSTONE_BLOCK)
 					&& p.getItemInHand().getItemMeta().hasDisplayName()) {
 				// Grabs the number of redstone ticks
 				try {
@@ -35,13 +36,12 @@ public class BlockPlaceListener implements Listener {
 						p.sendMessage(ChatColor.BLUE + "It will disappear in "
 								+ ChatColor.GREEN + sTicks + ChatColor.BLUE
 								+ " seconds");
-						// Changes the number of redstone ticks to minecraft
-						// ticks
+						// Changes the number of redstone ticks to minecraft ticks
 						dTicks = dTicks * 2;
 						// Conversion to Int for Bukkit Scheduler
 						int iTicks = (int) dTicks;
 						BukkitScheduler scheduler = Bukkit.getServer().getScheduler();
-						scheduler.scheduleSyncDelayedTask(this,
+						scheduler.scheduleSyncDelayedTask(Util.getMain(),
 									new Runnable() {
 									@Override
 									public void run() {
@@ -60,7 +60,7 @@ public class BlockPlaceListener implements Listener {
 					}
 				} catch (NumberFormatException ex) {
 				}
-			}*/
+			}
 		}
 	}
 }

@@ -25,6 +25,8 @@ public class Main extends JavaPlugin {
 		Util.loadAllOnlineTimes();
 		Util.updatePlayerList();
 		Util.RegisterPlotCommands();
+		Util.LoadEssentials();
+		//Vars.remoteConsoleSocket = Util.openRemoteConsoleServer();
 		System.out.println("iZenith Enabled");
 	}
 	

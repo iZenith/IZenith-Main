@@ -96,6 +96,7 @@ public class PlayTime implements HubCommand {
 							if (config.getString("last_name").toLowerCase().equals(args[0].toLowerCase())) {
 								time = config.getLong("time");
 								name = args[0];
+								@SuppressWarnings("null")
 								Double timeHours = new Double(time) / (1000 * 60 * 60);
 								DecimalFormat df = new DecimalFormat("#.##");
 								shortTime = df.format(timeHours);
