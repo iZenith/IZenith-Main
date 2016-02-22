@@ -3,7 +3,6 @@
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.7"/>
 	<classpathentry kind="lib" path="lib/Custom GUI.jar"/>
-	<classpathentry kind="lib" path="lib/CustomTab-1.1.1.jar"/>
 	<classpathentry kind="lib" path="lib/Essentials-2.x-SNAPSHOT.jar"/>
 	<classpathentry kind="lib" path="lib/FrameAPI.jar"/>
 	<classpathentry kind="lib" path="lib/Multiverse-Core-2.4.jar"/>
@@ -12,7 +11,6 @@
 	<classpathentry kind="lib" path="lib/ProtocolLib.jar"/>
 	<classpathentry kind="lib" path="lib/spigot-BT42_1.8.8_07.30.jar"/>
 	<classpathentry kind="lib" path="lib/Vault.jar"/>
-	<classpathentry kind="lib" path="json-simple-1.1.1.jar"/>
-	<classpathentry kind="lib" path="Bob&apos;s network API.jar"/>
+	<classpathentry kind="lib" path="C:/Users/103454930/Programming/workspace/IZenith-Main/lib/json-simple-1.1.1.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
