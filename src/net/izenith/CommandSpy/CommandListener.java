@@ -36,8 +36,10 @@ public class CommandListener implements Listener {
 			Bukkit.getServer().broadcastMessage(ChatColor.BLUE + e.getPlayer().getName() + ChatColor.DARK_PURPLE + " took the easy way out!");
 		}
 
-		if (Util.startsWithIgnoreCase(e.getMessage(), "/reload"))
+		if (Util.startsWithIgnoreCase(e.getMessage(), "/reload")){
 			e.setCancelled(true);
+			e.getPlayer().sendMessage(ChatColor.RED + "This command is currently disabled.");
+		}
 
 		if (Util.startsWithIgnoreCase(e.getMessage(), "/plots") || Util.startsWithIgnoreCase(e.getMessage(), "/cr")) {
 			e.setCancelled(true);

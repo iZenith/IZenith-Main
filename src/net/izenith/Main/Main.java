@@ -33,11 +33,6 @@ public class Main extends JavaPlugin {
 	@Override
 	public void onDisable() {
 		Util.setAllOnlineTimes();
-		try {
-			Vars.remoteConsoleSocket.close();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
 	}
 
 	@Override

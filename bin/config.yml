@@ -18,8 +18,7 @@ colors:
   - 'MemberP,2'
   - 'Trusted,b'
   - 'Mod,c'
-  - 'Admin,9'
-  - 'Owner,4'
+  - 'Admin,4'
   
 ranks:
   - "&7Visitor"

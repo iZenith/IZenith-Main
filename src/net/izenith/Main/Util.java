@@ -443,7 +443,7 @@ public class Util {
 		for (String s : retList) {
 			ret += s + "\n";
 		}
-		if (ret.length() > 0) {
+		if (ret.length() > 2) {
 			ret = ret.substring(0, ((ret.length() - 2) - seperator.length()) + 1);
 		}
 		return ret;
