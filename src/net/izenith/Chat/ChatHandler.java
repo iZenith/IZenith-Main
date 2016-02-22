@@ -33,9 +33,9 @@ public class ChatHandler implements Listener {
 		try {
 			e.setCancelled(true);
 			IPlayer player = IPlayerHandler.getPlayer(e.getPlayer());
-			if (Util.ess.getUser(e.getPlayer()).isMuted() == true) {
+			//if (Util.ess.getUser(e.getPlayer()).isMuted()) {
 				player.sendChatMessage(e.getMessage());
-			}
+			//}
 			// t = translated
 			/*
 			 * String language = Util.detectLanguage(pMessage);

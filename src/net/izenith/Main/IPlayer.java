@@ -259,6 +259,7 @@ public class IPlayer {
 			new Thread(new Runnable() {
 				@Override
 				public void run() {
+					
 					String command = null;
 					String name = player.getName();
 					String translation = "No translation";
@@ -282,47 +283,36 @@ public class IPlayer {
 							}
 						}
 					}
-					if (Util.containsIgnoreCase(message, name)) {
-						int playerIndex = message.toLowerCase().indexOf(
-								name.toLowerCase());
-						command = "tellraw "
-								+ name
-								+ " [\"\",{\"text\":\""
-								+ iPlayer.player.getDisplayName()
-								+ " \",\"hoverEvent\":{\"action\":\"show_text\",\"value\":{\"text\":\"\",\""
-								+ "extra\":[{\"text\":\""
-								+ PermissionHandler
-										.getGroupName(iPlayer.player)
-								+ "\\n\",\"color\":\""
-								+ Util.getGroupColor(
-										PermissionHandler
-												.getGroupName(iPlayer.player))
-										.name().toLowerCase()
-								+ "\"},"
-								+ "{\"text\":\"Language: \",\"color\":\"blue\"},{\"text\":\""
-								+ (playerLanguageEnum == null ? "ENGLISH"
-										: playerLanguageEnum.name())
-								+ "\\n\",\"color\":\"green\"},"
-								+ "{\"text\":\"Playtime: \",\"color\":\"blue\"},{\"text\":\""
-								+ getOnlineTimeHours()
-								+ " hours\",\"color\":\"green\"}]}}},{\"text\":\"\u2192 \",\"color\":\"black\"},"
-								+ "{\"text\":\""
-								+ ChatColor.WHITE
-								+ message.substring(0, playerIndex)
-								+ ChatColor.RED
-								+ ChatColor.BOLD
-								+ player.getName()
-								+ ChatColor.RESET
-								+ message.substring(playerIndex
-										+ player.getName().length())
-								+ "\",\"hoverEvent\":{\"action\":\"show_text\",\"value\":{\"text\":\"\",\"extra\":[{\"text\":\"Language: \",\"color\":\"blue\"},"
-								+ "{\"text\":\""
-								+ (toLanguageEnum == null ? "ENGLISH"
-										: toLanguageEnum.name())
-								+ "\\n\",\"color\":\"green\"},"
-								+ "{\"text\":\"" + translation
-								+ "\",\"color\":\"white\"}]}}}]";
-
+					
+					String messageFormat = "";
+					for(String part : message.split(" ")){
+						if(Util.isURL(part)){
+							messageFormat += "{\"text\":\""
+									+ part
+									+ " \",\"color\":\"aqua\",\"underlined\":true,\"clickEvent\":{\"action\":\"open_url\",\"value\":\"" + part + "\"}"
+									+ ",\"hoverEvent\":{\"action\":\"show_text\",\"value\":{\"text\":\"\",\"extra\":[{\"text\":\"Click to open link\",\"color\":\"blue\"}"
+									+ "]}}},";
+						} else if (player.getName().toLowerCase().equals(part.toLowerCase()) && player != iPlayer.player){ 
+							messageFormat += "{\"text\":\""
+									+ part
+									+ " \",\"color\":\"red\",\"clickEvent\":{\"action\":\"suggest_command\",\"value\":\"/msg " + iPlayer.player.getName() + " \"}"
+									+ ",\"hoverEvent\":{\"action\":\"show_text\",\"value\":{\"text\":\"\",\"extra\":[{\"text\":\"Click to reply\",\"color\":\"blue\"}"
+									+ "]}}},";
+						}else {
+							messageFormat += "{\"text\":\""
+									+ part
+									+ " \",\"hoverEvent\":{\"action\":\"show_text\",\"value\":{\"text\":\"\",\"extra\":[{\"text\":\"Language: \",\"color\":\"blue\"},"
+									+ "{\"text\":\""
+									+ (toLanguageEnum == null ? "ENGLISH"
+											: toLanguageEnum.name())
+									+ "\\n\",\"color\":\"green\"},"
+									+ "{\"text\":\"" + translation
+									+ "\",\"color\":\"white\"}]}}},";
+						}
+					}
+					messageFormat = messageFormat.substring(0,messageFormat.length() - 1);
+					
+					if (Util.containsIgnoreCase(message, name) && !iPlayer.player.getName().toLowerCase().equals(name.toLowerCase())) {
 						player.playSound(player.getLocation(),
 								Sound.NOTE_PLING, 1f, 1f);
 						Util.getMain()
@@ -338,39 +328,32 @@ public class IPlayer {
 														1.25f);
 											}
 										}, 10l);
-					} else {
-						command = "tellraw "
-								+ name
-								+ " [\"\",{\"text\":\""
-								+ iPlayer.player.getDisplayName()
-								+ " \",\"hoverEvent\":{\"action\":\"show_text\",\"value\":{\"text\":\"\",\""
-								+ "extra\":[{\"text\":\""
-								+ PermissionHandler
-										.getGroupName(iPlayer.player)
-								+ "\\n\",\"color\":\""
-								+ Util.getGroupColor(
-										PermissionHandler
-												.getGroupName(iPlayer.player))
-										.name().toLowerCase()
-								+ "\"},"
-								+ "{\"text\":\"Language: \",\"color\":\"blue\"},{\"text\":\""
-								+ (playerLanguageEnum == null ? "ENGLISH"
-										: playerLanguageEnum.name())
-								+ "\\n\",\"color\":\"green\"},"
-								+ "{\"text\":\"Playtime: \",\"color\":\"blue\"},{\"text\":\""
-								+ getOnlineTimeHours()
-								+ " hours\",\"color\":\"green\"}]}}},{\"text\":\"\u2192 \",\"color\":\"black\"},"
-								+ "{\"text\":\""
-								+ message
-								+ "\",\"hoverEvent\":{\"action\":\"show_text\",\"value\":{\"text\":\"\",\"extra\":[{\"text\":\"Language: \",\"color\":\"blue\"},"
-								+ "{\"text\":\""
-								+ (toLanguageEnum == null ? "ENGLISH"
-										: toLanguageEnum.name())
-								+ "\\n\",\"color\":\"green\"},"
-								+ "{\"text\":\"" + translation
-								+ "\",\"color\":\"white\"}]}}}]";
 					}
+					command = "tellraw "
+							+ name
+							+ " [\"\",{\"text\":\""
+							+ iPlayer.player.getDisplayName()
+							+ " \",\"hoverEvent\":{\"action\":\"show_text\",\"value\":{\"text\":\"\",\""
+							+ "extra\":[{\"text\":\""
+							+ PermissionHandler
+									.getGroupName(iPlayer.player)
+							+ "\\n\",\"color\":\""
+							+ Util.getGroupColor(
+									PermissionHandler
+											.getGroupName(iPlayer.player))
+									.name().toLowerCase()
+							+ "\"},"
+							+ "{\"text\":\"Language: \",\"color\":\"blue\"},{\"text\":\""
+							+ (playerLanguageEnum == null ? "ENGLISH"
+									: playerLanguageEnum.name())
+							+ "\\n\",\"color\":\"green\"},"
+							+ "{\"text\":\"Playtime: \",\"color\":\"blue\"},{\"text\":\""
+							+ getOnlineTimeHours()
+							+ " hours\",\"color\":\"green\"}]}}},{\"text\":\"\u2192 \",\"color\":\"black\"},"
+							+ messageFormat
+							+ "]";
 					Bukkit.dispatchCommand(Bukkit.getConsoleSender(), command);
+					System.out.println(command);
 				}
 			}).start();
 		}
