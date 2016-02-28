@@ -353,7 +353,6 @@ public class IPlayer {
 							+ messageFormat
 							+ "]";
 					Bukkit.dispatchCommand(Bukkit.getConsoleSender(), command);
-					System.out.println(command);
 				}
 			}).start();
 		}

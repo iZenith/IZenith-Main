@@ -41,11 +41,12 @@ import net.izenith.Commands.Translate;
 import net.izenith.Commands.Trusted;
 import net.izenith.Commands.UpdateList;
 import net.izenith.Commands.WorldEditPerms;
-import net.izenith.Events.BowListener;
 import net.izenith.Events.BlockPlaceListener;
+import net.izenith.Events.BowListener;
 import net.izenith.Events.DamageListener;
 import net.izenith.Events.InteractListener;
 import net.izenith.Events.InventoryClickListener;
+import net.izenith.Events.ItemDropListener;
 import net.izenith.Events.PlayerLogListener;
 import net.izenith.Events.PlayerMoveListener;
 import net.izenith.Events.ServerListHandler;
@@ -143,6 +144,7 @@ public class Vars {
 		lis.add(new BowListener());
 		lis.add(new BlockPlaceListener());
 		lis.add(new InventoryClickListener());
+		lis.add(new ItemDropListener());
 		new ServerListHandler();
 		//lis.add(new FrameListener());
 		for (Listener l : lis) {

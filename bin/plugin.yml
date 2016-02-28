@@ -124,6 +124,9 @@ permissions:
     default: OP
   console.remoteaccess:
     description: Allows access to a key used for remote access
-  izenith.rename :
+  izenith.rename:
     description: Renames the item in hand
+    default: OP
+  spawn.interact:
+    description: Allows inventory interaction at spawn
     default: OP

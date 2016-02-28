@@ -1,16 +1,17 @@
 package net.izenith.Events;
 
-import net.izenith.Main.Vars;
-import net.md_5.bungee.api.ChatColor;
-
 import org.bukkit.Material;
 import org.bukkit.block.BlockState;
 import org.bukkit.block.Skull;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.block.Action;
+import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.inventory.ItemStack;
+
+import net.izenith.Main.Vars;
+import net.md_5.bungee.api.ChatColor;
 
 public class InteractListener implements Listener {
 
@@ -33,10 +34,13 @@ public class InteractListener implements Listener {
 			}
 		}
 
-		if (e.getPlayer().getLocation().getWorld().getName().equals("spawn") && e.getItem().getType().equals(Material.NETHER_STAR)) {
+		ItemStack item = e.getItem();
+		if (e.getPlayer().getLocation().getWorld().getName().equals("spawn") && item != null && e.getItem().getType().equals(Material.NETHER_STAR)) {
 			Vars.tpGUI.open(e.getPlayer());
 		}
 
-
+		if(e.getPlayer().getWorld().getName().equals("spawn") && e.getClickedBlock().getType().equals(Material.STONE_BUTTON)){
+			e.setCancelled(false);
+		}
 	}
 }
