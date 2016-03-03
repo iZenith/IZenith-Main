@@ -11,6 +11,6 @@
 	<classpathentry kind="lib" path="lib/ProtocolLib.jar"/>
 	<classpathentry kind="lib" path="lib/spigot-BT42_1.8.8_07.30.jar"/>
 	<classpathentry kind="lib" path="lib/Vault.jar"/>
-	<classpathentry kind="lib" path="C:/Users/103454930/Programming/workspace/IZenith-Main/lib/json-simple-1.1.1.jar"/>
+	<classpathentry kind="lib" path="lib/json-simple-1.1.1.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

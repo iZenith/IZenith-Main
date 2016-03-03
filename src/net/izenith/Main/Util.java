@@ -262,7 +262,7 @@ public class Util {
 	}
 
 	public static Main getMain() {
-		return (Main) Bukkit.getPluginManager().getPlugin("IZenith");
+		return (Main) Vars.main;
 	}
 
 	public static Server getServer() {
@@ -390,7 +390,7 @@ public class Util {
 		for (Player player : Bukkit.getOnlinePlayers()) {
 			IPlayer iPlayer = IPlayerHandler.getPlayer(player);
 			iPlayer.setTeam();
-			iPlayer.sendTabFootHeader();
+			//iPlayer.sendTabFootHeader();
 		}
 	}
 
