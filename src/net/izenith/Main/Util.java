@@ -390,7 +390,7 @@ public class Util {
 		for (Player player : Bukkit.getOnlinePlayers()) {
 			IPlayer iPlayer = IPlayerHandler.getPlayer(player);
 			iPlayer.setTeam();
-			//iPlayer.sendTabFootHeader();
+			iPlayer.sendTabFootHeader();
 		}
 	}
 

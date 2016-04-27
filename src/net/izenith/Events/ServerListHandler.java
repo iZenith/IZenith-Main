@@ -37,7 +37,7 @@ public class ServerListHandler {
 
 	@SuppressWarnings("deprecation")
 	public void handlePing(WrappedServerPing ping) {
-		ping.setVersionName("iZenith Server 1.9");
+		ping.setVersionName("iZenith Server 1.8.8");
 		System.out.println("Sending player list");
 		List<String> playerNames = new ArrayList<String>();
 		for (Player player : Bukkit.getOnlinePlayers()) {
