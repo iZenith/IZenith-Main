@@ -31,3 +31,5 @@ ranks:
 
 inventory_interact_worlds:
   - "spawn"
+  
+player_list_message: "Test message"

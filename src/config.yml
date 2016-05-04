@@ -31,3 +31,5 @@ ranks:
 
 inventory_interact_worlds:
   - "spawn"
+  
+player_list_message: "&7&l&m--------------[&r &6&liZenith &f&lMinecraft &7&l&m]--------------\n&4&lSERVER IS STILL IN DEVELOPMENT.\n&4&lPLEASE REPORT ANY ISSUES USING /report <message>\n&7Online Players:"
