@@ -366,10 +366,10 @@ public class IPlayer {
 		pc.getChatComponents()
 				.write(0,
 						WrappedChatComponent.fromText(Util
-								.parseColors("&7&l&m--------&f&lWelcome to &6&liZenith&7&l&m--------")))
+								.parseColors(Util.getConfig().getString("tab_info.header"))))
 				.write(1,
 						WrappedChatComponent.fromText(Util
-								.parseColors("&7&l&m--------[&9&lDonate: &5&lstore.izenith.net&7&l&m]--------\n&7&l&m   --------[&9&lTeamSpeak: &5&ltalk.izenith.net&7&l&m]--------")));
+								.parseColors(Util.getConfig().getString("tab_info.footer"))));
 		try {
 			Vars.protocolManager.sendServerPacket(player, pc);
 		} catch (InvocationTargetException e) {
