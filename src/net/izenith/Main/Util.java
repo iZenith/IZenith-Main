@@ -377,7 +377,7 @@ public class Util {
 	}
 
 	public static void loadOnlineTime(Player player) {
-		Vars.times.put(player, System.currentTimeMillis());
+		IPlayerHandler.getPlayer(player).joinTime = System.currentTimeMillis();
 	}
 
 	public static void loadAllOnlineTimes() {

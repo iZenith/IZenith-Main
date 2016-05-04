@@ -28,6 +28,8 @@ public class IPlayer {
 	public Player player;
 	public YamlConfiguration config;
 	private File file;
+	public long joinTime = -1;
+	public long afkStartTime = -1;
 
 	public IPlayer(Player player) {
 		this.player = player;
@@ -71,7 +73,7 @@ public class IPlayer {
 	public long getOnlineTime() {
 		Long time = config.getLong("time");
 		time = time == null ? 0 : time;
-		return time + (System.currentTimeMillis() - Vars.times.get(player));
+		return time + (System.currentTimeMillis() - joinTime);
 	}
 
 	public String getOnlineTimeHours() {
