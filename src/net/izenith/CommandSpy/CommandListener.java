@@ -41,7 +41,7 @@ public class CommandListener implements Listener {
 			e.getPlayer().sendMessage(ChatColor.RED + "This command is currently disabled.");
 		}
 
-		if (Util.startsWithIgnoreCase(e.getMessage(), "/plots") || Util.startsWithIgnoreCase(e.getMessage(), "/cr")) {
+		if (Util.startsWithIgnoreCase(e.getMessage(), "/plots ") || Util.startsWithIgnoreCase(e.getMessage(), "/cr")) {
 			e.setCancelled(true);
 			e.getPlayer().performCommand("warp plots");
 		}
@@ -51,34 +51,8 @@ public class CommandListener implements Listener {
 			Bukkit.dispatchCommand(e.getPlayer(), "warp info");
 		}
 		
-		if (Util.startsWithIgnoreCase(e.getMessage(), "/p")){
-			Player p = e.getPlayer();
-			if (!(p instanceof Player)) return;
-			PlotAPI api = Util.getPlotAPI();
-			Plot plot = api.getPlot(p);
-			if (plot == null) return;
-			HashSet<UUID> owners = plot.getOwners();
-			String owner = owners.toString();
-			if (owners.size() >= 1) {
-				owner = "MHF_Exclamation";
-			}
-			@SuppressWarnings("deprecation")
-			Location l1 = new Location(plot.getWorld().toString(),
-					plot.getCorners()[0].getX() + 1, 66, plot
-							.getCorners()[0].getZ() + 1);
-			@SuppressWarnings("deprecation")
-			Location l2 = new Location(plot.getWorld().toString(),
-					plot.getCorners()[1].getX(), 66, plot
-							.getCorners()[1].getZ() + 1);
-			@SuppressWarnings("deprecation")
-			Location l3 = new Location(plot.getWorld().toString(),
-					plot.getCorners()[2].getX(), 66, plot
-							.getCorners()[2].getZ());
-			@SuppressWarnings("deprecation")
-			Location l4 = new Location(plot.getWorld().toString(),
-					plot.getCorners()[3].getX() + 1, 66, plot
-							.getCorners()[3].getZ());
-			Util.CreatePlotSkull(plot, owner, l1, l2, l3, l4);
+		if (Util.startsWithIgnoreCase(e.getMessage(), "/p ") && !e.getPlayer().hasPermission("voxelsniper.sniper")) {
+			e.setMessage("/plotsquared:" + e.getMessage().substring(1,e.getMessage().length()));
 		}
 		
 		if (Util.startsWithIgnoreCase(e.getMessage(), "/pex")) {
