@@ -44,7 +44,7 @@ public class ServerListHandler {
 			playerNames.add(IPlayerHandler.getPlayer(player).getColoredName(false));
 		}
 		String players = Util.parseColors(Util.buildString(playerNames, "&7, ", 0, 40));
-		ping.setPlayers(Arrays.asList(new WrappedGameProfile("id1", Util.parseColors("&7&l&m--------------[&r &6&liZenith &f&lMinecraft &7&l&m]--------------\n&4&lSERVER IS STILL IN DEVELOPMENT.\n&4&lPLEASE REPORT ANY ISSUES TO AN ADMIN\n&7Online Players:")), new WrappedGameProfile("id2", Util.parseColors("&7") + players)));
+		ping.setPlayers(Arrays.asList(new WrappedGameProfile("id1", Util.parseColors("&7&l&m--------------[&r &6&liZenith &f&lMinecraft &7&l&m]--------------\n&4&lSERVER IS STILL IN DEVELOPMENT.\n&4&lPLEASE REPORT ANY ISSUES TO AN ADMIN\n&7Online Players: " + players))));
 	}
 
 }

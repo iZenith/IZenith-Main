@@ -126,7 +126,7 @@ public class Util {
 				boolean isOnLand = false;
 				for (int y = 256; y >= 0; y--) {
 					midLoc = new com.intellectualcrafters.plot.object.Location(p.getLocation().getWorld(), (int) midX, y, (int) midZ);
-					if (((Location) midLoc.toBukkitLocation()).getBlock().getType() != Material.AIR) {
+					if ((convLocation(midLoc).getBlock().getType() != Material.AIR)) {
 						isOnLand = true;
 						midLoc.add(0, 1, 0);
 						break;
@@ -144,6 +144,10 @@ public class Util {
 		MainCommand.getInstance().addCommand(cmd);
 	}
 
+	public static Location convLocation(com.intellectualcrafters.plot.object.Location loc){
+		return new Location(Bukkit.getWorld(loc.getWorld()), loc.getX(), loc.getY(), loc.getZ(), loc.getYaw(), loc.getPitch());
+	}
+	
 	public static void line(Location l1, Location l2, Material material) {
 		double xSlope = (l1.getBlockX() - l2.getBlockX());
 		double ySlope = (l1.getBlockY() - l2.getBlockY()) / xSlope;

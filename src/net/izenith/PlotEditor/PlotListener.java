@@ -26,16 +26,16 @@ public class PlotListener implements Listener {
 					public void run() {
 						Plot plot = e.getPlot();
 						String owner = e.getPlayer().getName();
-						Location l1 = new Location(plot.getWorld().toString(),
+						Location l1 = new Location(plot.getHome().getWorld().toString(),
 								plot.getCorners()[0].getX() + 1, 66, plot
 										.getCorners()[0].getZ() + 1);
-						Location l2 = new Location(plot.getWorld().toString(),
+						Location l2 = new Location(plot.getHome().getWorld().toString(),
 								plot.getCorners()[1].getX(), 66, plot
 										.getCorners()[1].getZ() + 1);
-						Location l3 = new Location(plot.getWorld().toString(),
+						Location l3 = new Location(plot.getHome().getWorld().toString(),
 								plot.getCorners()[2].getX(), 66, plot
 										.getCorners()[2].getZ());
-						Location l4 = new Location(plot.getWorld().toString(),
+						Location l4 = new Location(plot.getHome().getWorld().toString(),
 								plot.getCorners()[3].getX() + 1, 66, plot
 										.getCorners()[3].getZ());
 
@@ -51,17 +51,17 @@ public class PlotListener implements Listener {
 				new Runnable() {
 					@Override
 					public void run() {
-						Plot plot = new Plot(e.getWorld(), e.getPlotId());
-						Location l1 = new Location(plot.getWorld().toString(),
+						Plot plot = e.getPlot();
+						Location l1 = new Location(plot.getHome().getWorld().toString(),
 								plot.getCorners()[0].getX() + 1, 66, plot
 										.getCorners()[0].getZ() + 1);
-						Location l2 = new Location(plot.getWorld().toString(),
+						Location l2 = new Location(plot.getHome().getWorld().toString(),
 								plot.getCorners()[1].getX(), 66, plot
 										.getCorners()[1].getZ() + 1);
-						Location l3 = new Location(plot.getWorld().toString(),
+						Location l3 = new Location(plot.getHome().getWorld().toString(),
 								plot.getCorners()[2].getX(), 66, plot
 										.getCorners()[2].getZ());
-						Location l4 = new Location(plot.getWorld().toString(),
+						Location l4 = new Location(plot.getHome().getWorld().toString(),
 								plot.getCorners()[3].getX() + 1, 66, plot
 										.getCorners()[3].getZ());
 
@@ -88,15 +88,15 @@ public class PlotListener implements Listener {
 	@EventHandler
 	public void onMerge(final PlotMergeEvent e) {
 		final Plot plot = e.getPlot();
-		final Location l1 = new Location(plot.getWorld().toString(),
+		final Location l1 = new Location(plot.getHome().getWorld().toString(),
 				plot.getCorners()[0].getX() + 1, 66,
 				plot.getCorners()[0].getZ() + 1);
-		final Location l2 = new Location(plot.getWorld().toString(),
+		final Location l2 = new Location(plot.getHome().getWorld().toString(),
 				plot.getCorners()[1].getX(), 66,
 				plot.getCorners()[1].getZ() + 1);
-		final Location l3 = new Location(plot.getWorld().toString(),
+		final Location l3 = new Location(plot.getHome().getWorld().toString(),
 				plot.getCorners()[2].getX(), 66, plot.getCorners()[2].getZ());
-		final Location l4 = new Location(plot.getWorld().toString(),
+		final Location l4 = new Location(plot.getHome().getWorld().toString(),
 				plot.getCorners()[3].getX() + 1, 66,
 				plot.getCorners()[3].getZ());
 		Util.getLocation(l1).getBlock().setTypeId(0);
