@@ -84,6 +84,9 @@ commands:
     description: Renames item in hand
     usage: /<command> <name>
     aliases: [re]
+  rskull:
+    description: Refresh plot skulls
+    usage: /<command>
 
 permissions:
   commandspy.use:
@@ -129,4 +132,7 @@ permissions:
     default: OP
   spawn.interact:
     description: Allows inventory interaction at spawn
+    default: OP
+  plot.rskull:
+    description: Allows refreshing of plot skulls
     default: OP
