@@ -41,7 +41,7 @@ public class Kit implements HubCommand {
 
 			player.sendMessage(ChatColor.BLUE + "Private Kits");
 			if (Util.getConfig().contains("kits." + player.getUniqueId())) {
-				Set<String> privateKits = Util.getConfig().getConfigurationSection("kits." + player.getUniqueId()).getKeys(false);
+				Set<String> privateKits = IPlayerHandler.getPlayer(player).config.getConfigurationSection("kits").getKeys(false);
 				for (String kitName : privateKits) {
 					player.sendMessage(ChatColor.GREEN + kitName);
 				}
