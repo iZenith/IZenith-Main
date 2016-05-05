@@ -381,7 +381,7 @@ public class Util {
 	}
 
 	public static void loadOnlineTime(Player player) {
-		Vars.times.put(player, System.currentTimeMillis());
+		IPlayerHandler.getPlayer(player).joinTime = System.currentTimeMillis();
 	}
 
 	public static void loadAllOnlineTimes() {
@@ -394,7 +394,7 @@ public class Util {
 		for (Player player : Bukkit.getOnlinePlayers()) {
 			IPlayer iPlayer = IPlayerHandler.getPlayer(player);
 			iPlayer.setTeam();
-			//iPlayer.sendTabFootHeader();
+			iPlayer.sendTabFootHeader();
 		}
 	}
 

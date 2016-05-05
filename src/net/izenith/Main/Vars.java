@@ -67,7 +67,6 @@ public class Vars {
 	public static List<Team> teams;
 	public static GUIHandler guiHandler;
 	public static GUI tpGUI;
-	public static HashMap<Player,Long> times;
 	public static List<Player> adminChat;
 	public static ProtocolManager protocolManager;
 	public static ServerSocket remoteConsoleSocket;
@@ -125,7 +124,6 @@ public class Vars {
 				//new Console()
 				};
 		commandSpy = new HashMap<Player, CommandFilter>();
-		times = new HashMap<Player,Long>();
 		adminChat = new ArrayList<Player>();
 		
 		/*

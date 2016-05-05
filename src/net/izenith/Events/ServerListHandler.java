@@ -37,14 +37,14 @@ public class ServerListHandler {
 
 	@SuppressWarnings("deprecation")
 	public void handlePing(WrappedServerPing ping) {
-		ping.setVersionName("iZenith Server 1.9");
+		ping.setVersionName("iZenith Server 1.8.8");
 		System.out.println("Sending player list");
 		List<String> playerNames = new ArrayList<String>();
 		for (Player player : Bukkit.getOnlinePlayers()) {
 			playerNames.add(IPlayerHandler.getPlayer(player).getColoredName(false));
 		}
 		String players = Util.parseColors(Util.buildString(playerNames, "&7, ", 0, 40));
-		ping.setPlayers(Arrays.asList(new WrappedGameProfile("id1", Util.parseColors("&7&l&m--------------[&r &6&liZenith &f&lMinecraft &7&l&m]--------------\n&4&lSERVER IS STILL IN DEVELOPMENT.\n&4&lPLEASE REPORT ANY ISSUES TO AN ADMIN\n&7Online Players: " + players))));
+		ping.setPlayers(Arrays.asList(new WrappedGameProfile("id1", Util.parseColors(Util.getConfig().getString("player_list_message"))), new WrappedGameProfile("id2", Util.parseColors("&7") + players)));
 	}
 
 }

@@ -28,6 +28,8 @@ public class IPlayer {
 	public Player player;
 	public YamlConfiguration config;
 	private File file;
+	public long joinTime = -1;
+	public long afkStartTime = -1;
 
 	public IPlayer(Player player) {
 		this.player = player;
@@ -71,7 +73,7 @@ public class IPlayer {
 	public long getOnlineTime() {
 		Long time = config.getLong("time");
 		time = time == null ? 0 : time;
-		return time + (System.currentTimeMillis() - Vars.times.get(player));
+		return time + (System.currentTimeMillis() - joinTime);
 	}
 
 	public String getOnlineTimeHours() {
@@ -364,10 +366,10 @@ public class IPlayer {
 		pc.getChatComponents()
 				.write(0,
 						WrappedChatComponent.fromText(Util
-								.parseColors("&7&l&m--------&f&lWelcome to &6&liZenith&7&l&m--------")))
+								.parseColors(Util.getConfig().getString("tab_info.header"))))
 				.write(1,
 						WrappedChatComponent.fromText(Util
-								.parseColors("&7&l&m--------[&9&lDonate: &5&lstore.izenith.net&7&l&m]--------\n&7&l&m   --------[&9&lTeamSpeak: &5&ltalk.izenith.net&7&l&m]--------")));
+								.parseColors(Util.getConfig().getString("tab_info.footer"))));
 		try {
 			Vars.protocolManager.sendServerPacket(player, pc);
 		} catch (InvocationTargetException e) {

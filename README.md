@@ -1,5 +1,6 @@
 # IZenith-Main
 IZenith's Plugin
 # Commit Format
-If you add a feature start with [Feature]
-If you add a fix start with [Fix]
+Summary: Short simple 1-5 word explanation.
+
+Description: [+] for additions or changes. [-] for removals
